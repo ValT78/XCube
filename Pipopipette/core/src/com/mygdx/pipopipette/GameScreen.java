@@ -35,6 +35,22 @@ public class GameScreen implements Screen {
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 2900, 2900);
                 System.out.println("gggg");
+                ScreenUtils.clear(1,1,1,1);
+                camera.update();
+                spriteBatch.setProjectionMatrix(camera.combined);
+
+                Array<HollowBar> bar = generateBar();
+                Array<HollowBlock> block = generateBlock();
+
+                spriteBatch.begin();
+                for(HollowBar b : bar) {
+                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1,b.rotation);
+                        b.clicBar();
+                }
+                for(HollowBlock b : block) {
+                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1, 0);
+                }
+                spriteBatch.end();
 
         }
 
@@ -89,22 +105,7 @@ public class GameScreen implements Screen {
 
         @Override
         public void render(float delta){
-                ScreenUtils.clear(1,1,1,1);
-                camera.update();
-                spriteBatch.setProjectionMatrix(camera.combined);
 
-                Array<HollowBar> bar = generateBar();
-                Array<HollowBlock> block = generateBlock();
-
-                spriteBatch.begin();
-                for(HollowBar b : bar) {
-                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1,b.rotation);
-                        b.clicBar();
-                }
-                for(HollowBlock b : block) {
-                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1, 0);
-                }
-                spriteBatch.end();
 
 
 
