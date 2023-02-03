@@ -2,52 +2,37 @@ package com.mygdx.pipopipette;
 
 
 
-import java.util.Iterator;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.pipopipette.block.HollowBar;
-import com.mygdx.pipopipette.block.HollowBlock;
-
-import org.graalvm.compiler.hotspot.HotSpotCounterOp;
+import com.mygdx.pipopipette.block.HollowSquare;
 
 public class GameScreen implements Screen {
         final Pipopipette game;
-        OrthographicCamera camera;
-        private SpriteBatch spriteBatch = new SpriteBatch();
+        public static OrthographicCamera camera;
+        public static SpriteBatch spriteBatch = new SpriteBatch();
         Array<HollowBar> bar = generateBar();
-        Array<HollowBlock> block = generateBlock();
+        Array<HollowSquare> square = generateSquare();
 
         public GameScreen(final Pipopipette game) {
                 this.game = game;
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 3000, 3000);
                 ScreenUtils.clear(1,1,1,1);
-                camera.update();
                 spriteBatch.setProjectionMatrix(camera.combined);
-                spriteBatch.begin();
                 for(HollowBar b : bar) {
-                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1,0);
+                        b.drawBlock(camera, spriteBatch, "grey_bar.png");
+                        spriteBatch.begin();
+                        GameScreen.spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1,0);
+                        spriteBatch.end();
                 }
-                for(HollowBlock b : block) {
-                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1, 0);
+                for(HollowSquare b : square) {
+                        b.drawBlock(camera, spriteBatch, "grey_square.png");
                 }
-                spriteBatch.end();
+
 
         }
 
@@ -83,9 +68,9 @@ public class GameScreen implements Screen {
                 return bar;
         }
 
-        public Array<HollowBlock> generateBlock() {
+        public Array<HollowSquare> generateSquare() {
 
-                Array<HollowBlock> block = new Array<HollowBlock>();
+                Array<HollowSquare> block = new Array<HollowSquare>();
                 float x = -250;
                 float y;
 
@@ -93,17 +78,21 @@ public class GameScreen implements Screen {
                         x = x + 600;
                         y = 350;
                         for (int k = 0; k < 4; k++) {
-                                block.add(new HollowBlock(x, y));
+                                block.add(new HollowSquare(x, y));
                                 y = y + 600;
                         }
                 }
                 return block;
         }
 
+        //render s'execute toutes les frames
         @Override
         public void render(float delta){
                 for(HollowBar b : bar) {
-                        b.clicBar(camera, spriteBatch);
+                        b.clicBar();
+                }
+                for(HollowSquare b : square) {
+                        b.clicSquare();
                 }
 
 
