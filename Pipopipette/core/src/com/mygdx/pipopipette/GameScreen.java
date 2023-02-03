@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -29,23 +30,19 @@ public class GameScreen implements Screen {
         final Pipopipette game;
         OrthographicCamera camera;
         private SpriteBatch spriteBatch = new SpriteBatch();
+        Array<HollowBar> bar = generateBar();
+        Array<HollowBlock> block = generateBlock();
 
         public GameScreen(final Pipopipette game) {
                 this.game = game;
                 camera = new OrthographicCamera();
-                camera.setToOrtho(false, 2900, 2900);
-                System.out.println("gggg");
+                camera.setToOrtho(false, 3000, 3000);
                 ScreenUtils.clear(1,1,1,1);
                 camera.update();
                 spriteBatch.setProjectionMatrix(camera.combined);
-
-                Array<HollowBar> bar = generateBar();
-                Array<HollowBlock> block = generateBlock();
-
                 spriteBatch.begin();
                 for(HollowBar b : bar) {
-                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1,b.rotation);
-                        b.clicBar();
+                        spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1,0);
                 }
                 for(HollowBlock b : block) {
                         spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1, 0);
@@ -70,7 +67,7 @@ public class GameScreen implements Screen {
                         }
                 }
 
-                x = -300;
+                x = -400;
                 y = 300;
                 for(int i=0; i<5; i++) {
                         x = x + 600;
@@ -105,8 +102,9 @@ public class GameScreen implements Screen {
 
         @Override
         public void render(float delta){
-
-
+                for(HollowBar b : bar) {
+                        b.clicBar(camera, spriteBatch);
+                }
 
 
         }
@@ -116,8 +114,7 @@ public class GameScreen implements Screen {
 
         @Override
         public void show() {
-                // start the playback of the background music
-                // when the screen is shown
+
 
         }
 
