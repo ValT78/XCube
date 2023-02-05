@@ -16,9 +16,9 @@ public class Block {
     public float dx;
     public float dy;
 
-    public void drawBlock(Camera camera, SpriteBatch spriteBatch, String texture) {
-        camera.update();
+    public void drawBlock(Camera camera, SpriteBatch spriteBatch, String texture) {  // Drawn the sprite pass in argument.
         this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
+        camera.update();
         spriteBatch.begin();
         spriteBatch.draw(this.sprite,this.x,this.y,0,0,this.dx,this.dy,1,1,0);
         spriteBatch.end();

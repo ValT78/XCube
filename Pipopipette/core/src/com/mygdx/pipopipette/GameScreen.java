@@ -2,8 +2,11 @@ package com.mygdx.pipopipette;
 
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,26 +20,31 @@ public class GameScreen implements Screen {
         Array<HollowBar> bar = generateBar();
         Array<HollowSquare> square = generateSquare();
 
-        public GameScreen(final Pipopipette game) {
+        public GameScreen(final Pipopipette game) {     //Sets a new GameScreen
                 this.game = game;
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 3000, 3000);
-                ScreenUtils.clear(1,1,1,1);
+                ScreenUtils.clear(1,1,1,1);    // Clears the old background and sets a new with rgb colors
+                camera.update();
                 spriteBatch.setProjectionMatrix(camera.combined);
+                // Sets the game.
+
                 for(HollowBar b : bar) {
-                        b.drawBlock(camera, spriteBatch, "grey_bar.png");
+                        b.drawBlock(camera,spriteBatch,"grey_bar.png");
+                        /*
                         spriteBatch.begin();
                         GameScreen.spriteBatch.draw(b.sprite,b.x,b.y,0,0,b.dx,b.dy,1,1,0);
                         spriteBatch.end();
+                         */
                 }
                 for(HollowSquare b : square) {
-                        b.drawBlock(camera, spriteBatch, "grey_square.png");
+                        b.drawBlock(camera,spriteBatch,"grey_square.png");
                 }
 
 
         }
 
-        public Array generateBar() {
+        public Array generateBar() {  // Generates the suitable array of "HollowBar"
 
                 Array<HollowBar> bar = new Array<HollowBar>();
                 float x = 300;
@@ -68,7 +76,7 @@ public class GameScreen implements Screen {
                 return bar;
         }
 
-        public Array<HollowSquare> generateSquare() {
+        public Array<HollowSquare> generateSquare() {   // Generates the suitable array of "HollowSquare"
 
                 Array<HollowSquare> block = new Array<HollowSquare>();
                 float x = -250;
@@ -85,7 +93,7 @@ public class GameScreen implements Screen {
                 return block;
         }
 
-        //render s'execute toutes les frames
+        //render each frame
         @Override
         public void render(float delta){
                 for(HollowBar b : bar) {
@@ -94,8 +102,6 @@ public class GameScreen implements Screen {
                 for(HollowSquare b : square) {
                         b.clicSquare();
                 }
-
-
         }
         @Override
         public void resize(int width, int height) {
@@ -121,7 +127,5 @@ public class GameScreen implements Screen {
 
         @Override
         public void dispose() {
-
-
         }
 }

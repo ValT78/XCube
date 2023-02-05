@@ -10,15 +10,15 @@ public class MainMenuScreen implements Screen {
 
     OrthographicCamera camera;
 
-    public MainMenuScreen(Pipopipette game){
+    public MainMenuScreen(Pipopipette game){    // Sets the Main menu.
     this.game = game;
 
     camera = new OrthographicCamera();
-        camera.setToOrtho(false,400,800);
+    camera.setToOrtho(false,400,800);
 }
 
-    public void render(float delta){
-        ScreenUtils.clear(0,0,0.2f,1);
+    public void render(float delta){          // render the Main menu
+        ScreenUtils.clear(0,0,0,0); // Clear past background and sets a new with rgb colors.
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -28,12 +28,12 @@ public class MainMenuScreen implements Screen {
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 200);
         game.batch.end();
 
-        if (Gdx.input.isTouched()){
+        if (Gdx.input.isTouched()){        //Launch the game screen if screen was tapped.
             game.setScreen(new GameScreen(game));
             dispose();
         }
     }
-
+   // All unnecessary functions required by "Screen"
     @Override
     public void resize(int width, int height) {
 
