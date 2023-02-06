@@ -1,0 +1,8 @@
+com.mygdx.pipopipette.android-pngs-0 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/build/generated/res/pngs/debug
+com.mygdx.pipopipette.android-resValues-1 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/build/generated/res/resValues/debug
+com.mygdx.pipopipette.android-rs-2 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/build/generated/res/rs/debug
+com.mygdx.pipopipette.android-mergeDebugResources-3 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.mygdx.pipopipette.android-mergeDebugResources-4 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.mygdx.pipopipette.android-merged_res-5 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/build/intermediates/merged_res/debug
+com.mygdx.pipopipette.android-android-6 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/res
+com.mygdx.pipopipette.android-debug-7 /home/valt/Bureau/projetgpt/Projet-dev/Pipopipette/android/src/debug/res
