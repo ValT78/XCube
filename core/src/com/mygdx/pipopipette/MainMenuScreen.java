@@ -10,7 +10,7 @@ public class MainMenuScreen implements Screen {
 
     OrthographicCamera camera;
 
-    public MainMenuScreen(Pipopipette game){
+    public MainMenuScreen(final Pipopipette game){
     this.game = game;
 
     camera = new OrthographicCamera();

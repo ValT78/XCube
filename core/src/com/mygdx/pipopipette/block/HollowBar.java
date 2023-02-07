@@ -1,10 +1,12 @@
 package com.mygdx.pipopipette.block;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
 public class HollowBar extends Block {
     public float rotation;
+    //public Sprite sprite;
 
     public HollowBar(float rotation, float x, float y){
         super(x,y);
