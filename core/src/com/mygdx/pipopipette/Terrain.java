@@ -10,16 +10,16 @@ public class Terrain {
 
 
     public Terrain() {
-        this.bar = generateBar();
-        this.square=generateSquare();
+        this.bar = generateBar();           // Stock la liste des barres
+        this.square=generateSquare();       // Stock la liste de carrés
     }
 
     public Array<HollowBar> getBar() {
         return bar;
-    }
+    }                //Permet d'appeler les barres
     public Array<HollowSquare> getSquare() {
         return square;
-    }
+    }       // Permet d'appeler les carrés
     public Array generateBar() {
 
         Array<HollowBar> bar = new Array<HollowBar>();

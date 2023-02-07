@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class HollowBar extends Block {
     public float rotation;
-    //public Sprite sprite;
 
     public HollowBar(float rotation, float x, float y){
         super(x,y);

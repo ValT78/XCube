@@ -17,23 +17,24 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false,400,800);
 }
 
-    public void render(float delta){
-        ScreenUtils.clear(0,0,0.2f,1);
+    public void render(float delta){            // Boucle infinie d'exécution
+        ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
+        game.batch.begin();     // Début des éléments à afficher
         game.font.draw(game.batch, "Welcome Pipopipette ! ",100,250);
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 200);
-        game.batch.end();
+        game.batch.end();       // Fin des éléments à afficher
 
         if (Gdx.input.isTouched()){
-            game.setScreen(new GameScreen(game));
-            dispose();
+            game.setScreen(new GameScreen(game));   // Si l'écran est touché, l'écran passe à GameScreen
+            dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
         }
     }
 
+    // Fonctions non utilisées recquises par l'implementation de screen
     @Override
     public void resize(int width, int height) {
 

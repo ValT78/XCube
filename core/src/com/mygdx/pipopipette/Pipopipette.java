@@ -11,7 +11,7 @@ public class Pipopipette extends Game {
 	public void create(){
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new MainMenuScreen(this));    // Lance l'écran de départ.
 
 	}
 

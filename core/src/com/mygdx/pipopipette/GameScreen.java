@@ -23,16 +23,10 @@ public class GameScreen implements Screen {
                 this.game = game;
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 3000, 3000);
-
         }
 
 
-
-
-
-        //render s'execute toutes les frames
-
-
+        //render s'éxecute toutes les frames
 
         @Override
         public void render(float delta){
@@ -40,24 +34,24 @@ public class GameScreen implements Screen {
                 camera.update();
                 spriteBatch.setProjectionMatrix(camera.combined);
                 for(HollowBar b : terrain.getBar()) {
-                        if(b.sprite == null) {                  // Petmet de set l'initialisation
+                        if(b.sprite == null) {                  // Initialise les sprites des blocks
                                 b.sprite = new Sprite(new Texture(Gdx.files.internal("grey_bar.png")));
                         }
-                        b.drawBlock();
+                        b.drawBlock();                          // Dessine le terrain
 
                 }
                 for(HollowSquare b : terrain.getSquare()) {
-                        if(b.sprite == null) {                  // permet de set l'initialisation
+                        if(b.sprite == null) {                  // Initialise les sprites des blocks
                                 b.sprite = new Sprite(new Texture(Gdx.files.internal("grey_square.png")));
                         }
-                        b.drawBlock();
+                        b.drawBlock();                          // Dessine le terrain
                 }
                 if(Gdx.input.isTouched()) {
 
                         for (HollowBar b : terrain.getBar()) {
-                                if (players.getPlayer()) {
+                                if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                         b.clickBlock("blue_bar.png");
-                                } else {
+                                } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
                                         b.clickBlock("red_bar.png");
 
                                 }
@@ -74,6 +68,8 @@ public class GameScreen implements Screen {
 
 
         }
+
+        // Fonctions inutilisées
         @Override
         public void resize(int width, int height) {
         }

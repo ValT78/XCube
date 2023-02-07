@@ -33,7 +33,7 @@ public class Block {
             Vector3 touchPos = new Vector3();                              //Création d'un vecteur à 3 coordonnées x,y,z
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);        // On récupère les coordonnées de touché
             camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
-            if(this.rectangle.contains(touchPos.x, touchPos.y) && isFree){ // On test si l'endroit toucher est un rectangle et s'il est libre
+            if(this.rectangle.contains(touchPos.x, touchPos.y) && isFree){ // On test si l'endroit touché est un rectangle et s'il est libre
                 isFree=false;
                 System.out.println(isFree);
                 PlayerManager.setCoup(GameScreen.players);
