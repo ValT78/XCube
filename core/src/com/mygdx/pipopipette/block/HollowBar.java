@@ -30,7 +30,7 @@ public class HollowBar extends Block {
     }
 
     //public HollowBar[] AddNeighbor(HollowBar[] bars) {
-        //return bars.add(this);
+    //    return bars.add(this);
     //}
 
 

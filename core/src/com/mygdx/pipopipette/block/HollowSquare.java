@@ -17,7 +17,7 @@ public class HollowSquare extends Block{
     }
 
     //public HollowBar[] FindNeighbors(Array<HollowBar> bar, int i) {
-        //this.neighbors.add();
+    //    this.neighbors.add();
     //}
 
 }
