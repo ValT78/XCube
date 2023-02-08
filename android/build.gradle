@@ -1,4 +1,13 @@
+apply plugin: 'org.jetbrains.kotlin.android'
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/home/valt/Bureau/xcube/keystore.jks')
+            storePassword 'abcdef'
+            keyAlias 'key0'
+            keyPassword 'abcdef'
+        }
+    }
     buildToolsVersion "33.0.1"
     compileSdkVersion 33
     sourceSets {
