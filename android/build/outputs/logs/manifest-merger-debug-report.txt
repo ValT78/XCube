@@ -8,7 +8,7 @@ INJECTED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:2:1-29:12
 INJECTED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:2:1-29:12
 INJECTED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:2:1-29:12
 	package
-		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:4:5-36
+		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:4:5-30
 		INJECTED from /home/valt/Bureau/xcube/android/AndroidManifest.xml
 		INJECTED from /home/valt/Bureau/xcube/android/AndroidManifest.xml
 	android:versionName
@@ -45,7 +45,7 @@ ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:8:5-27:19
 		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:9:9-35
 	android:isGame
 		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:12:9-30
-activity#com.mygdx.pipopipette.AndroidLauncher
+activity#com.mygdx.xcube.AndroidLauncher
 ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:16:9-26:20
 	android:screenOrientation
 		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:19:13-49
@@ -56,7 +56,7 @@ ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:16:9-26:20
 	android:configChanges
 		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:20:13-107
 	android:name
-		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:17:13-65
+		ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:17:13-59
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from /home/valt/Bureau/xcube/android/AndroidManifest.xml:22:13-25:29
 action#android.intent.action.MAIN

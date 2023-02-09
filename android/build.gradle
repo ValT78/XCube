@@ -28,7 +28,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "com.mygdx.pipopipette"
+        applicationId "com.mygdx.xcube"
         minSdkVersion 14
         targetSdkVersion 33
         versionCode 1
@@ -93,7 +93,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.pipopipette/com.mygdx.pipopipette.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.pipopipette/com.mygdx.xcube.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
