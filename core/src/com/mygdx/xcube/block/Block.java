@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.xcube.GameScreen;
 import com.mygdx.xcube.PlayerManager;
 
+import java.util.ArrayList;
+
 public class Block {
     public Sprite sprite;
     public Rectangle rectangle;
@@ -17,11 +19,16 @@ public class Block {
     public float y;
     public float dx;
     public float dy;
+    public boolean isSquare;
     public boolean isFree;
+    public ArrayList<HollowBar> neighbors = new ArrayList<>();
+
 
     public Block(float x, float y) {
         this.x = x;
         this.y = y;
+
+        isFree=true;
     }
 
     public void clickBlock(String texture) {
@@ -31,9 +38,8 @@ public class Block {
             Vector3 touchPos = new Vector3();                              //Création d'un vecteur à 3 coordonnées x,y,z
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);        // On récupère les coordonnées de touché
             camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
-            if(this.rectangle.contains(touchPos.x, touchPos.y) && isFree){ // On test si l'endroit touché est un rectangle et s'il est libre
+            if(this.rectangle.contains(touchPos.x, touchPos.y) && this.isClickable()){ // On test si l'endroit touché est un rectangle et s'il est libre
                 isFree=false;
-                System.out.println(isFree);
                 PlayerManager.setCoup(GameScreen.players);
                 this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
                 this.drawBlock();
@@ -45,6 +51,19 @@ public class Block {
         GameScreen.spriteBatch.begin();
         GameScreen.spriteBatch.draw(this.sprite,x,y,0,0,dx,dy,1,1,0);
         GameScreen.spriteBatch.end();
+    }
+
+    public boolean isClickable() {
+        boolean clickable = this.isFree;
+        if(this.isSquare) {
+            for (HollowBar bar : this.neighbors
+                 ) {
+                if(bar.isFree) {
+                    clickable = false;
+                }
+            }
+        }
+        return clickable;
     }
 
 }

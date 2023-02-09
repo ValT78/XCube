@@ -18,12 +18,11 @@ public class HollowBar extends Block {
         //que l'on met en argument
         this.rotation = rotation;
         if (rotation==90) {
-            rectangle.setSize(96,500);
-            dx=96;
-            dy=500;
+            rectangle.setSize(96, 500);
+            dx = 96;
+            dy = 500;
         }
-        isFree=true;
-
+        isSquare=false;
 
     }
 
