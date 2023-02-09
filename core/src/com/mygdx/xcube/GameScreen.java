@@ -19,6 +19,8 @@ public class GameScreen implements Screen {
 
         private Terrain terrain = new Terrain();
         public static PlayerManager players= new PlayerManager();
+
+        private boolean touchOff = true;
         public GameScreen(final XCube game) {
                 this.game = game;
                 camera = new OrthographicCamera();
@@ -46,8 +48,8 @@ public class GameScreen implements Screen {
                         }
                         b.drawBlock();                          // Dessine le terrain
                 }
-                if(Gdx.input.isTouched()) {
-
+                if(Gdx.input.isTouched() && touchOff) {
+                        touchOff = false;
                         for (HollowBar b : terrain.getBar()) {
                                 if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                         b.clickBlock("blue_bar.png");
@@ -64,6 +66,9 @@ public class GameScreen implements Screen {
 
                                 }
                         }
+                }
+                if(!Gdx.input.isTouched()) {
+                        touchOff = true;
                 }
 
 

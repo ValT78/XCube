@@ -2,8 +2,10 @@ package com.mygdx.xcube.block;
 
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+
 public class HollowSquare extends Block{
-    public HollowBar[] neighbors;
+    public ArrayList<HollowBar> neighbors = new ArrayList<>();
     public HollowSquare(float x, float y) {
         super(x,y);
         dx=400;

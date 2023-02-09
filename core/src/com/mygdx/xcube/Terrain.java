@@ -36,14 +36,14 @@ public class Terrain {
             }
         }
 
-        x = -400;
-        y = 300;
-        for(int i=0; i<5; i++) {
-            x = x + 600;
-            y = 300;
-            for (int k = 0; k < 4; k++) {
+        x = 300;
+        y = -300;
+        for(int i=0; i<4; i++) {
+            y += 600;
+            x = 200;
+            for (int k = 0; k < 5; k++) {
                 bar.add(new HollowBar(90,x,y));
-                y = y + 600;
+                x = x + 600;
 
             }
 
@@ -54,15 +54,20 @@ public class Terrain {
     public Array<HollowSquare> generateSquare() {
 
         Array<HollowSquare> block = new Array<HollowSquare>();
-        float x = -250;
-        float y;
+        float x;
+        float y = -250;
 
         for(int i=0; i<4; i++) {
-            x = x + 600;
-            y = 350;
-            for (int k = 0; k < 4; k++) {
-                block.add(new HollowSquare(x, y));
-                y = y + 600;
+            y += 600;
+            x = 350;
+            for (int j = 0; j < 4; j++) {
+                HollowSquare square1 = new HollowSquare(x, y);
+                square1.neighbors.add(bar.get((i*4)+j));
+                square1.neighbors.add(bar.get((i*4)+j + 4));
+                square1.neighbors.add(bar.get((i*5)+j + 20));
+                square1.neighbors.add(bar.get((i*5)+j + 21));
+                block.add(square1);
+                x += 600;
             }
         }
         return block;

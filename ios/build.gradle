@@ -4,7 +4,7 @@ sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 ext {
-	mainClassName = "com.mygdx.pipopipette.IOSLauncher"
+	mainClassName = "com.mygdx.xcube.IOSLauncher"
 }
 
 launchIPhoneSimulator.dependsOn build
