@@ -61,13 +61,13 @@ public class GameScreen implements Screen {
                                 if (players.getPlayer()) {
                                         b.clickBlock("blue_square.png");
                                         if(b.isFree==false){
-                                                b.status=true;
+                                                b.status="true";
                                                 end.winTest();
                                         }
                                 } else {
                                         b.clickBlock("red_square.png");
                                         if(b.isFree==false){
-                                                b.status=false;
+                                                b.status="false";
                                                 end.winTest();
                                         }
                                 }

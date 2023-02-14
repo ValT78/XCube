@@ -21,7 +21,7 @@ public class Block {
     public float dy;
     public boolean isSquare;
     public boolean isFree;
-    public boolean status;
+    public String status = "none";
     public ArrayList<HollowBar> neighbors = new ArrayList<>();
 
     public Block(float x, float y) {
