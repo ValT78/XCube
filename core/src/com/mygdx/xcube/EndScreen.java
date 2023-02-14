@@ -37,147 +37,476 @@ public class EndScreen implements Screen {
                 game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(13).status=="true" && square.get(14).status=="true" && square.get(15).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(8).status=="true" && square.get(9).status=="true" && square.get(10).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(9).status=="true" && square.get(10).status=="true" && square.get(11).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(4).status=="true" && square.get(5).status=="true" && square.get(6).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(5).status=="true" && square.get(6).status=="true" && square.get(7).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(0).status=="true" && square.get(1).status=="true" && square.get(2).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(1).status=="true" && square.get(2).status=="true" && square.get(3).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(12).status=="true" && square.get(8).status=="true" && square.get(4).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(8).status=="true" && square.get(4).status=="true" && square.get(0).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(13).status=="true" && square.get(9).status=="true" && square.get(5).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(9).status=="true" && square.get(5).status=="true" && square.get(1).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(14).status=="true" && square.get(10).status=="true" && square.get(6).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(10).status=="true" && square.get(6).status=="true" && square.get(2).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(15).status=="true" && square.get(11).status=="true" && square.get(7).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(11).status=="true" && square.get(7).status=="true" && square.get(3).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(14).status=="true" && square.get(9).status=="true" && square.get(4).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(15).status=="true" && square.get(10).status=="true" && square.get(15).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(10).status=="true" && square.get(5).status=="true" && square.get(0).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(11).status=="true" && square.get(6).status=="true" && square.get(1).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(8).status=="true" && square.get(5).status=="true" && square.get(2).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(12).status=="true" && square.get(9).status=="true" && square.get(6).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(9).status=="true" && square.get(6).status=="true" && square.get(3).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(13).status=="true" && square.get(10).status=="true" && square.get(7).status=="true"){
-                System.out.println("Blue wins");
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
         }
         else{
             if(square.get(12).status=="false" && square.get(13).status=="false" && square.get(14).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(13).status=="false" && square.get(14).status=="false" && square.get(15).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(8).status=="false" && square.get(9).status=="false" && square.get(10).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(9).status=="false" && square.get(10).status=="false" && square.get(11).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(4).status=="false" && square.get(5).status=="false" && square.get(6).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(5).status=="false" && square.get(6).status=="false" && square.get(7).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(0).status=="false" && square.get(1).status=="false" && square.get(2).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(1).status=="false" && square.get(2).status=="false" && square.get(3).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(12).status=="false" && square.get(8).status=="false" && square.get(4).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(8).status=="false" && square.get(4).status=="false" && square.get(0).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(13).status=="false" && square.get(9).status=="false" && square.get(5).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(9).status=="false" && square.get(5).status=="false" && square.get(1).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(14).status=="false" && square.get(10).status=="false" && square.get(6).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(10).status=="false" && square.get(6).status=="false" && square.get(2).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(15).status=="false" && square.get(11).status=="false" && square.get(7).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(11).status=="false" && square.get(7).status=="false" && square.get(3).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(14).status=="false" && square.get(9).status=="false" && square.get(4).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(15).status=="false" && square.get(10).status=="false" && square.get(15).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(10).status=="false" && square.get(5).status=="false" && square.get(0).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(11).status=="false" && square.get(6).status=="false" && square.get(1).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(8).status=="false" && square.get(5).status=="false" && square.get(2).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(12).status=="false" && square.get(9).status=="false" && square.get(6).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(9).status=="false" && square.get(6).status=="false" && square.get(3).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(13).status=="false" && square.get(10).status=="false" && square.get(7).status=="false"){
-                System.out.println("Red wins");
+                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Red Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
         }
     }
