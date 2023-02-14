@@ -19,10 +19,11 @@ public class GameScreen implements Screen {
 
         private Terrain terrain = new Terrain();
         public static PlayerManager players= new PlayerManager();
-        private EndScreen end = new EndScreen(terrain, players);
+        private EndScreen end;
         private boolean touchOff = true;
         public GameScreen(final XCube game) {
                 this.game = game;
+                this.end = new EndScreen(terrain, players,game);
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 3000, 3000);
         }
@@ -62,13 +63,11 @@ public class GameScreen implements Screen {
                                         b.clickBlock("blue_square.png");
                                         if(b.isFree==false){
                                                 b.status="true";
-                                                end.winTest();
                                         }
                                 } else {
                                         b.clickBlock("red_square.png");
                                         if(b.isFree==false){
                                                 b.status="false";
-                                                end.winTest();
                                         }
                                 }
                         }
@@ -76,7 +75,7 @@ public class GameScreen implements Screen {
                 if(!Gdx.input.isTouched()) {
                         touchOff = true;
                 }
-
+                end.winTest();
 
         }
 

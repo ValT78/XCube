@@ -2,24 +2,39 @@ package com.mygdx.xcube;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 import com.mygdx.xcube.Terrain;
 import com.mygdx.xcube.PlayerManager;
-public class EndScreen {
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.mygdx.xcube.XCube;
+public class EndScreen implements Screen {
     private Array<HollowSquare> square;
     //private Terrain terrain;
     private PlayerManager players;
-
-    public EndScreen(Terrain terrain, PlayerManager players){
+    public static OrthographicCamera camera;
+    final XCube game;
+    public EndScreen(Terrain terrain, PlayerManager players, XCube game){
         this.square = terrain.getSquare();
         this.players = players;
+        this.game = game;
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false,400,800);
     }
 
     public void winTest(){
         if(players.getPlayer()==true){
-            if(square.get(15).status=="true" && square.get(13).status=="true" && square.get(14).status=="true"){
-                System.out.println("Blue wins");
+            if(square.get(12).status=="true" && square.get(13).status=="true" && square.get(14).status=="true"){
+                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
+
+                game.batch.begin();     // Début des éléments à afficher
+                game.font.draw(game.batch, "Blue Wins ! ",100,250);
+                game.batch.end();       // Fin des éléments à afficher
             }
             if(square.get(13).status=="true" && square.get(14).status=="true" && square.get(15).status=="true"){
                 System.out.println("Blue wins");
@@ -168,5 +183,39 @@ public class EndScreen {
     }
 
 
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }
 
