@@ -7,9 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.xcube.EndScreen;
+import com.mygdx.xcube.End;
 import com.mygdx.xcube.GameScreen;
 import com.mygdx.xcube.PlayerManager;
+import com.mygdx.xcube.XCube;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class Block {
 
 
     }
-    public void clickSquareBlock(String texture, EndScreen end, boolean player) {
+    public void clickSquareBlock(String texture, boolean player, End end) {
         //rectangle.contains permet de savoir si le point que l'on indique appartient au rectangle
         //Gdx.input.get renvoie automatiquement la coordonnée X/Y sur laquelle on clique.
 
@@ -62,10 +63,12 @@ public class Block {
             if(player==true) {
                 this.status = 0;
                 this.drawBlock();
+                end.winTest();
             }
             if(player==false) {
                 this.status = 1;
                 this.drawBlock();
+                end.winTest();
             }
         }
     }

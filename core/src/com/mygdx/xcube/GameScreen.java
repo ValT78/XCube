@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
-import com.mygdx.xcube.EndScreen;
+
 public class GameScreen implements Screen {
         final XCube game;
         public static OrthographicCamera camera;
@@ -19,11 +19,11 @@ public class GameScreen implements Screen {
 
         private Terrain terrain = new Terrain();
         public static PlayerManager players= new PlayerManager();
-        private EndScreen end;
+        private End end;
         private boolean touchOff = true;
         public GameScreen(final XCube game) {
                 this.game = game;
-                this.end = new EndScreen(this.terrain, this.players,this.game);
+                this.end = new End(this.terrain, this.players,this.game);
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 3000, 3000);
         }
@@ -60,14 +60,13 @@ public class GameScreen implements Screen {
                         }
                         for (HollowSquare b : terrain.getSquare()) {
                                 if (players.getPlayer()) {
-                                        b.clickSquareBlock("blue_square.png",end,true);
+                                        b.clickSquareBlock("blue_square.png",true,end);
 
                                 }
                                 else {
-                                        b.clickSquareBlock("red_square.png",end,false);
+                                        b.clickSquareBlock("red_square.png",false,end);
                                 }
                         }
-                        end.winTest();
                 }
                 if(!Gdx.input.isTouched()) {
                         touchOff = true;
@@ -99,7 +98,7 @@ public class GameScreen implements Screen {
 
         @Override
         public void dispose() {
-
-
+        game.dispose();
+        spriteBatch.dispose();
         }
 }
