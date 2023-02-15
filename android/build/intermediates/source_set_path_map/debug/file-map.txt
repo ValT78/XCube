@@ -1,8 +1,8 @@
-com.mygdx.pipopipette.android-pngs-0 /home/valt/Bureau/xcube/android/build/generated/res/pngs/debug
-com.mygdx.pipopipette.android-resValues-1 /home/valt/Bureau/xcube/android/build/generated/res/resValues/debug
-com.mygdx.pipopipette.android-rs-2 /home/valt/Bureau/xcube/android/build/generated/res/rs/debug
-com.mygdx.pipopipette.android-mergeDebugResources-3 /home/valt/Bureau/xcube/android/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
-com.mygdx.pipopipette.android-mergeDebugResources-4 /home/valt/Bureau/xcube/android/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
-com.mygdx.pipopipette.android-merged_res-5 /home/valt/Bureau/xcube/android/build/intermediates/merged_res/debug
-com.mygdx.pipopipette.android-android-6 /home/valt/Bureau/xcube/android/res
-com.mygdx.pipopipette.android-debug-7 /home/valt/Bureau/xcube/android/src/debug/res
+com.mygdx.xcube.android-pngs-0 /home/valt/Bureau/XCube/Projet-dev/android/build/generated/res/pngs/debug
+com.mygdx.xcube.android-resValues-1 /home/valt/Bureau/XCube/Projet-dev/android/build/generated/res/resValues/debug
+com.mygdx.xcube.android-rs-2 /home/valt/Bureau/XCube/Projet-dev/android/build/generated/res/rs/debug
+com.mygdx.xcube.android-mergeDebugResources-3 /home/valt/Bureau/XCube/Projet-dev/android/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.mygdx.xcube.android-mergeDebugResources-4 /home/valt/Bureau/XCube/Projet-dev/android/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.mygdx.xcube.android-merged_res-5 /home/valt/Bureau/XCube/Projet-dev/android/build/intermediates/merged_res/debug
+com.mygdx.xcube.android-android-6 /home/valt/Bureau/XCube/Projet-dev/android/res
+com.mygdx.xcube.android-debug-7 /home/valt/Bureau/XCube/Projet-dev/android/src/debug/res

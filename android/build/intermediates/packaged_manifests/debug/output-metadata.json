@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.mygdx.pipopipette",
+  "applicationId": "com.mygdx.xcube",
   "variantName": "debug",
   "elements": [
     {

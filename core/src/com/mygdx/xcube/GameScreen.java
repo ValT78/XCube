@@ -32,23 +32,8 @@ public class GameScreen implements Screen {
         //render s'éxecute toutes les frames
 
         @Override
-        public void render(float delta){
-                ScreenUtils.clear(1,1,1,1);
-                camera.update();
-                spriteBatch.setProjectionMatrix(camera.combined);
-                for(HollowBar b : terrain.getBar()) {
-                        if(b.sprite == null) {                  // Initialise les sprites des blocks
-                                b.sprite = new Sprite(new Texture(Gdx.files.internal("grey_bar.png")));
-                        }
-                        b.drawBlock();                          // Dessine le terrain
+        public void render(float delta){ //méthode spammé chaque frame
 
-                }
-                for(HollowSquare b : terrain.getSquare()) {
-                        if(b.sprite == null) {                  // Initialise les sprites des blocks
-                                b.sprite = new Sprite(new Texture(Gdx.files.internal("grey_square.png")));
-                        }
-                        b.drawBlock();                          // Dessine le terrain
-                }
                 if(Gdx.input.isTouched() && touchOff) {
                         touchOff = false;
                         for (HollowBar b : terrain.getBar()) {
@@ -69,7 +54,7 @@ public class GameScreen implements Screen {
                         }
                         end.winTest();
                 }
-                if(!Gdx.input.isTouched()) {
+                if(!Gdx.input.isTouched()) { //Evite que l'on puisse cliquer sur plusieurs blocs en un appuie
                         touchOff = true;
                 }
         }
@@ -80,9 +65,22 @@ public class GameScreen implements Screen {
         }
 
         @Override
-        public void show() {
+        public void show() { //Un tick au début
+                ScreenUtils.clear(1,1,1,1);
+                camera.update();
+                spriteBatch.setProjectionMatrix(camera.combined);
+                for(HollowBar b : terrain.getBar()) {
+                        if(b.getFree()) {
+                                b.drawBlock("grey_bar.png");
+                        } // Dessine les barres du terrain de base
 
+                }
+                for(HollowSquare b : terrain.getSquare()) {
 
+                        if(b.getFree()) {
+                                b.drawBlock("grey_square.png");
+                        } // Dessine les barres du terrain de base                         // Dessine le terrain
+                }
         }
 
         @Override

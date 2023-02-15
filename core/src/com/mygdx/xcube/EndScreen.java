@@ -25,7 +25,7 @@ public class EndScreen implements Screen {
     }
 
     public void winTest(){
-        if(players.getPlayer()==true){
+        if(players.getPlayer()){
             if(square.get(12).status==0 && square.get(13).status==0 && square.get(14).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 

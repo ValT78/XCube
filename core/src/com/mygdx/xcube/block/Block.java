@@ -14,7 +14,7 @@ import com.mygdx.xcube.PlayerManager;
 import java.util.ArrayList;
 
 public class Block {
-    public Sprite sprite;
+    private Sprite sprite;
     public Rectangle rectangle;
     public float x;
     public float y;
@@ -32,6 +32,10 @@ public class Block {
         isFree=true;
     }
 
+    public boolean getFree() {
+        return isFree;
+    }
+
     public void clickBlock(String texture) {
         //rectangle.contains permet de savoir si le point que l'on indique appartient au rectangle
         //Gdx.input.get renvoie automatiquement la coordonnée X/Y sur laquelle on clique.
@@ -42,8 +46,7 @@ public class Block {
         if(this.rectangle.contains(touchPos.x, touchPos.y) && this.isClickable()){ // On test si l'endroit touché est un rectangle et s'il est libre
             isFree=false;
             PlayerManager.setCoup(GameScreen.players);
-            this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
-            this.drawBlock();
+            this.drawBlock(texture);
         }
 
 
@@ -58,19 +61,19 @@ public class Block {
         if (this.rectangle.contains(touchPos.x, touchPos.y) && this.isClickable()) { // On test si l'endroit touché est un rectangle et s'il est libre
             isFree = false;
             PlayerManager.setCoup(GameScreen.players);
-            this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
             if(player==true) {
                 this.status = 0;
-                this.drawBlock();
+                this.drawBlock(texture);
             }
             if(player==false) {
                 this.status = 1;
-                this.drawBlock();
+                this.drawBlock(texture);
             }
         }
     }
 
-    public void drawBlock() {
+    public void drawBlock(String texture) {
+        this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
         camera.update();
         GameScreen.spriteBatch.begin();
         GameScreen.spriteBatch.draw(this.sprite,x,y,0,0,dx,dy,1,1,0);
@@ -88,6 +91,11 @@ public class Block {
             }
         }
         return clickable;
+    }
+
+
+    public void align() {
+        if(true) {}
     }
 
 }
