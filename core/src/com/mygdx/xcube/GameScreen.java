@@ -23,7 +23,7 @@ public class GameScreen implements Screen {
         private boolean touchOff = true;
         public GameScreen(final XCube game) {
                 this.game = game;
-                this.end = new End(this.terrain, this.players,this.game);
+                this.end = new End(this.terrain, this.players,this.game,this);
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 3000, 3000);
         }
@@ -72,7 +72,12 @@ public class GameScreen implements Screen {
                         touchOff = true;
                 }
         }
-
+        public void setBlue(){
+                game.setScreen(new EndScreen(game,true));
+        }
+        public void setRed(){
+                game.setScreen(new EndScreen(game,false));
+        }
         // Fonctions inutilisées
         @Override
         public void resize(int width, int height) {

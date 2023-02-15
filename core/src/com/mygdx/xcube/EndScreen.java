@@ -14,7 +14,7 @@ public class EndScreen implements Screen {
             this.game = game;
             this.player = player;
             camera = new OrthographicCamera();
-            camera.setToOrtho(false,400,800);
+            camera.setToOrtho(false,400,400);
         }
 
         public void render(float delta){            // Boucle infinie d'exécution
@@ -25,13 +25,8 @@ public class EndScreen implements Screen {
                 game.batch.setProjectionMatrix(camera.combined);
 
                 game.batch.begin();     // Début des éléments à afficher
-                game.font.draw(game.batch, "Blue team win ! ", 300, 350);
+                game.font.draw(game.batch, "Blue team win ! ", 200, 200);
                 game.batch.end();       // Fin des éléments à afficher
-
-                if (Gdx.input.isTouched()) {
-                    game.setScreen(new GameScreen(game));   // Si l'écran est touché, l'écran passe à GameScreen
-                    dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
-                }
             }
             if(!player){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
@@ -39,14 +34,17 @@ public class EndScreen implements Screen {
                 game.batch.setProjectionMatrix(camera.combined);
 
                 game.batch.begin();     // Début des éléments à afficher
-                game.font.draw(game.batch, "Red team win ! ", 300, 350);
+                game.font.draw(game.batch, "Red team win ! ", 200, 200);
                 game.batch.end();       // Fin des éléments à afficher
 
-                if (Gdx.input.isTouched()) {
-                    game.setScreen(new GameScreen(game));   // Si l'écran est touché, l'écran passe à GameScreen
-                    dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
-                }
             }
+            /*
+            if (Gdx.input.isTouched()) {
+                game.setScreen(new GameScreen(new XCube()));   // Si l'écran est touché, l'écran passe à GameScreen
+                dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
+            }
+
+             */
         }
 
         // Fonctions non utilisées recquises par l'implementation de screen
