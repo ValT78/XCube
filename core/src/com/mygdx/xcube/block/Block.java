@@ -28,7 +28,7 @@ public class Block {
     public Block(float x, float y) {
         this.x = x;
         this.y = y;
-        this.status =2;
+        this.status = 2;
         isFree=true;
     }
 
@@ -48,7 +48,7 @@ public class Block {
 
 
     }
-    public void clickSquareBlock(String texture, EndScreen end) {
+    public void clickSquareBlock(String texture, EndScreen end, boolean player) {
         //rectangle.contains permet de savoir si le point que l'on indique appartient au rectangle
         //Gdx.input.get renvoie automatiquement la coordonnée X/Y sur laquelle on clique.
 
@@ -59,15 +59,13 @@ public class Block {
             isFree = false;
             PlayerManager.setCoup(GameScreen.players);
             this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
-            if(this.sprite == new Sprite(new Texture(Gdx.files.internal("blue_square.png")))) {
+            if(player==true) {
                 this.status = 0;
                 this.drawBlock();
-                end.winTest();
             }
-            if(this.sprite == new Sprite(new Texture(Gdx.files.internal("red_square.png")))) {
+            if(player==false) {
                 this.status = 1;
                 this.drawBlock();
-                end.winTest();
             }
         }
     }

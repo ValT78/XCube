@@ -60,13 +60,14 @@ public class GameScreen implements Screen {
                         }
                         for (HollowSquare b : terrain.getSquare()) {
                                 if (players.getPlayer()) {
-                                        b.clickSquareBlock("blue_square.png",end);
+                                        b.clickSquareBlock("blue_square.png",end,true);
 
                                 }
                                 else {
-                                        b.clickSquareBlock("red_square.png",end);
+                                        b.clickSquareBlock("red_square.png",end,false);
                                 }
                         }
+                        end.winTest();
                 }
                 if(!Gdx.input.isTouched()) {
                         touchOff = true;

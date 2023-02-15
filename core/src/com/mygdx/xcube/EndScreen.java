@@ -35,6 +35,7 @@ public class EndScreen implements Screen {
                 game.batch.begin();     // Début des éléments à afficher
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
+                System.out.println("Blue wins");
             }
             if(square.get(13).status==0 && square.get(14).status==0 && square.get(15).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
