@@ -23,7 +23,7 @@ public class GameScreen implements Screen {
         private boolean touchOff = true;
         public GameScreen(final XCube game) {
                 this.game = game;
-                this.end = new EndScreen(terrain, players,game);
+                this.end = new EndScreen(this.terrain, this.players,this.game);
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false, 3000, 3000);
         }
@@ -60,23 +60,17 @@ public class GameScreen implements Screen {
                         }
                         for (HollowSquare b : terrain.getSquare()) {
                                 if (players.getPlayer()) {
-                                        b.clickBlock("blue_square.png");
-                                        if(b.isFree==false){
-                                                b.status="true";
-                                        }
-                                } else {
-                                        b.clickBlock("red_square.png");
-                                        if(b.isFree==false){
-                                                b.status="false";
-                                        }
+                                        b.clickSquareBlock("blue_square.png",end);
+
+                                }
+                                else {
+                                        b.clickSquareBlock("red_square.png",end);
                                 }
                         }
                 }
                 if(!Gdx.input.isTouched()) {
                         touchOff = true;
                 }
-                end.winTest();
-
         }
 
         // Fonctions inutilisées

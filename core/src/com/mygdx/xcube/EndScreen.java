@@ -26,7 +26,7 @@ public class EndScreen implements Screen {
 
     public void winTest(){
         if(players.getPlayer()==true){
-            if(square.get(12).status=="true" && square.get(13).status=="true" && square.get(14).status=="true"){
+            if(square.get(12).status==0 && square.get(13).status==0 && square.get(14).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -36,7 +36,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(13).status=="true" && square.get(14).status=="true" && square.get(15).status=="true"){
+            if(square.get(13).status==0 && square.get(14).status==0 && square.get(15).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -46,7 +46,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(8).status=="true" && square.get(9).status=="true" && square.get(10).status=="true"){
+            if(square.get(8).status==0 && square.get(9).status==0 && square.get(10).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -56,7 +56,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(9).status=="true" && square.get(10).status=="true" && square.get(11).status=="true"){
+            if(square.get(9).status==0 && square.get(10).status==0 && square.get(11).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -66,7 +66,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(4).status=="true" && square.get(5).status=="true" && square.get(6).status=="true"){
+            if(square.get(4).status==0 && square.get(5).status==0 && square.get(6).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -76,7 +76,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(5).status=="true" && square.get(6).status=="true" && square.get(7).status=="true"){
+            if(square.get(5).status==0 && square.get(6).status==0 && square.get(7).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -86,7 +86,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(0).status=="true" && square.get(1).status=="true" && square.get(2).status=="true"){
+            if(square.get(0).status==0 && square.get(1).status==0 && square.get(2).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -96,7 +96,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(1).status=="true" && square.get(2).status=="true" && square.get(3).status=="true"){
+            if(square.get(1).status==0 && square.get(2).status==0 && square.get(3).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -106,7 +106,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(12).status=="true" && square.get(8).status=="true" && square.get(4).status=="true"){
+            if(square.get(12).status==0 && square.get(8).status==0 && square.get(4).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -116,7 +116,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(8).status=="true" && square.get(4).status=="true" && square.get(0).status=="true"){
+            if(square.get(8).status==0 && square.get(4).status==0 && square.get(0).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -126,7 +126,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(13).status=="true" && square.get(9).status=="true" && square.get(5).status=="true"){
+            if(square.get(13).status==0 && square.get(9).status==0 && square.get(5).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -136,7 +136,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(9).status=="true" && square.get(5).status=="true" && square.get(1).status=="true"){
+            if(square.get(9).status==0 && square.get(5).status==0 && square.get(1).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -146,7 +146,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(14).status=="true" && square.get(10).status=="true" && square.get(6).status=="true"){
+            if(square.get(14).status==0 && square.get(10).status==0 && square.get(6).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -156,7 +156,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(10).status=="true" && square.get(6).status=="true" && square.get(2).status=="true"){
+            if(square.get(10).status==0 && square.get(6).status==0 && square.get(2).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -166,7 +166,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(15).status=="true" && square.get(11).status=="true" && square.get(7).status=="true"){
+            if(square.get(15).status==0 && square.get(11).status==0 && square.get(7).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -176,7 +176,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(11).status=="true" && square.get(7).status=="true" && square.get(3).status=="true"){
+            if(square.get(11).status==0 && square.get(7).status==0 && square.get(3).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -186,7 +186,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(14).status=="true" && square.get(9).status=="true" && square.get(4).status=="true"){
+            if(square.get(14).status==0 && square.get(9).status==0 && square.get(4).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -196,7 +196,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(15).status=="true" && square.get(10).status=="true" && square.get(15).status=="true"){
+            if(square.get(15).status==0 && square.get(10).status==0 && square.get(15).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -206,7 +206,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(10).status=="true" && square.get(5).status=="true" && square.get(0).status=="true"){
+            if(square.get(10).status==0 && square.get(5).status==0 && square.get(0).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -216,7 +216,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(11).status=="true" && square.get(6).status=="true" && square.get(1).status=="true"){
+            if(square.get(11).status==0 && square.get(6).status==0 && square.get(1).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -226,7 +226,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(8).status=="true" && square.get(5).status=="true" && square.get(2).status=="true"){
+            if(square.get(8).status==0 && square.get(5).status==0 && square.get(2).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -236,7 +236,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(12).status=="true" && square.get(9).status=="true" && square.get(6).status=="true"){
+            if(square.get(12).status==0 && square.get(9).status==0 && square.get(6).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -246,7 +246,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(9).status=="true" && square.get(6).status=="true" && square.get(3).status=="true"){
+            if(square.get(9).status==0 && square.get(6).status==0 && square.get(3).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -256,7 +256,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Blue Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(13).status=="true" && square.get(10).status=="true" && square.get(7).status=="true"){
+            if(square.get(13).status==0 && square.get(10).status==0 && square.get(7).status==0){
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -268,7 +268,7 @@ public class EndScreen implements Screen {
             }
         }
         else{
-            if(square.get(12).status=="false" && square.get(13).status=="false" && square.get(14).status=="false"){
+            if(square.get(12).status==1 && square.get(13).status==1 && square.get(14).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -278,7 +278,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(13).status=="false" && square.get(14).status=="false" && square.get(15).status=="false"){
+            if(square.get(13).status==1 && square.get(14).status==1 && square.get(15).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -288,7 +288,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(8).status=="false" && square.get(9).status=="false" && square.get(10).status=="false"){
+            if(square.get(8).status==1 && square.get(9).status==1 && square.get(10).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -298,7 +298,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(9).status=="false" && square.get(10).status=="false" && square.get(11).status=="false"){
+            if(square.get(9).status==1 && square.get(10).status==1 && square.get(11).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -308,7 +308,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(4).status=="false" && square.get(5).status=="false" && square.get(6).status=="false"){
+            if(square.get(4).status==1 && square.get(5).status==1 && square.get(6).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -318,7 +318,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(5).status=="false" && square.get(6).status=="false" && square.get(7).status=="false"){
+            if(square.get(5).status==1 && square.get(6).status==1 && square.get(7).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -328,7 +328,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(0).status=="false" && square.get(1).status=="false" && square.get(2).status=="false"){
+            if(square.get(0).status==1 && square.get(1).status==1 && square.get(2).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -338,7 +338,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(1).status=="false" && square.get(2).status=="false" && square.get(3).status=="false"){
+            if(square.get(1).status==1 && square.get(2).status==1 && square.get(3).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -348,7 +348,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(12).status=="false" && square.get(8).status=="false" && square.get(4).status=="false"){
+            if(square.get(12).status==1 && square.get(8).status==1 && square.get(4).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -358,7 +358,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(8).status=="false" && square.get(4).status=="false" && square.get(0).status=="false"){
+            if(square.get(8).status==1 && square.get(4).status==1 && square.get(0).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -368,7 +368,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(13).status=="false" && square.get(9).status=="false" && square.get(5).status=="false"){
+            if(square.get(13).status==1 && square.get(9).status==1 && square.get(5).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -378,7 +378,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(9).status=="false" && square.get(5).status=="false" && square.get(1).status=="false"){
+            if(square.get(9).status==1 && square.get(5).status==1 && square.get(1).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -388,7 +388,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(14).status=="false" && square.get(10).status=="false" && square.get(6).status=="false"){
+            if(square.get(14).status==1 && square.get(10).status==1 && square.get(6).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -398,7 +398,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(10).status=="false" && square.get(6).status=="false" && square.get(2).status=="false"){
+            if(square.get(10).status==1 && square.get(6).status==1 && square.get(2).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -408,7 +408,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(15).status=="false" && square.get(11).status=="false" && square.get(7).status=="false"){
+            if(square.get(15).status==1 && square.get(11).status==1 && square.get(7).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -418,7 +418,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(11).status=="false" && square.get(7).status=="false" && square.get(3).status=="false"){
+            if(square.get(11).status==1 && square.get(7).status==1 && square.get(3).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -428,7 +428,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(14).status=="false" && square.get(9).status=="false" && square.get(4).status=="false"){
+            if(square.get(14).status==1 && square.get(9).status==1 && square.get(4).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -438,7 +438,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(15).status=="false" && square.get(10).status=="false" && square.get(15).status=="false"){
+            if(square.get(15).status==1 && square.get(10).status==1 && square.get(15).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -448,7 +448,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(10).status=="false" && square.get(5).status=="false" && square.get(0).status=="false"){
+            if(square.get(10).status==1 && square.get(5).status==1 && square.get(0).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -458,7 +458,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(11).status=="false" && square.get(6).status=="false" && square.get(1).status=="false"){
+            if(square.get(11).status==1 && square.get(6).status==1 && square.get(1).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -468,7 +468,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(8).status=="false" && square.get(5).status=="false" && square.get(2).status=="false"){
+            if(square.get(8).status==1 && square.get(5).status==1 && square.get(2).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -478,7 +478,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(12).status=="false" && square.get(9).status=="false" && square.get(6).status=="false"){
+            if(square.get(12).status==1 && square.get(9).status==1 && square.get(6).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -488,7 +488,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(9).status=="false" && square.get(6).status=="false" && square.get(3).status=="false"){
+            if(square.get(9).status==1 && square.get(6).status==1 && square.get(3).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -498,7 +498,7 @@ public class EndScreen implements Screen {
                 game.font.draw(game.batch, "Red Wins ! ",100,250);
                 game.batch.end();       // Fin des éléments à afficher
             }
-            if(square.get(13).status=="false" && square.get(10).status=="false" && square.get(7).status=="false"){
+            if(square.get(13).status==1 && square.get(10).status==1 && square.get(7).status==1){
                 ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
 
                 camera.update();
@@ -544,7 +544,7 @@ public class EndScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        game.dispose();
     }
 }
 
