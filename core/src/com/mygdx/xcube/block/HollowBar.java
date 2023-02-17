@@ -5,11 +5,13 @@ import com.badlogic.gdx.math.Rectangle;
 public class HollowBar extends Block {
     public float rotation;
 
-    public HollowBar(float rotation, float x, float y){
+    public HollowBar(float rotation, int x, int y){
         super(x,y);
         dx=500;
         dy=96;
         rectangle = new Rectangle(x, y, dx, dy);
+
+        this.setSprite("grey_bar.png");
         //La rotation semble assez inutile, il faudra la virer plus tard. Quand tu dessines un
         //sprite avec une certaine rotation (méthode batch.draw()), ça ne modifie pas la hitbox
         //du rectangle. Du coup, on a le sprite qui est tourné de 90° par rapport à la hitbox
@@ -23,15 +25,6 @@ public class HollowBar extends Block {
             dy = 500;
         }
         isSquare=false;
-
     }
-
-    //public HollowBar[] AddNeighbor(HollowBar[] bars) {
-    //    return bars.add(this);
-    //}
-
-
-
-
 
 }

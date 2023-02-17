@@ -16,11 +16,11 @@ public class GameScreen implements Screen {
         final XCube game;
         public static OrthographicCamera camera;
         public static SpriteBatch spriteBatch = new SpriteBatch();
-
-        private Terrain terrain = new Terrain();
+        public static Terrain terrain = new Terrain();
         public static PlayerManager players= new PlayerManager();
         private End end;
         private boolean touchOff = true;
+        private boolean setup= false;
         public GameScreen(final XCube game) {
                 this.game = game;
                 this.end = new End(this.terrain, this.players,this.game,this);
@@ -36,58 +36,49 @@ public class GameScreen implements Screen {
                 ScreenUtils.clear(1,1,1,1);
                 camera.update();
                 spriteBatch.setProjectionMatrix(camera.combined);
-                for(HollowBar b : terrain.getBar()) {
-                        if(b.sprite == null) {                  // Initialise les sprites des blocks
-                                b.sprite = new Sprite(new Texture(Gdx.files.internal("grey_bar.png")));
-                        }
-                        b.drawBlock();                          // Dessine le terrain
 
-                }
-                for(HollowSquare b : terrain.getSquare()) {
-                        if(b.sprite == null) {                  // Initialise les sprites des blocks
-                                b.sprite = new Sprite(new Texture(Gdx.files.internal("grey_square.png")));
-                        }
-                        b.drawBlock();                          // Dessine le terrain
-                }
-                if(Gdx.input.isTouched() && touchOff) {
-                        touchOff = false;
                         for (HollowBar b : terrain.getBar()) {
-                                if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                        b.clickBlock("blue_bar.png");
-                                } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                        b.clickBlock("red_bar.png");
-                                }
+                                b.drawBlock();                          // Dessine le terrain
                         }
                         for (HollowSquare b : terrain.getSquare()) {
-                                if (players.getPlayer()) {
-                                        b.clickSquareBlock("blue_square.png",true,end);
+                                b.drawBlock();                          // Dessine le terrain
+                        }
 
+                        if (Gdx.input.isTouched() && touchOff) {
+                                touchOff = false;
+                                for (HollowBar b : terrain.getBar()) {
+                                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
+                                                b.clickBlock("blue_bar.png", end);
+                                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
+                                                b.clickBlock("red_bar.png", end);
+                                        }
                                 }
-                                else {
-                                        b.clickSquareBlock("red_square.png",false,end);
+                                for (int i=0; i<terrain.getSquare().size; i++) {
+                                        if (players.getPlayer()) {
+                                                terrain.getSquare().get(i).clickBlock("blue_square.png", end);
+                                        } else {
+                                                terrain.getSquare().get(i).clickBlock("red_square.png", end);
+                                        }
                                 }
                         }
-                }
-                if(!Gdx.input.isTouched()) {
-                        touchOff = true;
-                }
+                        if (!Gdx.input.isTouched()) {
+                                touchOff = true;
+                        }
         }
-        public void setBlue(){
-                game.setScreen(new EndScreen(game,true));
+        public void setVictoryScreen(boolean winner){
+                game.setScreen(new EndScreen(game, winner));
+
         }
-        public void setRed(){
-                game.setScreen(new EndScreen(game,false));
+        @Override
+        public void show() {
+
         }
         // Fonctions inutilisées
         @Override
         public void resize(int width, int height) {
         }
 
-        @Override
-        public void show() {
 
-
-        }
 
         @Override
         public void hide() {
