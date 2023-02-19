@@ -38,13 +38,13 @@ public class EndScreen implements Screen {
                 game.batch.end();       // Fin des éléments à afficher
 
             }
-            /*
+
             if (Gdx.input.isTouched()) {
-                game.setScreen(new GameScreen(new XCube()));   // Si l'écran est touché, l'écran passe à GameScreen
-                dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
+                game.dispose();
+                game.create();
             }
 
-             */
+
         }
 
         // Fonctions non utilisées recquises par l'implementation de screen

@@ -24,12 +24,13 @@ public class Block {
     public boolean isSquare;
     public boolean isFree;
     public boolean isBlue;
-    public ArrayList<HollowBar> neighbors = new ArrayList<>();
+    public ArrayList<HollowBar> neighbors;
 
     public Block(int x, int y) {
         this.x = x;
         this.y = y;
         isFree=true;
+        this.neighbors = new ArrayList<>();
     }
     public void setSprite(String texture) {
         this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));

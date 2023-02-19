@@ -15,16 +15,19 @@ import com.mygdx.xcube.block.HollowSquare;
 public class GameScreen implements Screen {
         final XCube game;
         public static OrthographicCamera camera;
-        public static SpriteBatch spriteBatch = new SpriteBatch();
-        public static Terrain terrain = new Terrain();
-        public static PlayerManager players= new PlayerManager();
+        public static SpriteBatch spriteBatch;
+        public static Terrain terrain;
+        public static PlayerManager players;
         private End end;
         private boolean touchOff = true;
         private boolean setup= false;
         public GameScreen(final XCube game) {
                 this.game = game;
+                this.terrain = new Terrain();
+                this.players = new PlayerManager();
                 this.end = new End(this.terrain, this.players,this.game,this);
-                camera = new OrthographicCamera();
+                this.camera = new OrthographicCamera();
+                this.spriteBatch = new SpriteBatch();
                 camera.setToOrtho(false, 3000, 3000);
         }
 
@@ -67,7 +70,6 @@ public class GameScreen implements Screen {
         }
         public void setVictoryScreen(boolean winner){
                 game.setScreen(new EndScreen(game, winner));
-
         }
         @Override
         public void show() {
@@ -94,7 +96,5 @@ public class GameScreen implements Screen {
 
         @Override
         public void dispose() {
-        game.dispose();
-        spriteBatch.dispose();
         }
 }
