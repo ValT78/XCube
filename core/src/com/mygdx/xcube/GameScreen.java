@@ -4,15 +4,11 @@ package com.mygdx.xcube;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.Timer;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 
@@ -22,41 +18,65 @@ public class GameScreen implements Screen {
         public static SpriteBatch spriteBatch;
         public static Terrain terrain;
         public static PlayerManager players;
-        private End end;
+        private final End end;
         private boolean touchOff = true;
-        private boolean setup= false;
-        private long startTime = 10000;
-        private long timeLeft = 0;
+        //private boolean setup= false;
+        private final float startTime = 80;
+        private float timeLeftBlue = startTime;
+        private float timeLeftRed = startTime;
+        private int minutesBlue;
+        private int secondsBlue;
+        private int tenthsBlue;
+        private int minutesRed;
+        private int secondsRed;
+        private int tenthsRed;
         private BitmapFont font;
         public GameScreen(final XCube game) {
                 this.game = game;
-                this.terrain = new Terrain();
-                this.players = new PlayerManager();
-                this.end = new End(this.terrain, this.players,this.game,this);
-                this.camera = new OrthographicCamera();
-                this.spriteBatch = new SpriteBatch();
+                terrain = new Terrain();
+                players = new PlayerManager();
+                this.end = new End(terrain, players,this.game,this);
+                camera = new OrthographicCamera();
+                spriteBatch = new SpriteBatch();
                 camera.setToOrtho(false, 3000, 6150);
         }
 
 
         //render s'éxecute toutes les frames
 
+        @SuppressWarnings("DefaultLocale")
         @Override
         public void render(float delta){
 
                 ScreenUtils.clear(1,1,1,1);
                 camera.update();
                 spriteBatch.setProjectionMatrix(camera.combined);
-                int minutes = (int) (timeLeft / 1000 / 60);
-                int seconds = (int) ((timeLeft / 1000) % 60);
-                int tenths = (int) ((timeLeft / 100) % 10);
-                Gdx.gl.glClearColor(1, 1, 1, 1);
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                if(players.getPlayer()) { //gestion du chronometre bleu
+                        timeLeftBlue-=delta;
+                        minutesBlue = (int) (timeLeftBlue / 60);
+                        secondsBlue = (int) ((timeLeftBlue) % 60);
+                        tenthsBlue = (int) ((timeLeftBlue*10) % 10);
+                        if(timeLeftBlue<0) { //vérifie si le temps bleu n'est pas écoulé
+                                setVictoryScreen(false);
+                        }
+                }
+                else { //gestion du chronometre rouge
+                        timeLeftRed-=delta;
+                        minutesRed = (int) (timeLeftRed/ 60);
+                        secondsRed = (int) ((timeLeftRed) % 60);
+                        tenthsRed = (int) ((timeLeftRed*10) % 10);
+                        if(timeLeftRed<0) { //vérifie que le temps rouge n'est pas écoulé
+                                setVictoryScreen(true);
+                        }
+                }
+                //Affichage des 2 chronomètres rouge et bleu
                 spriteBatch.begin();
-                String str =Integer.toString(minutes) + Integer.toString(seconds) + Integer.toString(tenths);
-                game.font.draw(spriteBatch, "ijio", 1000, 2000);
+                font.setColor(Color.BLUE); // Police bleue pour le premier chronomètre
+                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), 1500, 5000);
+                font.setColor(Color.RED); // Police rouge pour le deuxième chronomètre
+                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), 1500, 1000);
                 spriteBatch.end();
-
+                // Affichage du terrain
                         for (HollowBar b : terrain.getBar()) {
                                 b.drawBlock();                          // Dessine le terrain
                         }
@@ -94,16 +114,22 @@ public class GameScreen implements Screen {
         public void show() {
                 // Initialisation de la police d'écriture
                 font = new BitmapFont();
-
+                font.getData().setScale(20); // Augmente l'échelle de la police d'écriture
+                minutesBlue = (int) (timeLeftBlue/ 60);
+                secondsBlue = (int) ((timeLeftBlue) % 60);
+                tenthsBlue = (int) ((timeLeftBlue*10) % 10);
+                minutesRed = (int) (timeLeftRed/ 60);
+                secondsRed = (int) ((timeLeftRed) % 60);
+                tenthsRed = (int) ((timeLeftRed*10) % 10);
                 // Définition du temps de départ et du temps restant (10 secondes)
-                startTime = TimeUtils.millis();
+                /*startTime = TimeUtils.millis();
                 Timer.schedule(new Timer.Task() {
                         @Override
                         public void run() {
                                 long elapsedTime = TimeUtils.timeSinceMillis(startTime);
-                                timeLeft = Math.max(0, 10000 - elapsedTime);
+                                timeLeft = Math.max(0, 120000 - elapsedTime);
                         }
-                }, 0, 0.1f);
+                }, 0, 0.1f);*/
         }
         // Fonctions inutilisées
         @Override
