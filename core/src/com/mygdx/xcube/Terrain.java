@@ -11,7 +11,7 @@ public class Terrain {
     private final Array<HollowSquare> square;
     private final int spaceBlock = 600;
     private final int originX = 300;
-    private final int originY = 300;
+    private final int originY = 1500;
 
 
     public Terrain() {

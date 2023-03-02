@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Xcube");
 		config.useVsync(true);
-		config.setWindowedMode(800,800);
+		config.setWindowedMode(800,1644);
 		new Lwjgl3Application(new XCube(), config);
 	}
 }
