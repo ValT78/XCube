@@ -3,6 +3,7 @@ package com.mygdx.xcube;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.xcube.block.Block;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 
@@ -13,10 +14,16 @@ public class Terrain {
     private final int originX = 300;
     private final int originY = 1500;
 
+    private Array<Block> lastPlay;
+
 
     public Terrain() {
         this.bar = generateBar();           // Stock la liste des barres
         this.square=generateSquare();       // Stock la liste de carrés
+        this.lastPlay=new Array<>();
+    }
+    public Array<Block> getLastPlay() {
+        return lastPlay;
     }
 
     public Array<HollowBar> getBar() {

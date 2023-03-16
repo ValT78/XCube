@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
-public class HollowSquare extends Block{
+public class HollowSquare extends Block {
     public HollowSquare[] vertical; //contient les blocs en haut et en bas de ce bloc
     public HollowSquare[] horizontal;
     public HollowSquare[] diagonal;

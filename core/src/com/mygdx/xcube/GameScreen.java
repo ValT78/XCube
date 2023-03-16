@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 
@@ -16,12 +18,13 @@ public class GameScreen implements Screen {
         final XCube game;
         public static OrthographicCamera camera;
         public static SpriteBatch spriteBatch;
+        Viewport viewport = new FitViewport(800,480);
         public static Terrain terrain;
         public static PlayerManager players;
         private final End end;
         private boolean touchOff = true;
         //private boolean setup= false;
-        private final float startTime = 80;
+        private final float startTime = 180;
         private float timeLeftBlue = startTime;
         private float timeLeftRed = startTime;
         private int minutesBlue;
@@ -39,6 +42,7 @@ public class GameScreen implements Screen {
                 camera = new OrthographicCamera();
                 spriteBatch = new SpriteBatch();
                 camera.setToOrtho(false, 3000, 6150);
+
         }
 
 
@@ -76,28 +80,26 @@ public class GameScreen implements Screen {
                 font.setColor(Color.RED); // Police rouge pour le deuxième chronomètre
                 font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), 1500, 1000);
                 spriteBatch.end();
-                // Affichage du terrain
-                        for (HollowBar b : terrain.getBar()) {
-                                b.drawBlock();                          // Dessine le terrain
-                        }
-                        for (HollowSquare b : terrain.getSquare()) {
-                                b.drawBlock();                          // Dessine le terrain
-                        }
-
+                for (HollowBar b : terrain.getBar()) {
+                        b.drawBlock();                         // Dessine le terrain
+                }
+                for (HollowSquare b : terrain.getSquare()) {
+                        b.drawBlock();                         // Dessine le terrain
+                }
                         if (Gdx.input.isTouched() && touchOff) {
                                 touchOff = false;
                                 for (HollowBar b : terrain.getBar()) {
                                         if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("blue_bar.png", end);
+                                                b.clickBlock("blue_bar_previous.png", end);
                                         } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("red_bar.png", end);
+                                                b.clickBlock("red_bar_previous.png", end);
                                         }
                                 }
                                 for (int i=0; i<terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("blue_square.png", end);
+                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("red_square.png", end);
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
                                         }
                                 }
                         }
@@ -112,6 +114,8 @@ public class GameScreen implements Screen {
         }
         @Override
         public void show() {
+
+
                 // Initialisation de la police d'écriture
                 font = new BitmapFont();
                 font.getData().setScale(20); // Augmente l'échelle de la police d'écriture

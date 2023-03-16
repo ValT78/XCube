@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.xcube.End;
 import com.mygdx.xcube.GameScreen;
 import com.mygdx.xcube.PlayerManager;
+import com.mygdx.xcube.Terrain;
 
 import java.util.ArrayList;
 
@@ -45,18 +46,40 @@ public class Block {
         camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
         if(this.rectangle.contains(touchPos.x, touchPos.y) && this.isClickable()){ // On test si l'endroit touché est un rectangle et s'il est libre
             isFree=false;
-            if(players.getPlayer()) {
-                isBlue=true;
-            }
-            else {
-                isBlue=false;
-            }
+            isBlue=players.getPlayer();
             this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
             this.drawBlock();
             if(this.isSquare) { //vérifie si une condition de victoire est remplie
                 end.checkAlign(GameScreen.players.getPlayer(), end);
             }
+
+            GameScreen.terrain.getLastPlay().add(this);
             PlayerManager.setCoup(GameScreen.players);
+            if(GameScreen.players.getCoup() && GameScreen.terrain.getLastPlay().size >= 3) {
+                for (int i = 0; i < 2; i++) {
+                    if (players.getPlayer()) {
+                        if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_cross.png");
+                        }
+                        else {
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_bar.png");
+                        }
+                    }
+
+                    else {
+                        if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_cross.png");
+                        }
+                        else {
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_bar.png");
+                        }
+                    }
+                GameScreen.terrain.getLastPlay().removeIndex(0);
+                }
+
+
+
+            }
         }
 
 

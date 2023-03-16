@@ -3,11 +3,15 @@ package com.mygdx.xcube;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenuScreen implements Screen {
     final XCube game;
-
+    Viewport viewport = new ExtendViewport(800, 480);
+    Stage stage = new Stage(viewport);
     OrthographicCamera camera;
 
     public MainMenuScreen(final XCube game){
