@@ -1,8 +1,10 @@
 package com.mygdx.xcube;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -16,8 +18,9 @@ import io.socket.client.IO;
 import io.socket.emitter.Emitter;
 
 public class Multiplayer implements Screen {
-    private Socket socket;
+    private static Socket socket;
     final XCube game;
+    private GameScreen gamescreen;
     Viewport viewport = new ExtendViewport(800, 480);
     Stage stage = new Stage(viewport);
     OrthographicCamera camera;
@@ -25,6 +28,7 @@ public class Multiplayer implements Screen {
     public Multiplayer(XCube game){
         connectSocket();
         this.game = game;
+         this.gamescreen = new GameScreen(game,true);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
         configSocketEvents();
@@ -52,10 +56,26 @@ public class Multiplayer implements Screen {
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
                 try {
-                    String id = data.getString("id");
-                    Gdx.app.log("SocketIO", "New Player Connect: " + id);
+                    String playerId = data.getString("id");
+                    Gdx.app.log("SocketIO", "New Player Connect: " + playerId);
                 } catch(JSONException e){
                     Gdx.app.log("SocketIO", "Error getting New Player ID ID");
+                }
+            }
+        }).on("playerPlayed", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONObject data = (JSONObject) args[0];
+                try {
+                    String playerID = data.getString("id");
+                    double x = data.getDouble("x");
+                    double y = data.getDouble("y");
+                    Vector3 touchPos = new Vector3();
+                    touchPos.x = (float) x;
+                    touchPos.y = (float) y;
+                    gamescreen.update(touchPos);
+                } catch(JSONException e){
+
                 }
             }
         });
@@ -66,6 +86,17 @@ public class Multiplayer implements Screen {
             socket.connect();
         } catch(Exception e){
             System.out.println(e);
+        }
+    }
+
+    public static void send(Vector3 vector){
+        JSONObject data = new JSONObject();
+        try{
+            data.put("x", vector.x);
+            data.put("y", vector.y);
+            socket.emit("playerPlayed", data);
+        } catch (JSONException e){
+            Gdx.app.log("SOCKET.IO", "Error sending update data");
         }
     }
 
@@ -87,7 +118,7 @@ public class Multiplayer implements Screen {
         game.batch.end();       // Fin des éléments à afficher
 
         if (Gdx.input.isTouched()){
-            game.setScreen(new GameScreen(game));   // Si l'écran est touché, l'écran passe à GameScreen
+            game.setScreen(gamescreen);   // Si l'écran est touché, l'écran passe à GameScreen
             dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
         }
     }
