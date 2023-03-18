@@ -47,6 +47,17 @@ public class Multiplayer implements Screen {
                     Gdx.app.log("SocketIO", "Error getting ID");
                 }
             }
+        }).on("newPlayer", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONObject data = (JSONObject) args[0];
+                try {
+                    String id = data.getString("id");
+                    Gdx.app.log("SocketIO", "New Player Connect: " + id);
+                } catch(JSONException e){
+                    Gdx.app.log("SocketIO", "Error getting New Player ID ID");
+                }
+            }
         });
     }
     public void connectSocket(){
