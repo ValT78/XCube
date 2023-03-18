@@ -8,8 +8,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.socket.client.Socket;
 import io.socket.client.IO;
+import io.socket.emitter.Emitter;
 
 public class Multiplayer implements Screen {
     private Socket socket;
@@ -23,8 +27,28 @@ public class Multiplayer implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
+        configSocketEvents();
     }
 
+    public void configSocketEvents(){
+        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Gdx.app.log("SocketIO","Connected");
+            }
+        }).on("socketID", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONObject data = (JSONObject) args[0];
+                try {
+                    String id = data.getString("id");
+                    Gdx.app.log("SocketIO", "My ID: " + id);
+                } catch(JSONException e){
+                    Gdx.app.log("SocketIO", "Error getting ID");
+                }
+            }
+        });
+    }
     public void connectSocket(){
         try{
             socket= IO.socket("http://localhost:8080");
