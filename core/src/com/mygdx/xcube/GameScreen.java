@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -34,7 +35,9 @@ public class GameScreen implements Screen {
         private int secondsRed;
         private int tenthsRed;
         private BitmapFont font;
-        public GameScreen(final XCube game) {
+        private static Boolean multiplayer;
+        private Vector3 touchPos = new Vector3();
+        public GameScreen(final XCube game,Boolean multi) {
                 this.game = game;
                 terrain = new Terrain();
                 players = new PlayerManager();
@@ -42,13 +45,14 @@ public class GameScreen implements Screen {
                 camera = new OrthographicCamera();
                 spriteBatch = new SpriteBatch();
                 camera.setToOrtho(false, 3000, 6150);
-
+                this.multiplayer = multi;
         }
 
 
         //render s'éxecute toutes les frames
 
         @SuppressWarnings("DefaultLocale")
+
         @Override
         public void render(float delta){
 
@@ -86,28 +90,70 @@ public class GameScreen implements Screen {
                 for (HollowSquare b : terrain.getSquare()) {
                         b.drawBlock();                         // Dessine le terrain
                 }
+
+                if(!multiplayer) {
                         if (Gdx.input.isTouched() && touchOff) {
                                 touchOff = false;
                                 for (HollowBar b : terrain.getBar()) {
                                         if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                                 b.clickBlock("blue_bar_previous.png", end);
+
                                         } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
                                                 b.clickBlock("red_bar_previous.png", end);
+
                                         }
                                 }
-                                for (int i=0; i<terrain.getSquare().size; i++) {
+                                for (int i = 0; i < terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
                                                 terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
+                                                }
                                         }
                                 }
                         }
+                else{
+                                for (HollowBar b : terrain.getBar()) {
+                                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
+                                                if(Gdx.input.isTouched() && touchOff) {
+                                                        b.clickBlock("blue_bar_previous.png", end);
+                                                }
+                                                b.clickBlock("blue_bar_previous.png", end, touchPos);
+
+                                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
+                                                if(Gdx.input.isTouched() && touchOff) {
+                                                        b.clickBlock("red_bar_previous.png", end);
+                                                }
+                                                b.clickBlock("red_bar_previous.png", end, touchPos);
+
+                                        }
+                                }
+                                for (int i = 0; i < terrain.getSquare().size; i++) {
+                                        if (players.getPlayer()) {
+                                                if(Gdx.input.isTouched() && touchOff) {
+                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                }
+                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end, touchPos);
+
+                                        } else {
+                                                if(Gdx.input.isTouched() && touchOff) {
+                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
+                                                }
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
+                                        }
+                                }
+                        }
+
                         if (!Gdx.input.isTouched()) {
                                 touchOff = true;
+
                         }
 
 
+        }
+        public void setTouchPos(Vector3 touchPos){
+                this.touchPos = touchPos;
         }
         public void setVictoryScreen(boolean winner){
                 game.setScreen(new EndScreen(game, winner));
@@ -134,6 +180,10 @@ public class GameScreen implements Screen {
                                 timeLeft = Math.max(0, 120000 - elapsedTime);
                         }
                 }, 0, 0.1f);*/
+        }
+
+        static public Boolean getMultiplayer(){
+                return multiplayer;
         }
         // Fonctions inutilisées
         @Override

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 
 public class MainMenuScreen implements Screen {
     final XCube game;
@@ -33,7 +34,7 @@ public class MainMenuScreen implements Screen {
         game.batch.end();       // Fin des éléments à afficher
 
         if (Gdx.input.isTouched()){
-            game.setScreen(new GameScreen(game));   // Si l'écran est touché, l'écran passe à GameScreen
+            game.setScreen(new Multiplayer(game));   // Si l'écran est touché, l'écran passe à GameScreen
             dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
         }
     }
