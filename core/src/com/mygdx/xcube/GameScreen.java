@@ -98,6 +98,7 @@ public class GameScreen implements Screen {
                                                         b.clickBlock("blue_bar_previous.png", end);
                                                 }
                                                 else{
+                                                        b.clickBlock("blue_bar_previous.png", end);
                                                         b.clickBlock("blue_bar_previous.png", end, touchPos);
                                                 }
                                         } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
@@ -105,6 +106,7 @@ public class GameScreen implements Screen {
                                                         b.clickBlock("red_bar_previous.png", end);
                                                 }
                                                 else{
+                                                        b.clickBlock("red_bar_previous.png", end);
                                                         b.clickBlock("red_bar_previous.png", end, touchPos);
                                                 }
                                         }
@@ -116,12 +118,14 @@ public class GameScreen implements Screen {
                                                 }
                                                 else{
                                                         terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
                                                 }
                                         } else {
                                                 if(!multiplayer) {
                                                         terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
                                                 }
                                                 else{
+                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
                                                         terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
                                                 }
                                         }
