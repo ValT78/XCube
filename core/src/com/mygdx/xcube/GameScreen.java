@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
         private int tenthsRed;
         private BitmapFont font;
         private static Boolean multiplayer;
+        private Vector3 touchPos = new Vector3();
         public GameScreen(final XCube game,Boolean multi) {
                 this.game = game;
                 terrain = new Terrain();
@@ -93,16 +94,36 @@ public class GameScreen implements Screen {
                                 touchOff = false;
                                 for (HollowBar b : terrain.getBar()) {
                                         if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("blue_bar_previous.png", end);
+                                                if(!multiplayer) {
+                                                        b.clickBlock("blue_bar_previous.png", end);
+                                                }
+                                                else{
+                                                        b.clickBlock("blue_bar_previous.png", end, touchPos);
+                                                }
                                         } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("red_bar_previous.png", end);
+                                                if(!multiplayer) {
+                                                        b.clickBlock("red_bar_previous.png", end);
+                                                }
+                                                else{
+                                                        b.clickBlock("red_bar_previous.png", end, touchPos);
+                                                }
                                         }
                                 }
                                 for (int i=0; i<terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                if(!multiplayer) {
+                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                }
+                                                else{
+                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                }
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
+                                                if(!multiplayer) {
+                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
+                                                }
+                                                else{
+                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
+                                                }
                                         }
                                 }
                         }
@@ -113,22 +134,8 @@ public class GameScreen implements Screen {
 
 
         }
-
-        public void update(Vector3 touchPos){
-                for (HollowBar b : terrain.getBar()) {
-                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                b.clickBlock("blue_bar_previous.png", end, touchPos);
-                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                b.clickBlock("red_bar_previous.png", end, touchPos);
-                        }
-                }
-                for (int i=0; i<terrain.getSquare().size; i++) {
-                        if (players.getPlayer()) {
-                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
-                        } else {
-                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
-                        }
-                }
+        public void setTouchPos(Vector3 touchPos){
+                this.touchPos = touchPos;
         }
         public void setVictoryScreen(boolean winner){
                 game.setScreen(new EndScreen(game, winner));

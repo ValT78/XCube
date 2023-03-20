@@ -28,7 +28,7 @@ public class Multiplayer implements Screen {
     public Multiplayer(XCube game){
         connectSocket();
         this.game = game;
-         this.gamescreen = new GameScreen(game,true);
+        this.gamescreen = new GameScreen(game,true);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
         configSocketEvents();
@@ -73,7 +73,7 @@ public class Multiplayer implements Screen {
                     Vector3 touchPos = new Vector3();
                     touchPos.x = (float) x;
                     touchPos.y = (float) y;
-                    gamescreen.update(touchPos);
+                    gamescreen.setTouchPos(touchPos);
                 } catch(JSONException e){
 
                 }
