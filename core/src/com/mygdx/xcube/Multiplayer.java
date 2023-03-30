@@ -109,6 +109,10 @@ public class Multiplayer implements Screen {
         }
     }
 
+    public static void disconnected(){
+        socket.emit("Disconnect");
+    }
+
     @Override
     public void show() {
 
@@ -122,13 +126,13 @@ public class Multiplayer implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();     // Début des éléments à afficher
-        game.font.draw(game.batch, "Welcome Pipopipette ! ",100,250);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 200);
+        game.font.draw(game.batch, "Waiting for another player ",100,250);
         game.batch.end();       // Fin des éléments à afficher
 
         if(duel){
             game.setScreen(gamescreen);
             dispose();
+            duel=false;
         }
     }
 

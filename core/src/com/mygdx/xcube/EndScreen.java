@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class EndScreen implements Screen {
     final XCube game;
-
+    float inputTime = 0;
     OrthographicCamera camera;
     boolean player;
     public EndScreen(final XCube game,boolean player){
@@ -18,7 +18,7 @@ public class EndScreen implements Screen {
         }
 
         public void render(float delta){            // Boucle infinie d'exécution
-
+            inputTime += delta;
             if(player) {
                 ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
                 camera.update();
@@ -39,11 +39,10 @@ public class EndScreen implements Screen {
 
             }
 
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.isTouched() && inputTime>0.2f) {
                 game.dispose();
                 game.create();
             }
-
 
         }
 
