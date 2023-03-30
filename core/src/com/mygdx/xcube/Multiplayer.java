@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.swing.text.StyledEditorKit;
+
 import io.socket.client.Socket;
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
@@ -21,6 +23,7 @@ public class Multiplayer implements Screen {
     private static Socket socket;
     final XCube game;
     private GameScreen gamescreen;
+    private boolean duel;
     Viewport viewport = new ExtendViewport(800, 480);
     Stage stage = new Stage(viewport);
     OrthographicCamera camera;
@@ -78,6 +81,12 @@ public class Multiplayer implements Screen {
 
                 }
             }
+        }).on("twoPlayers", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Gdx.app.log("SocketIO","Okay it's working");
+                duel=true;
+            }
         });
     }
     public void connectSocket(){
@@ -117,9 +126,9 @@ public class Multiplayer implements Screen {
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 200);
         game.batch.end();       // Fin des éléments à afficher
 
-        if (Gdx.input.isTouched()){
-            game.setScreen(gamescreen);   // Si l'écran est touché, l'écran passe à GameScreen
-            dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
+        if(duel){
+            game.setScreen(gamescreen);
+            dispose();
         }
     }
 

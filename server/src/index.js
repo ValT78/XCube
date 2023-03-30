@@ -26,6 +26,13 @@ io.on('connection', function(socket){
         }
     });
     players.push(new player(socket.id, 0, 0));
+
+    if(players.length>1){
+            console.log("Game will start");
+            socket.broadcast.emit('twoPlayers');
+            socket.emit('twoPlayers');
+    }
+
 });
 
 function player(id, x, y){
