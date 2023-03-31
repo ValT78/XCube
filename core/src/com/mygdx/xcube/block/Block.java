@@ -1,5 +1,6 @@
 package com.mygdx.xcube.block;
 
+import static com.badlogic.gdx.math.MathUtils.round;
 import static com.mygdx.xcube.GameScreen.camera;
 import static com.mygdx.xcube.GameScreen.players;
 
@@ -96,7 +97,6 @@ public class Block {
             }
         }
 
-
     }
     /*public void clickSquareBlock(String texture, boolean player, End end) {
         //rectangle.contains permet de savoir si le point que l'on indique appartient au rectangle
@@ -184,7 +184,6 @@ public class Block {
         }
         return clickable;
     }
-
 
 
 }
