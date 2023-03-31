@@ -36,7 +36,7 @@ io.on('connection', function(socket){
                 }
             }
         });
-    players.push(new player(socket.id, 0, 0));
+    players.push(new player(socket.id));
 
     if(players.length>1){
             sleep(300);
@@ -47,10 +47,8 @@ io.on('connection', function(socket){
 
 });
 
-function player(id, x, y){
+function player(id){
     this.id= id;
-    this.x = x;
-    this.y = y;
 }
 function sleep(milliseconds) {
   const date = Date.now();

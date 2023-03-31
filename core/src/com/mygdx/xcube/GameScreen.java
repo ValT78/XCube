@@ -114,7 +114,7 @@ public class GameScreen implements Screen {
                                                 terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
 
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
                                                 }
                                         }
                                 }
@@ -162,7 +162,9 @@ public class GameScreen implements Screen {
                 this.touchPos = touchPos;
         }
         public void setVictoryScreen(boolean winner){
-                Multiplayer.disconnected();
+                if(multiplayer) {
+                        Multiplayer.disconnected();
+                }
                 game.setScreen(new EndScreen(game, winner));
         }
         @Override
