@@ -162,7 +162,9 @@ public class GameScreen implements Screen {
                 this.touchPos = touchPos;
         }
         public void setVictoryScreen(boolean winner){
-                Multiplayer.disconnected();
+                if(multiplayer) {
+                        Multiplayer.disconnected();
+                }
                 game.setScreen(new EndScreen(game, winner));
         }
         @Override

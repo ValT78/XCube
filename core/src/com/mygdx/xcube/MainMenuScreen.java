@@ -22,8 +22,15 @@ import com.sun.org.apache.xpath.internal.operations.Mult;
 public class MainMenuScreen implements Screen {
     final XCube game;
     private Sprite sprite = new Sprite(new Texture(Gdx.files.internal("grey_bar.png")));
-    private SpriteBatch spriteBatch = new SpriteBatch();
     private Rectangle local;
+    private int lx;
+    private int ly;
+    private int ldx;
+    private int ldy;
+    private int mx;
+    private int my;
+    private int mdx;
+    private int mdy;
     private Rectangle multiplayer;
     Viewport viewport = new ExtendViewport(800, 480);
     float inputTime = 0;
@@ -31,8 +38,18 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(final XCube game){
     this.game = game;
-    local = new Rectangle(200,200,200,80);
-    multiplayer = new Rectangle(200,500,200,80);
+
+    //Valeurs modifiable selon le menu désiré
+    this.ly = 200;
+    this.ldx = 200;
+    this.ldy = 40;
+    this.lx = 400-(ldx/2);
+    this.my = 300;
+    this.mdx = 200;
+    this.mx = 400-(mdx/2);
+    this.mdy = 40;
+    local = new Rectangle(lx,ly,ldx,ldy);
+    multiplayer = new Rectangle(mx,my,mdx,mdy);
     camera = new OrthographicCamera();
         camera.setToOrtho(false,800,822);
 }
@@ -44,10 +61,10 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();     // Début des éléments à afficher
-        game.batch.draw(sprite,200,200,0,0,200,80,1,1,0);
-        game.batch.draw(sprite,200,500,0,0,200,80,1,1,0);
-        game.font.draw(game.batch, "Local",200,240);
-        game.font.draw(game.batch, "Multiplayer", 200, 550);
+        game.batch.draw(sprite,lx,ly,0,0,ldx,ldy,1,1,0);
+        game.batch.draw(sprite,mx,my,0,0,mdx,mdy,1,1,0);
+        game.font.draw(game.batch, "Local",lx+(ldx/4),ly+(ldy/2));
+        game.font.draw(game.batch, "Multiplayer", mx+(mdx/4), my+(mdy/2));
         game.batch.end();       // Fin des éléments à afficher
 
         if (Gdx.input.isTouched() && inputTime>0.2f){
