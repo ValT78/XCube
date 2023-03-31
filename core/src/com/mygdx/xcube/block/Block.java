@@ -33,9 +33,19 @@ public class Block {
         this.y = y;
         isFree=true;
         this.neighbors = new ArrayList<>();
+
     }
     public void setSprite(String texture) {
         this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
+    }
+    public Sprite getSprite() {
+        return this.sprite;
+    }
+
+    public int[] getSize() {
+        int[] tab = {dx,dy};
+
+        return tab;
     }
 
     public void clickBlock(String texture, End end) {
