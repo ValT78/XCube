@@ -10,14 +10,22 @@ import com.mygdx.xcube.block.HollowSquare;
 public class Terrain {
     private final Array<HollowBar> bar;
     private final Array<HollowSquare> square;
-    private final int spaceBlock = 600;
-    private final int originX = 300;
-    private final int originY = 1500;
-
+    private int spaceBlock;
+    private int unitX;
+    private int unitY;
+    private int unitSquare;
+    private int originX;
+    private int originY;
     private Array<Block> lastPlay;
 
 
     public Terrain() {
+        this.unitSquare = new HollowSquare(0,0).getSize()[0];
+        this.unitX = new HollowBar(false,0,0).getSize()[0];
+        this.unitY = new HollowBar(false,0,0).getSize()[1];
+        this.spaceBlock=unitX + unitY;
+        this.originX = unitY;
+        this.originY = (6*unitY + 5*unitX)/2;
         this.bar = generateBar();           // Stock la liste des barres
         this.square=generateSquare();       // Stock la liste de carrés
         this.lastPlay=new Array<>();
@@ -35,41 +43,41 @@ public class Terrain {
     public Array<HollowBar>  generateBar() {
 
         Array<HollowBar> bar = new Array<>();
-        int x = originX;
-        int y = originY-100;
+        int x = originX + unitX;
+        int y = originY;
 
         for(int i=0; i<5; i++){
             for(int k=0; k<4; k++ ){
-                HollowBar b= new HollowBar(0,x,y);
+                HollowBar b= new HollowBar(true,x,y);
                 x += spaceBlock;
                 bar.add(b);
             }
-            x = originX;
+            x = originX + unitX;
             y += spaceBlock;
 
         }
 
-        x = originX-100;
-        y = originY;
+        x = originX;
+        y = originY + unitX;
 
         for(int i=0; i<4; i++) {
             for (int k = 0; k < 5; k++) {
-                HollowBar b = new HollowBar(90,x,y);
+                HollowBar b = new HollowBar(false,x,y);
 
                 bar.add(b);
 
                 x += spaceBlock;
             }
-            x = originX-100;
+            x = originX;
             y += spaceBlock;
         }
         return bar;
     }
     public Array<HollowSquare> generateSquare() { //construit une grille de carré et leur attribut les barres qui les entourent
-
         Array<HollowSquare> block = new Array<>();
-        int x = originX+50;
-        int y = originY+50;
+
+        int x = originX+unitX+unitY/2-unitSquare/2;
+        int y = originY+unitX+unitY/2-unitSquare/2;
 
         for(int i=0; i<4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -81,7 +89,7 @@ public class Terrain {
                 block.add(square1);
                 x += spaceBlock;
             }
-            x = originX+50;
+            x = originX+unitX+unitY/2-unitSquare/2;
             y += spaceBlock;
         }
         for (int i = 0; i<block.size; i++) {
