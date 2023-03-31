@@ -34,6 +34,11 @@ public class GameScreen implements Screen {
         private int secondsRed;
         private int tenthsRed;
         private BitmapFont font;
+        private int unitSquare = new HollowSquare(0,0).getSize()[0];
+        private int unitX = new HollowBar(false,0,0).getSize()[0];
+        private int unitY = new HollowBar(false,0,0).getSize()[1];
+
+
         public GameScreen(final XCube game) {
                 this.game = game;
                 terrain = new Terrain();
@@ -41,7 +46,7 @@ public class GameScreen implements Screen {
                 this.end = new End(terrain, players,this.game,this);
                 camera = new OrthographicCamera();
                 spriteBatch = new SpriteBatch();
-                camera.setToOrtho(false, 3000, 6150);
+                camera.setToOrtho(false, 6*unitY + 5*unitX, 2*(6*unitY + 5*unitX));
 
         }
 
@@ -76,9 +81,9 @@ public class GameScreen implements Screen {
                 //Affichage des 2 chronomètres rouge et bleu
                 spriteBatch.begin();
                 font.setColor(Color.BLUE); // Police bleue pour le premier chronomètre
-                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), 1500, 5000);
+                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 font.setColor(Color.RED); // Police rouge pour le deuxième chronomètre
-                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), 1500, 1000);
+                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), unitY, (6*unitY + 5*unitX)/4);
                 spriteBatch.end();
                 for (HollowBar b : terrain.getBar()) {
                         b.drawBlock();                         // Dessine le terrain

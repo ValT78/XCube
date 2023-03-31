@@ -18,7 +18,7 @@ public class MainMenuScreen implements Screen {
     this.game = game;
 
     camera = new OrthographicCamera();
-        camera.setToOrtho(false,400,822);
+        camera.setToOrtho(false,800,822);
 }
 
     public void render(float delta){            // Boucle infinie d'exécution

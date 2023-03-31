@@ -1,5 +1,8 @@
 package com.mygdx.xcube.block;
 
+import static com.badlogic.gdx.math.MathUtils.round;
+import static com.sun.jmx.mbeanserver.Util.cast;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -16,19 +19,19 @@ public class HollowSquare extends Block {
     public boolean isAntidiagonal;
     public HollowSquare(int x, int y) {
         super(x,y);
+        this.setSprite("square_holder.png");
         this.vertical=new HollowSquare[2];
         this.horizontal= new HollowSquare[2];
         this.diagonal = new HollowSquare[2];
         this.antidiagonal = new HollowSquare[2];
-        dx=400;
-        dy=400;
+        dx=round(this.getSprite().getWidth());
+        dy=round(this.getSprite().getHeight());
         rectangle = new Rectangle(x, y, dx, dy);
         isSquare=true;
         isHorizontal=true;
         isVertical=true;
         isDiagonal=true;
         isAntidiagonal=true;
-        this.setSprite("grey_square.png");
 
     }
     public int[] getCoords() {
