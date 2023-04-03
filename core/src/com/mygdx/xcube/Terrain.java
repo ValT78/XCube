@@ -1,9 +1,7 @@
 package com.mygdx.xcube;
 
-import com.badlogic.gdx.math.Vector;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.xcube.block.Block;
+import com.mygdx.xcube.block.TerrainBlock;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 
@@ -16,7 +14,7 @@ public class Terrain {
     private int unitSquare;
     private int originX;
     private int originY;
-    private Array<Block> lastPlay;
+    private Array<TerrainBlock> lastPlay;
 
 
     public Terrain() {
@@ -30,7 +28,7 @@ public class Terrain {
         this.square=generateSquare();       // Stock la liste de carrés
         this.lastPlay=new Array<>();
     }
-    public Array<Block> getLastPlay() {
+    public Array<TerrainBlock> getLastPlay() {
         return lastPlay;
     }
 

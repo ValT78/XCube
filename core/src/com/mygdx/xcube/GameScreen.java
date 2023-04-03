@@ -7,19 +7,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 
 public class GameScreen implements Screen {
         final XCube game;
         public static OrthographicCamera camera;
-        public static SpriteBatch spriteBatch;
-        Viewport viewport = new FitViewport(800,480);
+        //Viewport viewport = new FitViewport(800,480);
         public static Terrain terrain;
         public static PlayerManager players;
         private final End end;
@@ -37,9 +33,9 @@ public class GameScreen implements Screen {
         private BitmapFont font;
         private static Boolean multiplayer;
         private Vector3 touchPos = new Vector3();
-        private int unitSquare = new HollowSquare(0,0).getSize()[0];
-        private int unitX = new HollowBar(false,0,0).getSize()[0];
-        private int unitY = new HollowBar(false,0,0).getSize()[1];
+        //private final int unitSquare = new HollowSquare(0,0).getSize()[0];
+        private final int unitX = new HollowBar(false,0,0).getSize()[0];
+        private final int unitY = new HollowBar(false,0,0).getSize()[1];
 
 
         public GameScreen(final XCube game,Boolean multi) {
@@ -48,7 +44,6 @@ public class GameScreen implements Screen {
                 players = new PlayerManager();
                 this.end = new End(terrain, players,this.game,this);
                 camera = new OrthographicCamera();
-                spriteBatch = new SpriteBatch();
                 this.multiplayer = multi;
                 camera.setToOrtho(false, 6*unitY + 5*unitX, 2*(6*unitY + 5*unitX));
 
@@ -64,7 +59,7 @@ public class GameScreen implements Screen {
 
                 ScreenUtils.clear(1,1,1,1);
                 camera.update();
-                spriteBatch.setProjectionMatrix(camera.combined);
+                game.batch.setProjectionMatrix(camera.combined);
                 if(players.getPlayer()) { //gestion du chronometre bleu
                         timeLeftBlue-=delta;
                         minutesBlue = (int) (timeLeftBlue / 60);
@@ -84,17 +79,17 @@ public class GameScreen implements Screen {
                         }
                 }
                 //Affichage des 2 chronomètres rouge et bleu
-                spriteBatch.begin();
+                game.batch.begin();
                 font.setColor(Color.BLUE); // Police bleue pour le premier chronomètre
-                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
+                font.draw(game.batch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 font.setColor(Color.RED); // Police rouge pour le deuxième chronomètre
-                font.draw(spriteBatch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), unitY, (6*unitY + 5*unitX)/4);
-                spriteBatch.end();
+                font.draw(game.batch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), unitY, (6*unitY + 5*unitX)/4);
+                game.batch.end();
                 for (HollowBar b : terrain.getBar()) {
-                        b.drawBlock();                         // Dessine le terrain
+                        b.drawBlock(game.batch);                         // Dessine le terrain
                 }
                 for (HollowSquare b : terrain.getSquare()) {
-                        b.drawBlock();                         // Dessine le terrain
+                        b.drawBlock(game.batch);                         // Dessine le terrain
                 }
 
                 if(!multiplayer) {
@@ -102,19 +97,19 @@ public class GameScreen implements Screen {
                                 touchOff = false;
                                 for (HollowBar b : terrain.getBar()) {
                                         if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("blue_bar_previous.png", end);
+                                                b.clickBlock("blue_bar_previous.png",game.batch, end);
 
                                         } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("red_bar_previous.png", end);
+                                                b.clickBlock("red_bar_previous.png", game.batch,end);
 
                                         }
                                 }
                                 for (int i = 0; i < terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end);
 
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end);
                                                 }
                                         }
                                 }
@@ -123,30 +118,30 @@ public class GameScreen implements Screen {
                                 for (HollowBar b : terrain.getBar()) {
                                         if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                                 if(Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("blue_bar_previous.png", end);
+                                                        b.clickBlock("blue_bar_previous.png",game.batch, end);
                                                 }
-                                                b.clickBlock("blue_bar_previous.png", end, touchPos);
+                                                b.clickBlock("blue_bar_previous.png",game.batch, end, touchPos);
 
                                         } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
                                                 if(Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("red_bar_previous.png", end);
+                                                        b.clickBlock("red_bar_previous.png",game.batch, end);
                                                 }
-                                                b.clickBlock("red_bar_previous.png", end, touchPos);
+                                                b.clickBlock("red_bar_previous.png",game.batch, end, touchPos);
 
                                         }
                                 }
                                 for (int i = 0; i < terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
                                                 if(Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end);
                                                 }
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end, touchPos);
+                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end, touchPos);
 
                                         } else {
                                                 if(Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
+                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end);
                                                 }
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end, touchPos);
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end, touchPos);
                                         }
                                 }
                         }
