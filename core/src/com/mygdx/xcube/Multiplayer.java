@@ -91,7 +91,7 @@ public class Multiplayer implements Screen {
     }
     public void connectSocket(){
         try{
-            socket= IO.socket("http://localhost:8080");
+            socket= IO.socket("http://157.159.195.91:8080");
             socket.connect();
         } catch(Exception e){
             System.out.println(e);
