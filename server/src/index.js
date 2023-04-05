@@ -42,7 +42,6 @@ io.on('connection', function(socket){
                 }
             }
         });
-    players.push(new player(socket.id));
 
     if(players.length>1){
             sleep(300);
