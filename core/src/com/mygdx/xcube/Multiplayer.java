@@ -20,6 +20,7 @@ import io.socket.client.IO;
 import io.socket.emitter.Emitter;
 
 public class Multiplayer implements Screen {
+    private boolean color;
     private static Socket socket;
     final XCube game;
     private GameScreen gamescreen;
@@ -47,8 +48,11 @@ public class Multiplayer implements Screen {
             @Override
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
+                JSONObject bool = (JSONObject) args[1];
                 try {
                     String id = data.getString("id");
+                    color = bool.getBoolean("bool");
+                    gamescreen.setColor(color);
                     Gdx.app.log("SocketIO", "My ID: " + id);
                 } catch(JSONException e){
                     Gdx.app.log("SocketIO", "Error getting ID");

@@ -8,8 +8,14 @@ server.listen(8080, function(){
 });
 
 io.on('connection', function(socket){
+    if(players.length==0){
+    players.push(new player(socket.id, true));
+    }
+    else{
+    players.push(new player(socket.id, false));
+    }
     console.log("Player Connected!");
-    socket.emit('socketID', {id: socket.id});
+    socket.emit('socketID', {id: socket.id}, {bool : players[players.length -1].color});
     socket.broadcast.emit('newPlayer', { id: socket.id});
     socket.on('playerPlayed',function(data){
         data.id = socket.id;
@@ -47,8 +53,9 @@ io.on('connection', function(socket){
 
 });
 
-function player(id){
+function player(id, color){
     this.id= id;
+    this.color = color;
 }
 function sleep(milliseconds) {
   const date = Date.now();
