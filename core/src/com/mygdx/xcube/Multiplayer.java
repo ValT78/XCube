@@ -58,17 +58,6 @@ public class Multiplayer implements Screen {
                     Gdx.app.log("SocketIO", "Error getting ID");
                 }
             }
-        }).on("newPlayer", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try {
-                    String playerId = data.getString("id");
-                    Gdx.app.log("SocketIO", "New Player Connect: " + playerId);
-                } catch(JSONException e){
-                    Gdx.app.log("SocketIO", "Error getting New Player ID ID");
-                }
-            }
         }).on("playerPlayed", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -94,7 +83,7 @@ public class Multiplayer implements Screen {
     }
     public void connectSocket(){
         try{
-            socket= IO.socket("http://localhost:8080");
+            socket= IO.socket("http://157.159.195.91:8080");
             socket.connect();
         } catch(Exception e){
             System.out.println(e);
@@ -135,7 +124,6 @@ public class Multiplayer implements Screen {
         if(duel){
             game.setScreen(gamescreen);
             dispose();
-            duel=false;
         }
     }
 

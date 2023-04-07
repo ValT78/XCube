@@ -10,17 +10,16 @@ server.listen(8080, function(){
 io.on('connection', function(socket){
     if(players.length==0){
     players.push(new player(socket.id, true));
+    sleep(200);
     }
     else{
     players.push(new player(socket.id, false));
     }
     console.log("Player Connected!");
     socket.emit('socketID', {id: socket.id}, {bool : players[players.length -1].color});
-    socket.broadcast.emit('newPlayer', { id: socket.id});
     socket.on('playerPlayed',function(data){
         data.id = socket.id;
         socket.broadcast.emit('playerPlayed', data);
-
     });
     socket.on('disconnect', function(){
             console.log("Player Disconnected");
@@ -33,7 +32,7 @@ io.on('connection', function(socket){
             }
         });
 
-    if(players.length>1){
+    if(players.length==2){
             sleep(300);
             console.log("Game will start");
             socket.broadcast.emit('twoPlayers');
