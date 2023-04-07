@@ -16,6 +16,7 @@ public class MainMenuScreen implements Screen {
     final public XCube game;
     private Button local;
     private Button multiplayer;
+    private Button IA;
     Viewport viewport = new ExtendViewport(800, 480);
     float inputTime = 0;
     OrthographicCamera camera;
@@ -25,6 +26,7 @@ public class MainMenuScreen implements Screen {
         //Valeurs modifiable selon le menu désiré
         local = new Button(400,300,"grey_bar.png","Local");
         multiplayer = new Button(400,200,"grey_bar.png","Multijoueur");
+        IA = new Button(400,100,"grey_bar.png","Intelligence Artificiel");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,480);
     }
@@ -37,6 +39,7 @@ public class MainMenuScreen implements Screen {
         game.batch.begin();     // Début des éléments à afficher
         local.drawButton(game);
         multiplayer.drawButton(game);
+        IA.drawButton(game);
         game.batch.end();       // Fin des éléments à afficher
 
         if (Gdx.input.isTouched() && inputTime>0.2f){
@@ -49,8 +52,12 @@ public class MainMenuScreen implements Screen {
                 game.setScreen(new Multiplayer(game));   // Si l'écran est touché, l'écran passe à GameScreen
                 dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
             }
-            if(this.local.contains(touchPos.x,touchPos.y)){
-                game.setScreen(new GameScreen(game,false));   // Si l'écran est touché, l'écran passe à GameScreen
+            else if(this.local.contains(touchPos.x,touchPos.y)){
+                game.setScreen(new GameScreen(game,0));   // Si l'écran est touché, l'écran passe à GameScreen
+                dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
+            }
+            else if(this.IA.contains(touchPos.x,touchPos.y)){
+                game.setScreen(new GameScreen(game,2));   // Si l'écran est touché, l'écran passe à GameScreen
                 dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
             }
         }

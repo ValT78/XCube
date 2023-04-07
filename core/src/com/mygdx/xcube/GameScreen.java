@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 
+import javax.swing.Renderer;
+
 public class GameScreen implements Screen {
         final XCube game;
         public static OrthographicCamera camera;
@@ -31,22 +33,22 @@ public class GameScreen implements Screen {
         private int secondsRed;
         private int tenthsRed;
         private BitmapFont font;
-        private static Boolean multiplayer;
+        private static int mode;
+        private int coupIA;
         private Vector3 touchPos = new Vector3();
         //private final int unitSquare = new HollowSquare(0,0).getSize()[0];
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
         private final int unitY = new HollowBar(false,0,0).getSize()[1];
+        private Renderer RenderMode;
 
-
-        public GameScreen(final XCube game,Boolean multi) {
+        public GameScreen(final XCube game,int mode) {
                 this.game = game;
                 terrain = new Terrain();
                 players = new PlayerManager();
                 this.end = new End(terrain, players,this.game,this);
                 camera = new OrthographicCamera();
-                this.multiplayer = multi;
+                this.mode = mode;
                 camera.setToOrtho(false, 6*unitY + 5*unitX, 2*(6*unitY + 5*unitX));
-
         }
 
 
@@ -92,7 +94,49 @@ public class GameScreen implements Screen {
                         b.drawBlock(game.batch);                         // Dessine le terrain
                 }
 
-                if(!multiplayer) {
+                switch (mode) {
+                        case 0:
+                                RendererLocal.run();
+                                break;
+                        case 1:
+                                RendererMulti.run();
+                                break;
+                        case 2:
+                                RendererIA.run();
+                                 break;
+                }
+
+
+
+
+        }
+        public void setTouchPos(Vector3 touchPos){
+                this.touchPos = touchPos;
+        }
+        public void setVictoryScreen(boolean winner){
+                if(mode == 1) {
+                        Multiplayer.disconnected();
+                }
+                game.setScreen(new EndScreen(game, winner));
+        }
+        @Override
+        public void show() {
+
+
+                // Initialisation de la police d'écriture
+                font = new BitmapFont();
+                font.getData().setScale(20); // Augmente l'échelle de la police d'écriture
+                minutesBlue = (int) (timeLeftBlue / 60);
+                secondsBlue = (int) ((timeLeftBlue) % 60);
+                tenthsBlue = (int) ((timeLeftBlue * 10) % 10);
+                minutesRed = (int) (timeLeftRed / 60);
+                secondsRed = (int) ((timeLeftRed) % 60);
+                tenthsRed = (int) ((timeLeftRed * 10) % 10);
+                // Définition du temps de départ et du temps restant (10 secondes)
+        }
+        Runnable RendererLocal = new Runnable() {
+                @Override
+                public void run() {
                         if (Gdx.input.isTouched() && touchOff) {
                                 touchOff = false;
                                 for (HollowBar b : terrain.getBar()) {
@@ -110,84 +154,97 @@ public class GameScreen implements Screen {
 
                                         } else {
                                                 terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end);
-                                                }
                                         }
                                 }
                         }
-                else{
-                                for (HollowBar b : terrain.getBar()) {
-                                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                if(Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("blue_bar_previous.png",game.batch, end);
-                                                }
-                                                b.clickBlock("blue_bar_previous.png",game.batch, end, touchPos);
-
-                                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                if(Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("red_bar_previous.png",game.batch, end);
-                                                }
-                                                b.clickBlock("red_bar_previous.png",game.batch, end, touchPos);
-
-                                        }
-                                }
-                                for (int i = 0; i < terrain.getSquare().size; i++) {
-                                        if (players.getPlayer()) {
-                                                if(Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end);
-                                                }
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end, touchPos);
-
-                                        } else {
-                                                if(Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end);
-                                                }
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end, touchPos);
-                                        }
-                                }
-                        }
-
                         if (!Gdx.input.isTouched()) {
                                 touchOff = true;
-
                         }
-
-
-        }
-        public void setTouchPos(Vector3 touchPos){
-                this.touchPos = touchPos;
-        }
-        public void setVictoryScreen(boolean winner){
-                if(multiplayer) {
-                        Multiplayer.disconnected();
                 }
-                game.setScreen(new EndScreen(game, winner));
-        }
-        @Override
-        public void show() {
 
+        };
+        Runnable RendererMulti = new Runnable() {
+                @Override
+                public void run() {
+                        for (HollowBar b : terrain.getBar()) {
+                                if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
+                                        if(Gdx.input.isTouched() && touchOff) {
+                                                b.clickBlock("blue_bar_previous.png",game.batch, end);
+                                        }
+                                        b.clickBlock("blue_bar_previous.png",game.batch, end, touchPos);
 
-                // Initialisation de la police d'écriture
-                font = new BitmapFont();
-                font.getData().setScale(20); // Augmente l'échelle de la police d'écriture
-                minutesBlue = (int) (timeLeftBlue/ 60);
-                secondsBlue = (int) ((timeLeftBlue) % 60);
-                tenthsBlue = (int) ((timeLeftBlue*10) % 10);
-                minutesRed = (int) (timeLeftRed/ 60);
-                secondsRed = (int) ((timeLeftRed) % 60);
-                tenthsRed = (int) ((timeLeftRed*10) % 10);
-                // Définition du temps de départ et du temps restant (10 secondes)
-                /*startTime = TimeUtils.millis();
-                Timer.schedule(new Timer.Task() {
-                        @Override
-                        public void run() {
-                                long elapsedTime = TimeUtils.timeSinceMillis(startTime);
-                                timeLeft = Math.max(0, 120000 - elapsedTime);
+                                } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
+                                        if(Gdx.input.isTouched() && touchOff) {
+                                                b.clickBlock("red_bar_previous.png",game.batch, end);
+                                        }
+                                        b.clickBlock("red_bar_previous.png",game.batch, end, touchPos);
+
+                                }
                         }
-                }, 0, 0.1f);*/
+                        for (int i = 0; i < terrain.getSquare().size; i++) {
+                                if (players.getPlayer()) {
+                                        if(Gdx.input.isTouched() && touchOff) {
+                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end);
+                                        }
+                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end, touchPos);
+
+                                } else {
+                                        if(Gdx.input.isTouched() && touchOff) {
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end);
+                                        }
+                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end, touchPos);
+                                }
+                        }
+                        if (!Gdx.input.isTouched()) {
+                                touchOff = true;
+                        }
+                }
+        };
+        Runnable RendererIA = new Runnable() {
+                @Override
+                public void run() {
+                        if(players.getPlayer()) {
+                                if (Gdx.input.isTouched() && touchOff) {
+                                        touchOff = false;
+                                        for (HollowBar b : terrain.getBar()) {
+                                                coupIA=2;
+                                                b.clickBlock("blue_bar_previous.png", game.batch, end);
+                                        }
+                                        for (int i = 0; i < terrain.getSquare().size; i++) {
+                                                coupIA=2;
+                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", game.batch, end);
+                                        }
+                                }
+                                if (!Gdx.input.isTouched()) {
+                                        touchOff = true;
+                                }
+                        }
+                        else {
+                                for (HollowBar b : terrain.getBar()) {
+                                        if(coupIA>0 && b.isFree) {
+                                                b.iaPlaceBlock("red_bar_previous.png", game.batch, end);
+                                                coupIA -=1;
+                                        }
+                                }
+                                for (int i =0; i < terrain.getSquare().size; i++) {
+                                        if(coupIA>0 && terrain.getSquare().get(i).isFree) {
+                                                terrain.getSquare().get(i).iaPlaceBlock("red_cross_previous.png", game.batch, end);
+                                                coupIA -=1;
+                                        }
+                                }
+
+                        }
+
+                }
+        };
+        public void resetCoupIA() {
+                coupIA=2;
         }
 
-        static public Boolean getMultiplayer(){
-                return multiplayer;
+
+
+        static public int getMode(){
+                return mode;
         }
         // Fonctions inutilisées
         @Override

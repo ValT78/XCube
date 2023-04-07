@@ -24,7 +24,7 @@ public class Button extends Block {
 
     public void drawButton(XCube game) {
         game.batch.draw(sprite,x,y,0,0,dx,dy,1,1,90);
-        game.font.draw(game.batch, text,x,y);
+        game.font.draw(game.batch, text,x-dy*15/16,y+dx*3/4);
     }
 
     public boolean contains(float x, float y) {

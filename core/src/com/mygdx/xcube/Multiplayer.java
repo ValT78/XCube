@@ -31,7 +31,7 @@ public class Multiplayer implements Screen {
     public Multiplayer(XCube game){
         connectSocket();
         this.game = game;
-        this.gamescreen = new GameScreen(game,true);
+        this.gamescreen = new GameScreen(game,1);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
         configSocketEvents();
