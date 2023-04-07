@@ -88,7 +88,6 @@ public class Multiplayer implements Screen {
         }).on("twoPlayers", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                Gdx.app.log("SocketIO","Okay it's working");
                 duel=true;
             }
         });
