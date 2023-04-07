@@ -24,7 +24,7 @@ public class Multiplayer implements Screen {
     private static Socket socket;
     final XCube game;
     private GameScreen gamescreen;
-    private boolean duel;
+    private boolean duel = false;
     Viewport viewport = new ExtendViewport(800, 480);
     Stage stage = new Stage(viewport);
     OrthographicCamera camera;
@@ -94,7 +94,7 @@ public class Multiplayer implements Screen {
     }
     public void connectSocket(){
         try{
-            socket= IO.socket("http://157.159.195.91:8080");
+            socket= IO.socket("http://localhost:8080");
             socket.connect();
         } catch(Exception e){
             System.out.println(e);
@@ -113,7 +113,7 @@ public class Multiplayer implements Screen {
     }
 
     public static void disconnected(){
-        socket.emit("Disconnect");
+        socket.disconnect();
     }
 
     @Override

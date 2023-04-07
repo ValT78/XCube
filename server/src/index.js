@@ -22,16 +22,16 @@ io.on('connection', function(socket){
         socket.broadcast.emit('playerPlayed', data);
 
     });
-    socket.on('Disconnect', function(){
-        console.log("Player Disconnected");
-        for(var i = 0; i < players.length; i++){
-            if(players[i].id == socket.id){
-                players.splice(i, 1);
-                console.log(players)
-                socket.disconnect();
+    socket.on('disconnect', function(){
+            console.log("Player Disconnected");
+            for(var i = 0; i < players.length; i++){
+                if(players[i].id == socket.id){
+                    players.splice(i, 1);
+                    console.log(players)
+                    socket.disconnect(true);
+                }
             }
-        }
-    });
+        });
 
     if(players.length>1){
             sleep(300);

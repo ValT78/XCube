@@ -158,45 +158,6 @@ public class GameScreen implements Screen {
                                         }
                                 }
                         }
-                else{
-                                for (HollowBar b : terrain.getBar()) {
-                                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                if(color) {
-                                                        if (Gdx.input.isTouched() && touchOff) {
-                                                                b.clickBlock("blue_bar_previous.png", game.batch, end);
-                                                        }
-                                                }
-                                                b.clickBlock("blue_bar_previous.png",game.batch, end, touchPos);
-
-                                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                if(!color) {
-                                                        if (Gdx.input.isTouched() && touchOff) {
-                                                                b.clickBlock("red_bar_previous.png", game.batch, end);
-                                                        }
-                                                }
-                                                b.clickBlock("red_bar_previous.png",game.batch, end, touchPos);
-
-                                        }
-                                }
-                                for (int i = 0; i < terrain.getSquare().size; i++) {
-                                        if (players.getPlayer()) {
-                                                if(color) {
-                                                        if (Gdx.input.isTouched() && touchOff) {
-                                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", game.batch, end);
-                                                        }
-                                                }
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end, touchPos);
-
-                                        } else {
-                                                if(!color) {
-                                                        if (Gdx.input.isTouched() && touchOff) {
-                                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", game.batch, end);
-                                                        }
-                                                }
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end, touchPos);
-                                        }
-                                }
-                        }
 
                         if (!Gdx.input.isTouched()) {
                                 touchOff = true;
@@ -209,31 +170,39 @@ public class GameScreen implements Screen {
                 public void run() {
                         for (HollowBar b : terrain.getBar()) {
                                 if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                        if(Gdx.input.isTouched() && touchOff) {
-                                                b.clickBlock("blue_bar_previous.png",game.batch, end);
+                                        if(color) {
+                                                if (Gdx.input.isTouched() && touchOff) {
+                                                        b.clickBlock("blue_bar_previous.png", game.batch, end);
+                                                }
                                         }
                                         b.clickBlock("blue_bar_previous.png",game.batch, end, touchPos);
 
                                 } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                        if(Gdx.input.isTouched() && touchOff) {
-                                                b.clickBlock("red_bar_previous.png",game.batch, end);
+                                        if(!color) {
+                                                if (Gdx.input.isTouched() && touchOff) {
+                                                        b.clickBlock("red_bar_previous.png", game.batch, end);
+                                                }
                                         }
                                         b.clickBlock("red_bar_previous.png",game.batch, end, touchPos);
-
                                 }
                         }
                         for (int i = 0; i < terrain.getSquare().size; i++) {
                                 if (players.getPlayer()) {
-                                        if(Gdx.input.isTouched() && touchOff) {
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end);
+                                        if(color) {
+                                                if (Gdx.input.isTouched() && touchOff) {
+                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", game.batch, end);
+                                                }
                                         }
                                         terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end, touchPos);
 
                                 } else {
-                                        if(Gdx.input.isTouched() && touchOff) {
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end);
+                                        if (!color) {
+                                                if (Gdx.input.isTouched() && touchOff) {
+                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png", game.batch, end);
+                                                }
                                         }
-                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png",game.batch, end, touchPos);
+                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", game.batch, end, touchPos);
+
                                 }
                         }
                         if (!Gdx.input.isTouched()) {
