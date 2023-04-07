@@ -1,4 +1,4 @@
-#Tue Feb 07 21:29:03 CET 2023
-base.0=/home/valt/Bureau/xcube/android/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+#Wed Apr 05 15:50:17 CEST 2023
+base.0=/home/basile/JavaProject/Projet-dev/android/build/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

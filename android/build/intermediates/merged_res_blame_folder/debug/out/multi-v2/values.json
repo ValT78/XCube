@@ -4,7 +4,7 @@
             "outputFile": "com.mygdx.xcube.android-mergeDebugResources-3:/values/values.xml",
             "map": [
                 {
-                    "source": "/home/valt/Bureau/Projet-dev/android/res/values/color.xml",
+                    "source": "/home/basile/JavaProject/Projet-dev/android/res/values/color.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/valt/Bureau/Projet-dev/android/res/values/strings.xml",
+                    "source": "/home/basile/JavaProject/Projet-dev/android/res/values/strings.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
