@@ -1,12 +1,12 @@
 package com.mygdx.xcube;
 
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -36,15 +36,20 @@ public class GameScreen implements Screen {
         private int minutesRed;
         private int secondsRed;
         private int tenthsRed;
-        private BitmapFont font;
         private static int mode;
         private int coupIA;
         private Vector3 touchPos = new Vector3();
         //private final int unitSquare = new HollowSquare(0,0).getSize()[0];
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
         private final int unitY = new HollowBar(false,0,0).getSize()[1];
+        private Renderer RenderMode;
+        private FreeTypeFontGenerator fontGenerator;
+        private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+        private BitmapFont font;
+        //private SpriteBatch batch;
         private boolean gameStarted = false;
         Random random = new Random();
+
         public GameScreen(final XCube game,int mode) {
                 this.game = game;
                 terrain = new Terrain();
@@ -52,7 +57,13 @@ public class GameScreen implements Screen {
                 this.end = new End(terrain, players,this.game,this);
                 camera = new OrthographicCamera();
                 this.mode = mode;
-                camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
+                camera.setToOrtho(false, 6*unitY + 5*unitX, 2*(6*unitY + 5*unitX));
+                //game.batch = new SpriteBatch();
+                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
+                fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+                fontParameter.size = 150;
+                //fontParameter.color = Color.BLUE;
+                font = fontGenerator.generateFont(fontParameter);
         }
 
 
@@ -96,11 +107,15 @@ public class GameScreen implements Screen {
                 ScreenUtils.clear(1,1,1,1);
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
+                //Affichage des 2 chronomètres rouge et bleu
                 game.batch.begin();
-                font.setColor(Color.BLUE); // Police bleue pour le premier chronomètre
-                font.draw(game.batch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((7*unitY + 7*unitX)*7/4));
-                font.setColor(Color.RED); // Police rouge pour le deuxième chronomètre
-                font.draw(game.batch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), unitY, (7*unitY + 7*unitX)/4);
+                //font.setColor(Color.BLUE);  Police bleue pour le premier chronomètre
+                //font.draw(game.batch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
+                //font.setColor(Color.RED);  Police rouge pour le deuxième chronomètre
+                font.setColor(Color.BLUE);
+                font.draw(game.batch, String.format("%01d : %02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
+                font.setColor(Color.RED);
+                font.draw(game.batch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), unitY, (6*unitY + 5*unitX)/4);
                 for (HollowBar b : terrain.getBar()) {
                         b.drawBlock(game.batch);                         // Dessine le terrain
                 }
@@ -108,6 +123,12 @@ public class GameScreen implements Screen {
                         b.drawBlock(game.batch);                         // Dessine le terrain
                 }
                 game.batch.end();
+
+                
+
+
+
+
         }
         public void setTouchPos(Vector3 touchPos){
                 this.touchPos = touchPos;
@@ -121,8 +142,8 @@ public class GameScreen implements Screen {
         @Override
         public void show() {
                 // Initialisation de la police d'écriture
-                font = new BitmapFont();
-                font.getData().setScale(20); // Augmente l'échelle de la police d'écriture
+                //font = new BitmapFont();
+                //font.getData().setScale(20);  Augmente l'échelle de la police d'écriture
                 minutesBlue = (int) (timeLeftBlue / 60);
                 secondsBlue = (int) ((timeLeftBlue) % 60);
                 tenthsBlue = (int) ((timeLeftBlue * 10) % 10);
@@ -160,19 +181,19 @@ public class GameScreen implements Screen {
                                 touchOff = false;
                                 for (HollowBar b : terrain.getBar()) {
                                         if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("blue_bar_previous.png", end);
+                                                b.clickBlock("V2/bluebar1.png", end);
 
                                         } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("red_bar_previous.png", end);
+                                                b.clickBlock("V2/redbar1.png", end);
 
                                         }
                                 }
                                 for (int i = 0; i < terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                terrain.getSquare().get(i).clickBlock("bluecross1.png", end);
 
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", end);
+                                                terrain.getSquare().get(i).clickBlock("redcross1.png", end);
                                         }
                                 }
                         }
@@ -190,10 +211,10 @@ public class GameScreen implements Screen {
                                 if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                         if(color) {
                                                 if (Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("blue_bar_previous.png", end);
+                                                        b.clickBlock("V2/bluebar1.png", end);
                                                 }
                                         }
-                                        b.clickBlock("blue_bar_previous.png", end, touchPos);
+                                        b.clickBlock("V2/bluebar1.png",end, touchPos);
 
                                 } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
                                         if(!color) {
@@ -236,11 +257,11 @@ public class GameScreen implements Screen {
                                         touchOff = false;
                                         for (HollowBar b : terrain.getBar()) {
                                                 coupIA=2;
-                                                b.clickBlock("blue_bar_previous.png", end);
+                                                b.clickBlock("V2/bluebar1.png.png", end);
                                         }
                                         for (int i = 0; i < terrain.getSquare().size; i++) {
                                                 coupIA=2;
-                                                terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", end);
+                                                terrain.getSquare().get(i).clickBlock("V2/bluebar1.png", end);
                                         }
                                 }
                                 if (!Gdx.input.isTouched()) {
@@ -296,5 +317,7 @@ public class GameScreen implements Screen {
 
         @Override
         public void dispose() {
+
+                game.batch.dispose();
         }
 }

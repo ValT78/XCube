@@ -6,57 +6,57 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="14"
-8-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml
+8-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml
 9        android:targetSdkVersion="33" />
-9-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml
+9-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml
 10
 11    <uses-feature
-11-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:6:5-78
+11-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:6:5-78
 12        android:glEsVersion="0x00020000"
-12-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:6:19-51
+12-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:6:19-51
 13        android:required="true" />
-13-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:6:52-75
+13-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:6:52-75
 14
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:7:5-67
-15-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:7:22-64
+15-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:7:5-67
+15-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:7:22-64
 16
 17    <application
-17-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:8:5-27:19
+17-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:8:5-27:19
 18        android:allowBackup="true"
-18-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:9:9-35
+18-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:9:9-35
 19        android:appCategory="game"
-19-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:13:9-35
+19-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:13:9-35
 20        android:debuggable="true"
 21        android:fullBackupContent="true"
-21-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:10:9-41
+21-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:10:9-41
 22        android:icon="@drawable/ic_launcher"
-22-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:11:9-45
+22-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:11:9-45
 23        android:isGame="true"
-23-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:12:9-30
+23-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:12:9-30
 24        android:label="@string/app_name" >
-24-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:14:9-41
+24-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:14:9-41
 25        <activity
-25-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:16:9-26:20
+25-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:16:9-26:20
 26            android:name="com.mygdx.xcube.AndroidLauncher"
-26-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:17:13-59
+26-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:17:13-59
 27            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
-27-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:20:13-107
+27-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:20:13-107
 28            android:exported="true"
-28-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:21:13-36
+28-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:21:13-36
 29            android:label="@string/app_name"
-29-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:18:13-45
+29-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:18:13-45
 30            android:screenOrientation="portrait" >
-30-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:19:13-49
+30-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:19:13-49
 31            <intent-filter>
-31-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:22:13-25:29
+31-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:22:13-25:29
 32                <action android:name="android.intent.action.MAIN" />
-32-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:23:17-69
-32-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:23:25-66
+32-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:23:17-69
+32-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:23:25-66
 33
 34                <category android:name="android.intent.category.LAUNCHER" />
-34-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:24:17-77
-34-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:24:27-74
+34-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:24:17-77
+34-->/run/media/rmoreau/ARCH_202303/Projet-dev/android/AndroidManifest.xml:24:27-74
 35            </intent-filter>
 36        </activity>
 37    </application>

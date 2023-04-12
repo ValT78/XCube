@@ -23,7 +23,7 @@ public class Multiplayer implements Screen {
     private boolean color;
     private static Socket socket;
     final XCube game;
-    private GameScreen gamescreen;
+    private final GameScreen gamescreen;
     private boolean duel = false;
     Viewport viewport = new ExtendViewport(800, 480);
     Stage stage = new Stage(viewport);
