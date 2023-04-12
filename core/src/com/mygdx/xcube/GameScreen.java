@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -43,8 +43,8 @@ public class GameScreen implements Screen {
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
         private final int unitY = new HollowBar(false,0,0).getSize()[1];
         private Renderer RenderMode;
-        private FreeTypeFontGenerator fontGenerator;
-        private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+        //private FreeTypeFontGenerator fontGenerator;
+        //private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
         private BitmapFont font;
         //private SpriteBatch batch;
         private boolean gameStarted = false;
@@ -57,13 +57,13 @@ public class GameScreen implements Screen {
                 this.end = new End(terrain, players,this.game,this);
                 camera = new OrthographicCamera();
                 this.mode = mode;
-                camera.setToOrtho(false, 6*unitY + 5*unitX, 2*(6*unitY + 5*unitX));
+                camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
                 //game.batch = new SpriteBatch();
-                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
-                fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-                fontParameter.size = 150;
+                //fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
+                //fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+                //fontParameter.size = 150;
                 //fontParameter.color = Color.BLUE;
-                font = fontGenerator.generateFont(fontParameter);
+                //font = fontGenerator.generateFont(fontParameter);
         }
 
 
@@ -190,10 +190,10 @@ public class GameScreen implements Screen {
                                 }
                                 for (int i = 0; i < terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("bluecross1.png", end);
+                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", end);
 
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("redcross1.png", end);
+                                                terrain.getSquare().get(i).clickBlock("V2/redcross1.png", end);
                                         }
                                 }
                         }
@@ -257,7 +257,7 @@ public class GameScreen implements Screen {
                                         touchOff = false;
                                         for (HollowBar b : terrain.getBar()) {
                                                 coupIA=2;
-                                                b.clickBlock("V2/bluebar1.png.png", end);
+                                                b.clickBlock("V2/bluebar1.png", end);
                                         }
                                         for (int i = 0; i < terrain.getSquare().size; i++) {
                                                 coupIA=2;
