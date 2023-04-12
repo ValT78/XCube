@@ -20,6 +20,10 @@
         "source": "com.mygdx.xcube.android-android-6:/drawable-mdpi/ic_launcher.png"
     },
     {
+        "merged": "com.mygdx.xcube.android-merged_res-5:/layout_textview.xml.flat",
+        "source": "com.mygdx.xcube.android-android-6:/layout/textview.xml"
+    },
+    {
         "merged": "com.mygdx.xcube.android-merged_res-5:/drawable-anydpi-v26_ic_launcher.xml.flat",
         "source": "com.mygdx.xcube.android-android-6:/drawable-anydpi-v26/ic_launcher.xml"
     },

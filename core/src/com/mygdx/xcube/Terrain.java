@@ -8,13 +8,13 @@ import com.mygdx.xcube.block.HollowSquare;
 public class Terrain {
     private final Array<HollowBar> bar;
     private final Array<HollowSquare> square;
-    private int spaceBlock;
-    private int unitX;
-    private int unitY;
-    private int unitSquare;
-    private int originX;
-    private int originY;
-    private Array<TerrainBlock> lastPlay;
+    private final int spaceBlock;
+    private final int unitX;
+    private final int unitY;
+    private final int unitSquare;
+    private final int originX;
+    private final int originY;
+    private final Array<TerrainBlock> lastPlay;
 
 
     public Terrain() {

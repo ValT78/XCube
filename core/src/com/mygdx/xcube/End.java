@@ -9,11 +9,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class End implements Screen {
-    private Array<HollowSquare> square;
+    private final Array<HollowSquare> square;
     //private Terrain terrain;
-    private PlayerManager players;
+    private final PlayerManager players;
     public static OrthographicCamera camera;
-    private GameScreen screen;
+    private final GameScreen screen;
     final XCube game;
     public End(Terrain terrain, PlayerManager players, XCube game, GameScreen screen){
         this.square = terrain.getSquare();
