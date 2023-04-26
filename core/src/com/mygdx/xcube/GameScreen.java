@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
+import com.mygdx.xcube.block.Items;
 
 import javax.swing.Renderer;
 
@@ -43,9 +44,18 @@ public class GameScreen implements Screen {
         private FreeTypeFontGenerator fontGenerator;
         private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
         private BitmapFont font;
+        private final int spaceBlock;
+        private final int originX;
+        private final int originY;
+        private Items grid;
         //private SpriteBatch batch;
 
         public GameScreen(final XCube game,int mode) {
+                this.spaceBlock=unitX + unitY;
+                this.originX = unitY;
+                this.originY = (6*unitY + 5*unitX)/2;
+                grid = new Items(originX-unitX,originY-unitX,"V2/grille.png");
+                grid.resize(4*originX+7*unitX,4*originX+7*unitX);
                 this.game = game;
                 terrain = new Terrain();
                 players = new PlayerManager();
@@ -54,7 +64,7 @@ public class GameScreen implements Screen {
                 GameScreen.mode = mode;
                 camera.setToOrtho(false, 6*unitY + 5*unitX, 2*(6*unitY + 5*unitX));
                 //game.batch = new SpriteBatch();
-                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
+                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
                 fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
                 fontParameter.size = 150;
                 //fontParameter.color = Color.BLUE;
@@ -95,9 +105,9 @@ public class GameScreen implements Screen {
                 //font.draw(game.batch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 //font.setColor(Color.RED);  Police rouge pour le deuxième chronomètre
                 font.setColor(Color.BLUE);
-                font.draw(game.batch, String.format("%01d : %02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
+                font.draw(game.batch, String.format("%01d:%02d:%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 font.setColor(Color.RED);
-                font.draw(game.batch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), unitY, (6*unitY + 5*unitX)/4);
+                font.draw(game.batch, String.format("%01d:%02d:%d",minutesRed,secondsRed,tenthsRed), unitY, (6*unitY + 5*unitX)/4);
                 game.batch.end();
                 for (HollowBar b : terrain.getBar()) {
                         b.drawBlock(game.batch);                         // Dessine le terrain
@@ -144,11 +154,17 @@ public class GameScreen implements Screen {
                 minutesRed = (int) (timeLeftRed / 60);
                 secondsRed = (int) ((timeLeftRed) % 60);
                 tenthsRed = (int) ((timeLeftRed * 10) % 10);
+
                 // Définition du temps de départ et du temps restant (10 secondes)
+
         }
         Runnable RendererLocal = new Runnable() {
                 @Override
                 public void run() {
+                        game.batch.begin();
+                        grid.drawItems(game,(float)(1));
+                        game.batch.end();
+
                         if (Gdx.input.isTouched() && touchOff) {
                                 touchOff = false;
                                 for (HollowBar b : terrain.getBar()) {
@@ -162,10 +178,10 @@ public class GameScreen implements Screen {
                                 }
                                 for (int i = 0; i < terrain.getSquare().size; i++) {
                                         if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("bluecross1.png",game.batch, end);
+                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png",game.batch, end);
 
                                         } else {
-                                                terrain.getSquare().get(i).clickBlock("redcross1.png",game.batch, end);
+                                                terrain.getSquare().get(i).clickBlock("V2/redcross1.png",game.batch, end);
                                         }
                                 }
                         }
@@ -183,36 +199,36 @@ public class GameScreen implements Screen {
                                 if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                         if(color) {
                                                 if (Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("V2/bluebar1.png.png", game.batch, end);
+                                                        b.clickBlock("V2/bluebar1.png", game.batch, end);
                                                 }
                                         }
-                                        b.clickBlock("V2/bluebar1.png.png",game.batch, end, touchPos);
+                                        b.clickBlock("V2/bluebar1.png",game.batch, end, touchPos);
 
                                 } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
                                         if(!color) {
                                                 if (Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("red_bar_previous.png", game.batch, end);
+                                                        b.clickBlock("V2/redbar1.png", game.batch, end);
                                                 }
                                         }
-                                        b.clickBlock("red_bar_previous.png",game.batch, end, touchPos);
+                                        b.clickBlock("V2/redbar1.png",game.batch, end, touchPos);
                                 }
                         }
                         for (int i = 0; i < terrain.getSquare().size; i++) {
                                 if (players.getPlayer()) {
                                         if(color) {
                                                 if (Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png", game.batch, end);
+                                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", game.batch, end);
                                                 }
                                         }
-                                        terrain.getSquare().get(i).clickBlock("blue_cross_previous.png",game.batch, end, touchPos);
+                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png",game.batch, end, touchPos);
 
                                 } else {
                                         if (!color) {
                                                 if (Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("red_cross_previous.png", game.batch, end);
+                                                        terrain.getSquare().get(i).clickBlock("V2/redcross1.png", game.batch, end);
                                                 }
                                         }
-                                                terrain.getSquare().get(i).clickBlock("red_cross_previous.png", game.batch, end, touchPos);
+                                                terrain.getSquare().get(i).clickBlock("V2/redcross1.png", game.batch, end, touchPos);
 
                                 }
                         }
@@ -229,11 +245,11 @@ public class GameScreen implements Screen {
                                         touchOff = false;
                                         for (HollowBar b : terrain.getBar()) {
                                                 coupIA=2;
-                                                b.clickBlock("V2/bluebar1.png.png", game.batch, end);
+                                                b.clickBlock("V2/bluebar1.png", game.batch, end);
                                         }
                                         for (int i = 0; i < terrain.getSquare().size; i++) {
                                                 coupIA=2;
-                                                terrain.getSquare().get(i).clickBlock("V2/bluebar1.png.png", game.batch, end);
+                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", game.batch, end);
                                         }
                                 }
                                 if (!Gdx.input.isTouched()) {
@@ -243,13 +259,13 @@ public class GameScreen implements Screen {
                         else {
                                 for (HollowBar b : terrain.getBar()) {
                                         if(coupIA>0 && b.isFree) {
-                                                b.iaPlaceBlock("red_bar_previous.png", game.batch, end);
+                                                b.iaPlaceBlock("V2/redbar1.png", game.batch, end);
                                                 coupIA -=1;
                                         }
                                 }
                                 for (int i =0; i < terrain.getSquare().size; i++) {
                                         if(coupIA>0 && terrain.getSquare().get(i).isFree) {
-                                                terrain.getSquare().get(i).iaPlaceBlock("red_cross_previous.png", game.batch, end);
+                                                terrain.getSquare().get(i).iaPlaceBlock("V2/redcross1.png", game.batch, end);
                                                 coupIA -=1;
                                         }
                                 }

@@ -15,13 +15,13 @@ public class HollowSquare extends TerrainBlock {
     public boolean isAntidiagonal;
     public HollowSquare(int x, int y) {
         super(x,y);
-        this.setSprite("square_holder.png");
+        this.setSprite("V2/4case.png");
         this.vertical=new HollowSquare[2];
         this.horizontal= new HollowSquare[2];
         this.diagonal = new HollowSquare[2];
         this.antidiagonal = new HollowSquare[2];
-        dx=round(this.getSprite().getWidth());
-        dy=round(this.getSprite().getHeight());
+        dx=round(this.getSprite().getWidth()/4);
+        dy=round(this.getSprite().getHeight()/4);
         rectangle = new Rectangle(x, y, dx, dy);
         isSquare=true;
         isHorizontal=true;

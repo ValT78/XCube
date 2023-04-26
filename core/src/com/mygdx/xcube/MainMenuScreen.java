@@ -25,11 +25,11 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(XCube game){
         this.game=game;
-        
+
         //Valeurs modifiable selon le menu désiré
-        local = new Button(400,300,"grey_bar.png","Local");
-        multiplayer = new Button(400,200,"grey_bar.png","Multijoueur");
-        IA = new Button(400,100,"grey_bar.png","Intelligence Artificiel");
+        local = new Button(400,300,"V2/bluebar1.png","Local");
+        multiplayer = new Button(400,200,"V2/bluebar1.png","Multijoueur");
+        IA = new Button(400,100,"V2/bluebar1.png","Intelligence Artificielle");
         logo = new Items(width_screen/4,3*height_screen/4,"V2/title.png");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,width_screen,height_screen);

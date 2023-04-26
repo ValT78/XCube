@@ -66,19 +66,19 @@ public class TerrainBlock extends Block {
                 for (int i = 0; i < 2; i++) {
                     if (players.getPlayer()) {
                         if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_cross.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/bluecross2.png");
                         }
                         else {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_bar.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/bluebar2.png");
                         }
                     }
 
                     else {
                         if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_cross.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/redcross2.png");
                         }
                         else {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_bar.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/redbar2.png");
                         }
                     }
                 GameScreen.terrain.getLastPlay().removeIndex(0);
@@ -110,19 +110,19 @@ public class TerrainBlock extends Block {
                 for (int i = 0; i < 2; i++) {
                     if (players.getPlayer()) {
                         if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_cross.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/bluecross1.png");
                         }
                         else {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_bar.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/bluebar1.png");
                         }
                     }
 
                     else {
                         if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_cross.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/redcross1.png");
                         }
                         else {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_bar.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/redbar1.png");
                         }
                     }
                     GameScreen.terrain.getLastPlay().removeIndex(0);
@@ -152,18 +152,18 @@ public class TerrainBlock extends Block {
                 for (int i = 0; i < 2; i++) {
                     if (players.getPlayer()) {
                         if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_cross.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/bluecross1.png");
                         }
                         else {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("blue_bar.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/bluebar1.png");
                         }
                     }
 
                     else {
                         if (GameScreen.terrain.getLastPlay().get(0).isSquare) {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_cross.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/redcross1.png");
                         } else {
-                            GameScreen.terrain.getLastPlay().get(0).setSprite("red_bar.png");
+                            GameScreen.terrain.getLastPlay().get(0).setSprite("V2/redbar1.png");
                         }
                     }
                     GameScreen.terrain.getLastPlay().removeIndex(0);

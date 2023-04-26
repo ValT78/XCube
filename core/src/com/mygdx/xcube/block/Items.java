@@ -23,4 +23,8 @@ public class Items extends Block {
     public void drawItems(XCube game, float scale) {
         game.batch.draw(sprite,x,y,0,0,dx,dy,scale,scale,0);
     }
+    public void resize(int x, int y){
+         this.dx = x;
+         this.dy = y;
+    }
 }

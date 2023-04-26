@@ -3,13 +3,22 @@ package com.mygdx.xcube.block;
 import static com.badlogic.gdx.math.MathUtils.round;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.xcube.XCube;
 
+
 public class Button extends Block {
     private final String text;
+
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private BitmapFont font;
+
 
     public Button(int x, int y, String sprite, String text) {
         this.x=x;
@@ -19,12 +28,20 @@ public class Button extends Block {
         this.dy=round(this.sprite.getHeight());
         this.rectangle = new Rectangle(x-dy,y,dy,dx);
         this.text=text;
+        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 20;
+        font = fontGenerator.generateFont(fontParameter);
     }
 
     public void drawButton(XCube game) {
         game.batch.draw(sprite,x,y,0,0,dx,dy,1,1,90);
 
-        game.font.draw(game.batch, text,x-dy*15/16,y+dx*3/4);
+        //game.batch.begin();
+        font.setColor(Color.WHITE);
+        font.draw(game.batch, text, x-dy*15/16, y+dx*3/4);
+        //game.batch.end();
+        //game.font.draw(game.batch, text,x-dy*15/16,y+dx*3/4);
     }
 
     public boolean contains(float x, float y) {
