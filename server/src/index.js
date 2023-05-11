@@ -24,7 +24,7 @@ io.on('connection', function(socket){
     socket.on('coord',function(data){
         for(var k=0; k< players.length; k++){
                 data.id = socket.id;
-            if(players[k].id == socket.id){
+            if(players[k].id == socket.id && rooms[players[k].room].length > 1){
                 if(players[k].id != rooms[players[k].room][0].id){
                 io.to(rooms[players[k].room][0].id).emit('playerPlayed', data);
                 }
