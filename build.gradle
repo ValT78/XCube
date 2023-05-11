@@ -103,3 +103,4 @@ project(":ios") {
         implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
     }
 }
+

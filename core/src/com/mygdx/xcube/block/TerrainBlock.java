@@ -41,7 +41,7 @@ public class TerrainBlock extends Block {
         return tab;
     }
 
-    public void clickBlock(String texture, SpriteBatch batch, End end) {
+    public void clickBlock(String texture, End end) {
         //rectangle.contains permet de savoir si le point que l'on indique appartient au rectangle
         //Gdx.input.get renvoie automatiquement la coordonnée X/Y sur laquelle on clique.
 
@@ -55,7 +55,6 @@ public class TerrainBlock extends Block {
             isFree=false;
             isBlue=players.getPlayer();
             this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
-            this.drawBlock(batch);
             if(this.isSquare) { //vérifie si une condition de victoire est remplie
                 end.checkAlign(GameScreen.players.getPlayer(), end);
             }
@@ -91,7 +90,7 @@ public class TerrainBlock extends Block {
 
     }
 
-    public void clickBlock(String texture,SpriteBatch batch, End end,Vector3 touchPos){
+    public void clickBlock(String texture, End end,Vector3 touchPos){
         //rectangle.contains permet de savoir si le point que l'on indique appartient au rectangle
         //Gdx.input.get renvoie automatiquement la coordonnée X/Y sur laquelle on clique.
 
@@ -99,7 +98,6 @@ public class TerrainBlock extends Block {
             isFree=false;
             isBlue=players.getPlayer();
             this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
-            this.drawBlock(batch);
             if(this.isSquare) { //vérifie si une condition de victoire est remplie
                 end.checkAlign(GameScreen.players.getPlayer(), end);
             }
@@ -136,13 +134,12 @@ public class TerrainBlock extends Block {
 
     }
 
-    public void iaPlaceBlock(String texture,SpriteBatch batch, End end){
+    public void iaPlaceBlock(String texture, End end){
         //rectangle.contains permet de savoir si le point que l'on indique appartient au rectangle
         //Gdx.input.get renvoie automatiquement la coordonnée X/Y sur laquelle on clique.
         isFree=false;
         isBlue=players.getPlayer();
         this.sprite = new Sprite(new Texture(Gdx.files.internal(texture)));
-        this.drawBlock(batch);
         if(this.isSquare) { //vérifie si une condition de victoire est remplie
             end.checkAlign(GameScreen.players.getPlayer(), end);
         }
@@ -172,10 +169,7 @@ public class TerrainBlock extends Block {
         }
 
     public void drawBlock(SpriteBatch batch) {
-        camera.update();
-        batch.begin();
         batch.draw(this.sprite,x,y,0,0,dx,dy,1,1,0);
-        batch.end();
     }
 
     public boolean isClickable() {
@@ -190,6 +184,11 @@ public class TerrainBlock extends Block {
         }
         return clickable;
     }
+    public int[] getCoords() {
+        int[] tab = {x,y};
+
+        return tab;
+    } //retourne les coordonnées d'un carré
 
 
 }

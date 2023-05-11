@@ -14,7 +14,7 @@ public class Terrain {
     private final int unitSquare;
     private final int originX;
     private final int originY;
-    private final Array<TerrainBlock> lastPlay;
+    private Array<TerrainBlock> lastPlay;
 
 
     public Terrain() {
@@ -22,8 +22,8 @@ public class Terrain {
         this.unitX = new HollowBar(false,0,0).getSize()[0];
         this.unitY = new HollowBar(false,0,0).getSize()[1];
         this.spaceBlock=unitX + unitY;
-        this.originX = unitY;
-        this.originY = (6*unitY + 5*unitX)/2;
+        this.originX = 3*unitY/2;
+        this.originY = (9*unitY + 9*unitX)/2;
         this.bar = generateBar();           // Stock la liste des barres
         this.square=generateSquare();       // Stock la liste de carrés
         this.lastPlay=new Array<>();
@@ -31,7 +31,6 @@ public class Terrain {
     public Array<TerrainBlock> getLastPlay() {
         return lastPlay;
     }
-
     public Array<HollowBar> getBar() {
         return bar;
     }                //Permet d'appeler les barres
@@ -72,7 +71,7 @@ public class Terrain {
         return bar;
     }
     public Array<HollowSquare> generateSquare() { //construit une grille de carré et leur attribut les barres qui les entourent
-        Array<HollowSquare> block = new Array<>();
+        Array<HollowSquare> squares = new Array<>();
 
         int x = originX+unitX+unitY/2-unitSquare/2;
         int y = originY+unitX+unitY/2-unitSquare/2;
@@ -80,22 +79,63 @@ public class Terrain {
         for(int i=0; i<4; i++) {
             for (int j = 0; j < 4; j++) {
                 HollowSquare square1 = new HollowSquare(x, y);
-                square1.neighbors.add(bar.get((i*4)+j));
-                square1.neighbors.add(bar.get((i*4)+j + 4));
-                square1.neighbors.add(bar.get((i*5)+j + 20));
-                square1.neighbors.add(bar.get((i*5)+j + 21));
-                block.add(square1);
+                square1.addNeighbors(getBar());
+                squares.add(square1);
                 x += spaceBlock;
             }
             x = originX+unitX+unitY/2-unitSquare/2;
             y += spaceBlock;
         }
-        for (int i = 0; i<block.size; i++) {
-            createAlign(block.get(i), block);
+        return squares;
+    }
+
+    public void setupAlign() {
+        for (int i = 0; i<this.square.size; i++) {
+            createAlign(this.square.get(i), this.square);
         }
+    }
 
+    public void createDLC(int place, boolean side, boolean turn) {
+        int x = originX-spaceBlock;
+        int y = originY-spaceBlock;
+        if(side) {
+            y+=spaceBlock*place;
+            if(turn) {x+=spaceBlock*5;}
+        }
+        else {
+            x+=spaceBlock*place;
+            if(turn) {y+=spaceBlock*5;}
+        }
+        HollowSquare square1 = new HollowSquare(x+unitX+unitY/2-unitSquare/2, y+unitX+unitY/2-unitSquare/2);
+        this.square.add(square1);
 
-        return block;
+        HollowBar bar1 = locateBar(x+unitX,y, this.bar);
+        if(bar1==null) {
+            bar1 = new HollowBar(true, x + unitX, y);
+        }
+        this.bar.add(bar1);
+        square1.neighbors.add(bar1);
+
+        HollowBar bar2 =locateBar(x+unitX,y+spaceBlock, this.bar);
+        if(bar2 ==null) {
+            bar2 = new HollowBar(true, x + unitX, y + spaceBlock);
+        }
+        this.bar.add(bar2);
+        square1.neighbors.add(bar2);
+
+        HollowBar bar3 = locateBar(x,y+unitX, this.bar);
+        if(bar3==null) {
+            bar3 = new HollowBar(false, x, y + unitX);
+        }
+            this.bar.add(bar3);
+            square1.neighbors.add(bar3);
+
+        HollowBar bar4 = locateBar(x+spaceBlock,y+unitX, this.bar);
+        if(bar4==null) {
+            bar4 = new HollowBar(false, x + spaceBlock, y + unitX);
+        }
+        this.bar.add(bar4);
+        square1.neighbors.add(bar4);
     }
 
     public HollowSquare locateSquare(int x, int y, Array<HollowSquare> squares) { //retourne le carré de coordonnée (x,y)
@@ -103,6 +143,15 @@ public class Terrain {
         for (HollowSquare square: squares) {
             if(coord[0] == square.getCoords()[0] && coord[1] == square.getCoords()[1]) {
                 return square;
+            }
+        }
+        return null;
+    }
+    public HollowBar locateBar(int x, int y, Array<HollowBar> bars) { //retourne la barre de coordonnée (x,y)
+        int[] coord = {x,y};
+        for (HollowBar bar: bars) {
+            if(coord[0] == bar.getCoords()[0] && coord[1] == bar.getCoords()[1]) {
+                return bar;
             }
         }
         return null;

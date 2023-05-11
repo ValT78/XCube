@@ -95,7 +95,7 @@ public class Multiplayer implements Screen {
         try{
             data.put("x", vector.x);
             data.put("y", vector.y);
-            socket.emit("playerPlayed", data);
+            socket.emit("coord", data);
         } catch (JSONException e){
             Gdx.app.log("SOCKET.IO", "Error sending update data");
         }
