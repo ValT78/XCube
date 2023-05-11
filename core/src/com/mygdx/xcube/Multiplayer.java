@@ -70,6 +70,7 @@ public class Multiplayer implements Screen {
                     touchPos.x = (float) x;
                     touchPos.y = (float) y;
                     gamescreen.setTouchPos(touchPos);
+                    System.out.println("Called");
                 } catch(JSONException e){
 
                 }
@@ -83,7 +84,7 @@ public class Multiplayer implements Screen {
     }
     public void connectSocket(){
         try{
-            socket= IO.socket("http://157.159.195.91:8080");
+            socket= IO.socket("http://127.0.0.1:8080");
             socket.connect();
         } catch(Exception e){
             System.out.println(e);
@@ -95,7 +96,7 @@ public class Multiplayer implements Screen {
         try{
             data.put("x", vector.x);
             data.put("y", vector.y);
-            socket.emit("playerPlayed", data);
+            socket.emit("coord", data);
         } catch (JSONException e){
             Gdx.app.log("SOCKET.IO", "Error sending update data");
         }

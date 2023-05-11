@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 //import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -39,12 +41,12 @@ public class GameScreen implements Screen {
         private static int mode;
         private int coupIA;
         private Vector3 touchPos = new Vector3();
-        //private final int unitSquare = new HollowSquare(0,0).getSize()[0];
+        private final int unitSquare = new HollowSquare(0,0).getSize()[0];
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
         private final int unitY = new HollowBar(false,0,0).getSize()[1];
         private Renderer RenderMode;
-        //private FreeTypeFontGenerator fontGenerator;
-        //private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+        private FreeTypeFontGenerator fontGenerator;
+        private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
         private BitmapFont font;
         //private SpriteBatch batch;
         private boolean gameStarted = false;
@@ -58,12 +60,12 @@ public class GameScreen implements Screen {
                 camera = new OrthographicCamera();
                 this.mode = mode;
                 camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
-                //game.batch = new SpriteBatch();
-                //fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
-                //fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-                //fontParameter.size = 150;
-                //fontParameter.color = Color.BLUE;
-                //font = fontGenerator.generateFont(fontParameter);
+                game.batch = new SpriteBatch();
+                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
+                fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+                fontParameter.size = 150;
+                fontParameter.color = Color.BLUE;
+                font = fontGenerator.generateFont(fontParameter);
         }
 
 
@@ -159,6 +161,7 @@ public class GameScreen implements Screen {
                         @Override
                         public void run() {
                                 boolean alea = random.nextBoolean();
+                                alea=true;
                                 System.out.println(alea);
                                 if (alea) {
                                         terrain.setupAlign();
