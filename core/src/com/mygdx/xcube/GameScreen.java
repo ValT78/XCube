@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -39,16 +39,15 @@ public class GameScreen implements Screen {
         private static int mode;
         private int coupIA;
         private Vector3 touchPos = new Vector3();
-        //private final int unitSquare = new HollowSquare(0,0).getSize()[0];
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
         private final int unitY = new HollowBar(false,0,0).getSize()[1];
         private Renderer RenderMode;
-        //private FreeTypeFontGenerator fontGenerator;
-        //private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+        private FreeTypeFontGenerator fontGenerator;
+        private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
         private BitmapFont font;
         //private SpriteBatch batch;
         private boolean gameStarted = false;
-        Random random = new Random();
+        private Random random = new Random();
 
         public GameScreen(final XCube game,int mode) {
                 this.game = game;
@@ -58,12 +57,13 @@ public class GameScreen implements Screen {
                 camera = new OrthographicCamera();
                 this.mode = mode;
                 camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
-                //game.batch = new SpriteBatch();
-                //fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
-                //fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-                //fontParameter.size = 150;
-                //fontParameter.color = Color.BLUE;
-                //font = fontGenerator.generateFont(fontParameter);
+                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
+                fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+                fontParameter.size = 150;
+                fontParameter.color = Color.BLUE;
+                fontParameter.color = Color.RED;
+                font = fontGenerator.generateFont(fontParameter);
+                //font = new BitmapFont();
         }
 
 
@@ -109,9 +109,9 @@ public class GameScreen implements Screen {
                 game.batch.setProjectionMatrix(camera.combined);
                 //Affichage des 2 chronomètres rouge et bleu
                 game.batch.begin();
-                //font.setColor(Color.BLUE);  Police bleue pour le premier chronomètre
+                //font.setColor(Color.BLUE);  //Police bleue pour le premier chronomètre
                 //font.draw(game.batch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
-                //font.setColor(Color.RED);  Police rouge pour le deuxième chronomètre
+                //font.setColor(Color.RED);  //Police rouge pour le deuxième chronomètre
                 font.setColor(Color.BLUE);
                 font.draw(game.batch, String.format("%01d : %02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 font.setColor(Color.RED);
@@ -123,12 +123,6 @@ public class GameScreen implements Screen {
                         b.drawBlock(game.batch);                         // Dessine le terrain
                 }
                 game.batch.end();
-
-                
-
-
-
-
         }
         public void setTouchPos(Vector3 touchPos){
                 this.touchPos = touchPos;
