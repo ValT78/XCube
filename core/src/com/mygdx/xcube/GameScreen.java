@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
         private Items grid;
         //private SpriteBatch batch;
         private boolean gameStarted = false;
-        Random random = new Random();
+        private Random random = new Random();
 
         public GameScreen(final XCube game,int mode) {
                 this.spaceBlock=unitX + unitY;
@@ -75,7 +75,9 @@ public class GameScreen implements Screen {
                 fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
                 fontParameter.size = 150;
                 fontParameter.color = Color.BLUE;
+                fontParameter.color = Color.RED;
                 font = fontGenerator.generateFont(fontParameter);
+                //font = new BitmapFont();
         }
 
 
@@ -121,9 +123,9 @@ public class GameScreen implements Screen {
                 game.batch.setProjectionMatrix(camera.combined);
                 //Affichage des 2 chronomètres rouge et bleu
                 game.batch.begin();
-                //font.setColor(Color.BLUE);  Police bleue pour le premier chronomètre
+                //font.setColor(Color.BLUE);  //Police bleue pour le premier chronomètre
                 //font.draw(game.batch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
-                //font.setColor(Color.RED);  Police rouge pour le deuxième chronomètre
+                //font.setColor(Color.RED);  //Police rouge pour le deuxième chronomètre
                 font.setColor(Color.BLUE);
                 font.draw(game.batch, String.format("%01d:%02d:%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 font.setColor(Color.RED);
@@ -246,10 +248,10 @@ public class GameScreen implements Screen {
                                 if (players.getPlayer()) {
                                         if(color) {
                                                 if (Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", game.batch, end);
+                                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", end);
                                                 }
                                         }
-                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png",game.batch, end, touchPos);
+                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", end, touchPos);
 
                                 } else {
                                         if (!color) {
