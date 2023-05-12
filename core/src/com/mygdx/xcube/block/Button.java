@@ -13,7 +13,7 @@ import com.mygdx.xcube.XCube;
 
 
 public class Button extends Block {
-    private final String text;
+    private String text;
 
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
@@ -46,6 +46,9 @@ public class Button extends Block {
 
     public void setSprite(String sprite) {
         this.sprite = new Sprite(new Texture(Gdx.files.internal(sprite)));
+    }
+    public void setText(String text) {
+        this.text = text;
     }
 
     public boolean contains(float x, float y) {
