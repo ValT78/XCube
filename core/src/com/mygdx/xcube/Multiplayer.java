@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.async.AsyncExecutor;
+import com.badlogic.gdx.utils.async.AsyncTask;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -20,6 +22,7 @@ import io.socket.client.IO;
 import io.socket.emitter.Emitter;
 
 public class Multiplayer implements Screen {
+    private AsyncExecutor asyncExecutor;
     private boolean color;
     private static Socket socket;
     final XCube game;
@@ -30,7 +33,15 @@ public class Multiplayer implements Screen {
     OrthographicCamera camera;
 
     public Multiplayer(XCube game, boolean dlc){
-        connectSocket();
+        asyncExecutor = new AsyncExecutor(1);
+
+        asyncExecutor.submit(new AsyncTask<Void>() {
+            @Override
+            public Void call() {
+                connectSocket();
+                return null;
+            }
+        });
         this.game = game;
         this.gamescreen = new GameScreen(game,1, dlc);
         camera = new OrthographicCamera();
