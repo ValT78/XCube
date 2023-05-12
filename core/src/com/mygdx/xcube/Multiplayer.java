@@ -39,6 +39,13 @@ public class Multiplayer implements Screen {
             @Override
             public Void call() {
                 connectSocket();
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Faire quelque chose avec la connexion socket.io
+                        configSocketEvents();
+                    }
+                });
                 return null;
             }
         });
@@ -46,7 +53,6 @@ public class Multiplayer implements Screen {
         this.gamescreen = new GameScreen(game,1, dlc);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
-        configSocketEvents();
     }
 
     public void configSocketEvents(){
