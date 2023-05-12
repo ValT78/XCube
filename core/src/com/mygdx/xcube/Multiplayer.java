@@ -29,10 +29,10 @@ public class Multiplayer implements Screen {
     Stage stage = new Stage(viewport);
     OrthographicCamera camera;
 
-    public Multiplayer(XCube game){
+    public Multiplayer(XCube game, boolean dlc){
         connectSocket();
         this.game = game;
-        this.gamescreen = new GameScreen(game,1);
+        this.gamescreen = new GameScreen(game,1, dlc);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
         configSocketEvents();

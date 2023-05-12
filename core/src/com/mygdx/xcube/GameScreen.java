@@ -40,6 +40,7 @@ public class GameScreen implements Screen {
         private int secondsRed;
         private int tenthsRed;
         private static int mode;
+        private boolean dlc;
         private int coupIA;
         private Vector3 touchPos = new Vector3();
         private final int unitSquare = new HollowSquare(0,0).getSize()[0];
@@ -57,7 +58,7 @@ public class GameScreen implements Screen {
         private boolean gameStarted = false;
         private Random random = new Random();
 
-        public GameScreen(final XCube game,int mode) {
+        public GameScreen(final XCube game,int mode, boolean dlc) {
                 this.spaceBlock=unitX + unitY;
                 this.originX = unitY;
                 this.originY = (6*unitY + 5*unitX)/2;
@@ -78,6 +79,7 @@ public class GameScreen implements Screen {
                 fontParameter.color = Color.RED;
                 font = fontGenerator.generateFont(fontParameter);
                 //font = new BitmapFont();
+                this.dlc=dlc;
         }
 
 
@@ -173,9 +175,7 @@ public class GameScreen implements Screen {
                         @Override
                         public void run() {
                                 boolean alea = random.nextBoolean();
-                                alea=true;
-                                System.out.println(alea);
-                                if (alea) {
+                                if (alea || !dlc) {
                                         terrain.setupAlign();
                                         gameStarted = true;
                                 }

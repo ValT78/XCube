@@ -17,11 +17,15 @@ public class MainMenuScreen implements Screen {
     private final Button multiplayer;
     private final Items logo;
     private final Button IA;
+    private final Button DLC;
+
+    private boolean dlc = false;
     Viewport viewport = new ExtendViewport(800, 480);
     float inputTime = 0;
     private int width_screen = 540;
     private int height_screen = 1200;
     OrthographicCamera camera;
+    private boolean touchOff;
 
     public MainMenuScreen(XCube game){
         this.game=game;
@@ -30,6 +34,7 @@ public class MainMenuScreen implements Screen {
         local = new Button(400,300,"V2/bluebar1.png","Local");
         multiplayer = new Button(400,200,"V2/bluebar1.png","Multijoueur");
         IA = new Button(400,100,"V2/bluebar1.png","Intelligence Artificielle");
+        DLC = new Button(400,400,"V2/bluebar1.png","DLC");
         logo = new Items(width_screen/4,3*height_screen/4,"V2/title.png");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,width_screen,height_screen);
@@ -44,27 +49,41 @@ public class MainMenuScreen implements Screen {
         local.drawButton(game);
         multiplayer.drawButton(game);
         IA.drawButton(game);
+        DLC.drawButton(game);
         logo.drawItems(game,(float)(0.5));
         game.batch.end();       // Fin des éléments à afficher
 
-        if (Gdx.input.isTouched() && inputTime>0.2f){
+        if (Gdx.input.isTouched() && touchOff){
+            touchOff=false;
             Vector3 touchPos = new Vector3();                              //Création d'un vecteur à 3 coordonnées x,y,z
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);        // On récupère les coordonnées de touché
             camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
 
             if(this.multiplayer.contains(touchPos.x,touchPos.y)){
 
-                game.setScreen(new Multiplayer(game));   // Si l'écran est touché, l'écran passe à GameScreen
+                game.setScreen(new Multiplayer(game, dlc));   // Si l'écran est touché, l'écran passe à GameScreen
                 dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
             }
             else if(this.local.contains(touchPos.x,touchPos.y)){
-                game.setScreen(new GameScreen(game,0));   // Si l'écran est touché, l'écran passe à GameScreen
+                game.setScreen(new GameScreen(game,0, dlc));   // Si l'écran est touché, l'écran passe à GameScreen
                 dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
             }
             else if(this.IA.contains(touchPos.x,touchPos.y)){
-                game.setScreen(new GameScreen(game,2));   // Si l'écran est touché, l'écran passe à GameScreen
+                game.setScreen(new GameScreen(game,2,dlc));   // Si l'écran est touché, l'écran passe à GameScreen
                 dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
             }
+            else if(this.DLC.contains(touchPos.x,touchPos.y)){
+                dlc=!dlc;
+                if(dlc) {
+                System.out.println("DLC activée");// Supprime les élements définie dans dispose ( ici aucun)
+                }
+                else {
+                    System.out.println("DLC désactivée");// Supprime les élements définie dans dispose ( ici aucun)
+                }
+            }
+        }
+        if (!Gdx.input.isTouched()) {
+            touchOff = true;
         }
     }
 
