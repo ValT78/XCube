@@ -44,6 +44,10 @@ public class Button extends Block {
         //game.font.draw(game.batch, text,x-dy*15/16,y+dx*3/4);
     }
 
+    public void setSprite(String sprite) {
+        this.sprite = new Sprite(new Texture(Gdx.files.internal(sprite)));
+    }
+
     public boolean contains(float x, float y) {
         return this.rectangle.contains(x,y);
     }

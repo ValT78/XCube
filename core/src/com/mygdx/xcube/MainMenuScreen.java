@@ -34,7 +34,7 @@ public class MainMenuScreen implements Screen {
         local = new Button(400,300,"V2/bluebar1.png","Local");
         multiplayer = new Button(400,200,"V2/bluebar1.png","Multijoueur");
         IA = new Button(400,100,"V2/bluebar1.png","Intelligence Artificielle");
-        DLC = new Button(400,400,"V2/bluebar1.png","DLC");
+        DLC = new Button(400,400,"V2/redbar1.png","DLC");
         logo = new Items(width_screen/4,3*height_screen/4,"V2/title.png");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,width_screen,height_screen);
@@ -75,10 +75,12 @@ public class MainMenuScreen implements Screen {
             else if(this.DLC.contains(touchPos.x,touchPos.y)){
                 dlc=!dlc;
                 if(dlc) {
-                System.out.println("DLC activée");// Supprime les élements définie dans dispose ( ici aucun)
+                    System.out.println("DLC activée");// Supprime les élements définie dans dispose ( ici aucun)
+                    DLC.setSprite("V2/bluebar1.png");
                 }
                 else {
                     System.out.println("DLC désactivée");// Supprime les élements définie dans dispose ( ici aucun)
+                    DLC.setSprite("V2/redbar1.png");
                 }
             }
         }
