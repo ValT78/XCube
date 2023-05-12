@@ -12,9 +12,9 @@ public class HollowBar extends TerrainBlock {
 
         dx=round(this.getSprite().getWidth());
         dy=round(this.getSprite().getHeight());
-        rectangle = new Rectangle(x, y, dx, dy);
+        rectangle = new Rectangle(x-dx*2, y+dy/4, dx*5, dy/2);
         if (rotation) {
-            rectangle.setSize(dy, dx);
+            rectangle = new Rectangle(x+dy/4, y-dx*2, dy/2, dx*5);
             dx = dy;
             dy = round(this.getSprite().getWidth());
         }
