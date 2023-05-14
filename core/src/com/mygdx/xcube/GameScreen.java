@@ -57,6 +57,8 @@ public class GameScreen implements Screen {
         //private SpriteBatch batch;
         private boolean gameStarted = false;
         private Random random = new Random();
+        private int width_screen = 540;
+        private int height_screen = 1200;
 
         public GameScreen(final XCube game,int mode, boolean dlc) {
                 this.spaceBlock=unitX + unitY;
@@ -72,6 +74,8 @@ public class GameScreen implements Screen {
                 players = new PlayerManager();
                 this.end = new End(terrain, players,this.game,this);
                 camera = new OrthographicCamera();
+                //camera.setToOrtho(false,width_screen,height_screen);
+
 
                 this.mode = mode;
                 camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));

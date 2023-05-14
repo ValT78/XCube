@@ -2,7 +2,10 @@ package com.mygdx.xcube;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class EndScreen implements Screen {
@@ -10,31 +13,41 @@ public class EndScreen implements Screen {
     float inputTime = 0;
     OrthographicCamera camera;
     boolean player;
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private BitmapFont font;
+    private int width_screen = 540;
+    private int height_screen = 1200;
     public EndScreen(final XCube game,boolean player){
             this.game = game;
             this.player = player;
             camera = new OrthographicCamera();
-            camera.setToOrtho(false,400,400);
+            camera.setToOrtho(false,width_screen,height_screen);
+            fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
+            fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+            fontParameter.size = 35;
+            font = fontGenerator.generateFont(fontParameter);
         }
 
         public void render(float delta){            // Boucle infinie d'exécution
             inputTime += delta;
             if(player) {
-                ScreenUtils.clear(0,0,0.2f,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                ScreenUtils.clear(222/255f,1,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
 
                 game.batch.begin();     // Début des éléments à afficher
-                game.font.draw(game.batch, "Blue team win ! ", 200, 200);
+                font.setColor(Color.BLUE);
+                font.draw(game.batch,"Victoire du bleu !",width_screen/4,height_screen/2);
                 game.batch.end();       // Fin des éléments à afficher
             }
             if(!player){
-                ScreenUtils.clear(0.2f,0,0,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                ScreenUtils.clear(1,222/255f,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
-
                 game.batch.begin();     // Début des éléments à afficher
-                game.font.draw(game.batch, "Red team win ! ", 200, 200);
+                font.setColor(Color.RED);
+                font.draw(game.batch,"Victoire du rouge !",width_screen/4,height_screen/2);
                 game.batch.end();       // Fin des éléments à afficher
 
             }
