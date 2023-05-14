@@ -60,23 +60,27 @@ public class GameScreen implements Screen {
 
         public GameScreen(final XCube game,int mode, boolean dlc) {
                 this.spaceBlock=unitX + unitY;
+                //this.originX = 3*unitY/2;
+                //this.originY = (9*unitY + 9*unitX)/2;
                 this.originX = unitY;
                 this.originY = (6*unitY + 5*unitX)/2;
-                grid = new Items(originX-unitX,originY-unitX,"V2/grille.png");
+
+                grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/grille.png");
                 grid.resize(4*originX+7*unitX,4*originX+7*unitX);
                 this.game = game;
                 terrain = new Terrain();
                 players = new PlayerManager();
                 this.end = new End(terrain, players,this.game,this);
                 camera = new OrthographicCamera();
+
                 this.mode = mode;
                 camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
                 game.batch = new SpriteBatch();
-                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
+                fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
                 fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
                 fontParameter.size = 150;
-                fontParameter.color = Color.BLUE;
-                fontParameter.color = Color.RED;
+                //fontParameter.color = Color.BLUE;
+                //fontParameter.color = Color.RED;
                 font = fontGenerator.generateFont(fontParameter);
                 //font = new BitmapFont();
                 this.dlc=dlc;
@@ -99,6 +103,7 @@ public class GameScreen implements Screen {
                                 if (timeLeftBlue < 0) { //vérifie si le temps bleu n'est pas écoulé
                                         setVictoryScreen(false);
                                 }
+
                         } else { //gestion du chronometre rouge
                                 timeLeftRed -= delta;
                                 minutesRed = (int) (timeLeftRed / 60);
@@ -138,6 +143,7 @@ public class GameScreen implements Screen {
                 for (HollowSquare b : terrain.getSquare()) {
                         b.drawBlock(game.batch);                         // Dessine le terrain
                 }
+                grid.drawItems(game,(float)(1));
                 game.batch.end();
 
                 
@@ -226,6 +232,9 @@ public class GameScreen implements Screen {
         Runnable RendererMulti = new Runnable() {
                 @Override
                 public void run() {
+                        game.batch.begin();
+                        grid.drawItems(game,(float)(1));
+                        game.batch.end();
                         for (HollowBar b : terrain.getBar()) {
                                 if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                         if(color) {
@@ -271,6 +280,9 @@ public class GameScreen implements Screen {
         Runnable RendererIA = new Runnable() {
                 @Override
                 public void run() {
+                        game.batch.begin();
+                        grid.drawItems(game,(float)(1));
+                        game.batch.end();
                         if(players.getPlayer()) {
                                 if (Gdx.input.isTouched() && touchOff) {
                                         touchOff = false;
