@@ -237,7 +237,6 @@ public class GameScreen implements Screen {
         Runnable RendererMulti = new Runnable() {
                 @Override
                 public void run() {
-<<<<<<< HEAD
                         for (int i = 0; i < terrain.getSquare().size; i++) {
                                 if (players.getPlayer()) {
                                         if(color) {
@@ -257,11 +256,6 @@ public class GameScreen implements Screen {
 
                                 }
                         }
-=======
-                        game.batch.begin();
-                        grid.drawItems(game,(float)(1));
-                        game.batch.end();
->>>>>>> racoon
                         for (HollowBar b : terrain.getBar()) {
                                 if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
                                         if(color) {
