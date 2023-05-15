@@ -16,9 +16,6 @@ public class Items extends Block {
         this.dx=round(this.sprite.getWidth());
         this.dy=round(this.sprite.getHeight());
         this.rectangle = new Rectangle(x,y,dy,dx);
-        //System.out.println(dx);
-        //System.out.println(dy);
-
     }
     public void drawItems(XCube game, float scale) {
         game.batch.draw(sprite,x,y,0,0,dx,dy,scale,scale,0);

@@ -22,8 +22,8 @@ public class MainMenuScreen implements Screen {
     private boolean dlc = false;
     Viewport viewport = new ExtendViewport(800, 480);
     float inputTime = 0;
-    private int width_screen = 540;
-    private int height_screen = 1200;
+    private final int width_screen = 540;
+    private final int height_screen = 1200;
     OrthographicCamera camera;
     private boolean touchOff;
 

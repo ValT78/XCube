@@ -37,7 +37,7 @@ public class Terrain {
     public Array<HollowSquare> getSquare() {
         return square;
     }       // Permet d'appeler les carrés
-    public Array<HollowBar>  generateBar() {
+    public Array<HollowBar>  generateBar() { //Génère les coordonnées des barres à placer sur le terrain
 
         Array<HollowBar> bar = new Array<>();
         int x = originX + unitX;
@@ -70,7 +70,7 @@ public class Terrain {
         }
         return bar;
     }
-    public Array<HollowSquare> generateSquare() { //construit une grille de carré et leur attribut les barres qui les entourent
+    public Array<HollowSquare> generateSquare() { //Génère les coordonnées des carrés à placer sur le terrain et leur attribut les barres qui les entourent
         Array<HollowSquare> squares = new Array<>();
 
         int x = originX+unitX+unitY/2-unitSquare/2;
@@ -78,9 +78,9 @@ public class Terrain {
 
         for(int i=0; i<4; i++) {
             for (int j = 0; j < 4; j++) {
-                HollowSquare square1 = new HollowSquare(x, y);
-                square1.addNeighbors(getBar());
-                squares.add(square1);
+                HollowSquare square1 = new HollowSquare(x, y); //Génération des coordonnées
+                square1.addNeighbors(getBar());                //recherche des voisin
+                squares.add(square1);                          //Ajout au terrain
                 x += spaceBlock;
             }
             x = originX+unitX+unitY/2-unitSquare/2;
@@ -89,16 +89,17 @@ public class Terrain {
         return squares;
     }
 
-    public void setupAlign() {
+    public void setupAlign() {                            //trouvent tous les carrés qui pourraient créer un alignement tous les autres carrés du terrain
         for (int i = 0; i<this.square.size; i++) {
             createAlign(this.square.get(i), this.square);
         }
     }
 
-    public void createDLC(int place, boolean side, boolean turn) {
+    public void createDLC(int place, boolean side, boolean turn) { //Crée un emplacement de DLC à un endroit libre sur le terrain
         int x = originX-spaceBlock;
         int y = originY-spaceBlock;
-        if(side) {
+
+        if(side) {                         //On peut définir chaque emplacement libre pour un DLC sur le terrain par un entier compris entre 0 et 5 inclus, et 2 boolean
             y+=spaceBlock*place;
             if(turn) {x+=spaceBlock*5;}
         }
@@ -106,31 +107,32 @@ public class Terrain {
             x+=spaceBlock*place;
             if(turn) {y+=spaceBlock*5;}
         }
-        HollowSquare square1 = new HollowSquare(x+unitX+unitY/2-unitSquare/2, y+unitX+unitY/2-unitSquare/2);
+
+        HollowSquare square1 = new HollowSquare(x+unitX+unitY/2-unitSquare/2, y+unitX+unitY/2-unitSquare/2); //Création et ajout du carré au terrain
         this.square.add(square1);
 
-        HollowBar bar1 = locateBar(x+unitX,y, this.bar);
+        HollowBar bar1 = locateBar(x+unitX,y, this.bar);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
         if(bar1==null) {
             bar1 = new HollowBar(true, x + unitX, y);
         }
         this.bar.add(bar1);
         square1.neighbors.add(bar1);
 
-        HollowBar bar2 =locateBar(x+unitX,y+spaceBlock, this.bar);
+        HollowBar bar2 =locateBar(x+unitX,y+spaceBlock, this.bar);  //Pareil mais inférieur
         if(bar2 ==null) {
             bar2 = new HollowBar(true, x + unitX, y + spaceBlock);
         }
         this.bar.add(bar2);
         square1.neighbors.add(bar2);
 
-        HollowBar bar3 = locateBar(x,y+unitX, this.bar);
+        HollowBar bar3 = locateBar(x,y+unitX, this.bar);          //Pareil mais à droite
         if(bar3==null) {
             bar3 = new HollowBar(false, x, y + unitX);
         }
             this.bar.add(bar3);
             square1.neighbors.add(bar3);
 
-        HollowBar bar4 = locateBar(x+spaceBlock,y+unitX, this.bar);
+        HollowBar bar4 = locateBar(x+spaceBlock,y+unitX, this.bar);   //Pareil mais à gauche
         if(bar4==null) {
             bar4 = new HollowBar(false, x + spaceBlock, y + unitX);
         }
@@ -157,15 +159,13 @@ public class Terrain {
         return null;
     }
 
-    public void createAlign(HollowSquare square, Array<HollowSquare> squares) { //Remplie les carrés voisins d'un carré
+    public void createAlign(HollowSquare square, Array<HollowSquare> squares) { //Définis quelles sont les carrés voisin d'un carré donné pouvant créer un alignement
         int[] coord = square.getCoords();
         HollowSquare right = locateSquare(coord[0]+spaceBlock, coord[1], squares);
         HollowSquare left = locateSquare(coord[0]-spaceBlock, coord[1], squares);
         if(right!=null && left!=null) { //si les cases à droite et à gauche existent, on les ajoute dans le tableau de taille 2 : horizontal
             square.horizontal[0] = right;
             square.horizontal[1] = left;
-
-
         }
         else { //Sinon, on précise que ce carré ne peut pas s'aligner à l'horizontal
             square.isHorizontal=false;
@@ -176,35 +176,32 @@ public class Terrain {
         if(up!=null && down!=null) { //pareil mais pour les cases verticales
             square.vertical[0] = up;
             square.vertical[1] = down;
-
         }
         else {
             square.isVertical=false;
         }
-
         HollowSquare upRight = locateSquare(coord[0]+spaceBlock, coord[1]+spaceBlock, squares);
         HollowSquare downLeft = locateSquare(coord[0]-spaceBlock, coord[1]-spaceBlock, squares);
         if(upRight!=null && downLeft!=null) { //pareil mais pour les diagonales
             square.diagonal[0] = upRight;
             square.diagonal[1]=downLeft;
-
         }
         else {
             square.isDiagonal=false;
         }
-
         HollowSquare upLeft = locateSquare(coord[0]-spaceBlock, coord[1]+spaceBlock, squares);
         HollowSquare downRight = locateSquare(coord[0]+spaceBlock, coord[1]-spaceBlock, squares);
         if(upLeft!=null && downRight!=null) { //pareil pour l'antidiagonal
             square.antidiagonal[0]=upLeft;
             square.antidiagonal[1]=downRight;
-
         }
         else {
             square.isAntidiagonal=false;
         }
+    }
 
-
+    public int heuristic() {
+        return 1;
     }
 
 

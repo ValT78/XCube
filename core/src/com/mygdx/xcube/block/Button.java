@@ -14,10 +14,7 @@ import com.mygdx.xcube.XCube;
 
 public class Button extends Block {
     private String text;
-
-    private FreeTypeFontGenerator fontGenerator;
-    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
-    private BitmapFont font;
+    private final BitmapFont font;
 
 
     public Button(int x, int y, String sprite, String text) {
@@ -28,8 +25,8 @@ public class Button extends Block {
         this.dy=round(this.sprite.getHeight());
         this.rectangle = new Rectangle(x-dy,y,dy,dx);
         this.text=text;
-        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
-        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter.size = 20;
         font = fontGenerator.generateFont(fontParameter);
     }

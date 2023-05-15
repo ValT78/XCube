@@ -13,18 +13,16 @@ public class EndScreen implements Screen {
     float inputTime = 0;
     OrthographicCamera camera;
     boolean player;
-    private FreeTypeFontGenerator fontGenerator;
-    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
-    private BitmapFont font;
-    private int width_screen = 540;
-    private int height_screen = 1200;
+    private final BitmapFont font;
+    private final int width_screen = 540;
+    private final int height_screen = 1200;
     public EndScreen(final XCube game,boolean player){
             this.game = game;
             this.player = player;
             camera = new OrthographicCamera();
             camera.setToOrtho(false,width_screen,height_screen);
-            fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
-            fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+            FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
+            FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
             fontParameter.size = 35;
             font = fontGenerator.generateFont(fontParameter);
         }
@@ -88,8 +86,6 @@ public class EndScreen implements Screen {
         public void show(){
 
         }
-        public void rezise(int x,int y){
 
-        }
     }
 
