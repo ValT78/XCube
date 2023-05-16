@@ -200,6 +200,46 @@ public class Terrain {
         }
     }
 
+    public Array<HollowSquare> HaveNeighbors(int min, int max) {
+        Array<HollowSquare> haveNeighbors = new Array<>();
+        for (HollowSquare square : square) {
+            int numberFree = 0;
+            for(int i =0; i<4;i++) {
+                if(square.neighbors.get(i).isFree) {
+                    numberFree++;
+                }
+            }
+            if(square.neighbors.size()>=min && square.neighbors.size()<=max) {
+                haveNeighbors.add(square);
+            }
+        }
+        return haveNeighbors;
+    }
+    public HollowBar FindInsaturation(Array<HollowSquare> nonSaturate) {
+        for (HollowSquare nonSat : nonSaturate) {
+            int[] coord = nonSat.getCoords();
+            HollowSquare squareR = locateSquare(coord[0]+spaceBlock, coord[1],square);
+            HollowSquare squareL = locateSquare(coord[0]-spaceBlock, coord[1],square);
+            HollowSquare squareU = locateSquare(coord[0], coord[1]+spaceBlock,square);
+            HollowSquare squareD = locateSquare(coord[0], coord[1]-spaceBlock,square);
+            if (squareL.neighbors.size()<2) {
+                return nonSat.neighbors.get(0);
+            }
+            else if (squareR.neighbors.size()<2) {
+                return nonSat.neighbors.get(1);
+
+            }
+            else if (squareD.neighbors.size()<2) {
+                return nonSat.neighbors.get(2);
+
+            }
+            else if (squareU.neighbors.size()<2) {
+                return nonSat.neighbors.get(3);
+
+            }
+        }
+        return null;
+    }
     public int heuristic() {
         return 1;
     }

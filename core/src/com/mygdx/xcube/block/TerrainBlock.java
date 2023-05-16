@@ -15,13 +15,11 @@ public class TerrainBlock extends Block {
     public boolean isSquare;
     public boolean isFree;
     public boolean isBlue;
-    public ArrayList<HollowBar> neighbors;
 
     public TerrainBlock(int x, int y) {
         this.x = x;
         this.y = y;
         isFree=true;
-        this.neighbors = new ArrayList<>();
 
     }
     public void setSprite(String texture) {
@@ -78,16 +76,14 @@ public class TerrainBlock extends Block {
     }
 
     public boolean isClickable() { //Vérifie si le rectangle cliqué est cliquable
-        boolean clickable = this.isFree;
-        if(this.isSquare) {
-            for (HollowBar bar : this.neighbors
-            ) {
-                if(bar.isFree) {
-                    clickable = false;
-                }
-            }
+        if(!isFree) {
+            return false;
         }
-        return clickable;
+        if(this.isSquare) {
+            HollowSquare square = (HollowSquare) this;
+            return square.FillNeighbors();
+        }
+        return true;
     }
     public int[] getCoords() {
 
