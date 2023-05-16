@@ -209,7 +209,8 @@ public class Terrain {
                     numberFree++;
                 }
             }
-            if(square.neighbors.size()>=min && square.neighbors.size()<=max) {
+            square.freeNeighbors=numberFree;
+            if(numberFree>=min && numberFree<=max) {
                 haveNeighbors.add(square);
             }
         }
@@ -222,24 +223,25 @@ public class Terrain {
             HollowSquare squareL = locateSquare(coord[0]-spaceBlock, coord[1],square);
             HollowSquare squareU = locateSquare(coord[0], coord[1]+spaceBlock,square);
             HollowSquare squareD = locateSquare(coord[0], coord[1]-spaceBlock,square);
-            if (squareL.neighbors.size()<2) {
+            if (squareL.freeNeighbors>2) {
                 return nonSat.neighbors.get(0);
             }
-            else if (squareR.neighbors.size()<2) {
+            else if (squareR.freeNeighbors>2) {
                 return nonSat.neighbors.get(1);
 
             }
-            else if (squareD.neighbors.size()<2) {
+            else if (squareD.freeNeighbors>2) {
                 return nonSat.neighbors.get(2);
 
             }
-            else if (squareU.neighbors.size()<2) {
+            else if (squareU.freeNeighbors>2) {
                 return nonSat.neighbors.get(3);
 
             }
         }
         return null;
     }
+
     public int heuristic() {
         return 1;
     }

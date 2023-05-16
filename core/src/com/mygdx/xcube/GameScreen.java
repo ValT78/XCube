@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 import com.mygdx.xcube.block.Items;
+import com.mygdx.xcube.block.TerrainBlock;
 
 import java.util.Random;
 
@@ -137,33 +139,66 @@ public class GameScreen implements Screen {
                 this.touchPos = touchPos;
         }
 
-        public void checkAlign(boolean player) { //vérifie si il y a un alignement avec les cases du joueur qui vient de jouer
+        public boolean checkEveryAlign(boolean player) { //vérifie si il y a un alignement avec les cases du joueur qui vient de jouer
                 for (HollowSquare square: terrain.getSquare()) { //boucle for sur chaque carré
-
                         if(!square.isFree && square.isBlue==player) { //on ne choisit que ceux qui sont plein et de la couleur du joueur qui vient de jouer
                                 if (square.isHorizontal) { //On vérifie si le bloc à droite et à gauche existent, puis s'ils sont de la même couleur que celui du milieu
                                         if (square.horizontal[0].isBlue==player && square.horizontal[1].isBlue==player && !square.horizontal[0].isFree && !square.horizontal[1].isFree) {
-                                                setVictoryScreen(player);
+                                                return true;
                                         }
                                 }
                                 if (square.isVertical) {//pareil avec celui en bas et en haut
                                         if (square.vertical[0].isBlue==player && square.vertical[1].isBlue==player && !square.vertical[0].isFree && !square.vertical[1].isFree ) {
-                                                setVictoryScreen(player);
+                                                return true;
                                         }
                                 }
                                 if (square.isDiagonal) {//pareil pour les 2 diagonales
                                         if (square.diagonal[0].isBlue==player && square.diagonal[1].isBlue==player && !square.diagonal[0].isFree && !square.diagonal[1].isFree ) {
-                                                setVictoryScreen(player);
+                                                return true;
                                         }
                                 }
                                 if (square.isAntidiagonal) {
                                         if (square.antidiagonal[0].isBlue==player && square.antidiagonal[1].isBlue==player && !square.antidiagonal[0].isFree && !square.antidiagonal[1].isFree ) {
-                                                setVictoryScreen(player);
+                                                return true;
                                         }
                                 }
                         }
                 }
+                return false;
         }
+
+        public Array<TerrainBlock> NearAlign(Array<HollowSquare> overSaturate) {
+                Array<TerrainBlock> needToPlay = new Array<>();
+                for (HollowSquare sat : overSaturate) {
+                        sat.isFree=false;
+                        sat.isBlue=players.getPlayer();
+                        if(checkEveryAlign(players.getPlayer())) {
+                                needToPlay.add(sat);
+                                for(HollowBar neighbors : sat.neighbors) {
+                                        if(neighbors.isFree) {
+                                                needToPlay.add(neighbors);
+                                        }
+                                }
+                                sat.isFree=true;
+                                return needToPlay;
+                        }
+                        sat.isBlue=!players.getPlayer();
+                        if(checkEveryAlign(players.getPlayer())) {
+                                needToPlay.add(sat);
+                                for(HollowBar neighbors : sat.neighbors) {
+                                        if(neighbors.isFree) {
+                                                needToPlay.add(neighbors);
+                                        }
+                                }
+                                sat.isFree=true;
+                                return needToPlay;
+                        }
+                        sat.isFree=true;
+                }
+                return needToPlay;
+
+        }
+
         public void setVictoryScreen(boolean winner){
                 if(mode == 1) {
                         Multiplayer.disconnected();

@@ -63,8 +63,8 @@ public class TerrainBlock extends Block {
         isFree=false;                                                          //Le rectangle ne peut plus être cliqué
         isBlue=gameScreen.players.getPlayer();                                 //Il prend la couleur du joueur dont c'est le tour
         this.setSprite(texture);                                               //Il change de texture
-        if(this.isSquare) {                                                   //vérifie si une condition de victoire est remplie
-            gameScreen.checkAlign(gameScreen.players.getPlayer());
+        if(this.isSquare && gameScreen.checkEveryAlign(gameScreen.players.getPlayer())) {                                                   //vérifie si une condition de victoire est remplie
+            gameScreen.setVictoryScreen(gameScreen.players.getPlayer());
         }
         gameScreen.terrain.getLastPlay().add(this);                           //Est enregistré comme le dernier coup joué pour apparaitre d'une couleur différente de la normal
         gameScreen.players.setCoup(gameScreen.terrain);                       //Vérifie combien de coup il reste au joueur actuel pour jouer, et change la couleur des blocks récemment joués

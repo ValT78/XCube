@@ -17,6 +17,7 @@ public class HollowSquare extends TerrainBlock {
     public boolean isDiagonal;
     public boolean isAntidiagonal;
     public ArrayList<HollowBar> neighbors;
+    public int freeNeighbors;
     public HollowSquare(int x, int y) {
         super(x,y);
         this.setSprite("V2/4case.png");
@@ -33,6 +34,7 @@ public class HollowSquare extends TerrainBlock {
         isDiagonal=true;
         isAntidiagonal=true;
         this.neighbors = new ArrayList<>();
+        this.freeNeighbors=4;
     }
 
     public boolean FillNeighbors() {
