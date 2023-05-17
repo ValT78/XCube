@@ -35,15 +35,21 @@ Vous pouvez télécharger la dernière version d'Android Studio en suivant [ce l
 
 Deux options sont possibles.
 <ins>Via archive tar.gz :</ins> Téléchargez l'archive [ici]([https://developer.android.com/studio#downloads](https://developer.android.com/studio#downloads)). Allez ensuite dans le dossier où se trouve l'archive, et éxécutez
+
 `$ tar -xvzf android-studio-xxx-linux.tar.gz`
+
 Pour éxécutez le programme :
+
 `$  /opt/android-studio/bin/studio.sh &`
 
 <ins>Via Snap :</ins> Installez Snap puis Android Studio :
 
 `$ sudo apt update && sudo apt install snapd`
+
 `$ sudo snap install core`
+
 `$ sudo snap install android-studio --classic`
+
 `$ snap run android-studio`
 
 **_Arch_** (et autre distribution fondé sur Arch)
