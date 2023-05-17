@@ -35,6 +35,7 @@ Vous pouvez télécharger la dernière version d'Android Studio en suivant [ce l
 **_Debian_** (et autre distribution fondé sur Debian)
 
 Deux options sont possibles.
+
 <ins>Via archive tar.gz :</ins> Téléchargez l'archive [ici]([https://developer.android.com/studio#downloads](https://developer.android.com/studio#downloads)). Allez ensuite dans le dossier où se trouve l'archive, et éxécutez
 
 `$ tar -xvzf android-studio-xxx-linux.tar.gz`
