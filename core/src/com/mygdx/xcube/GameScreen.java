@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 import com.mygdx.xcube.block.Items;
-import com.mygdx.xcube.block.TerrainBlock;
 
 import java.util.Random;
 
@@ -167,35 +166,24 @@ public class GameScreen implements Screen {
                 return false;
         }
 
-        public Array<TerrainBlock> NearAlign(Array<HollowSquare> overSaturate) {
-                Array<TerrainBlock> needToPlay = new Array<>();
+        public HollowSquare NearAlign(Array<HollowSquare> overSaturate) {
                 for (HollowSquare sat : overSaturate) {
                         sat.isFree=false;
                         sat.isBlue=players.getPlayer();
                         if(checkEveryAlign(players.getPlayer())) {
-                                needToPlay.add(sat);
-                                for(HollowBar neighbors : sat.neighbors) {
-                                        if(neighbors.isFree) {
-                                                needToPlay.add(neighbors);
-                                        }
-                                }
+                                System.out.println("J'ai gagnée");
                                 sat.isFree=true;
-                                return needToPlay;
+                                return sat;
                         }
                         sat.isBlue=!players.getPlayer();
-                        if(checkEveryAlign(players.getPlayer())) {
-                                needToPlay.add(sat);
-                                for(HollowBar neighbors : sat.neighbors) {
-                                        if(neighbors.isFree) {
-                                                needToPlay.add(neighbors);
-                                        }
-                                }
+                        if(checkEveryAlign(!players.getPlayer())) {
+                                System.out.println("je perds pas");
                                 sat.isFree=true;
-                                return needToPlay;
+                                return sat;
                         }
                         sat.isFree=true;
                 }
-                return needToPlay;
+                return null;
 
         }
 
@@ -321,7 +309,7 @@ public class GameScreen implements Screen {
                                         touchOff = false;
                                         for (int i = 0; i < terrain.getSquare().size; i++) {
                                                 coupIA=2;
-                                                terrain.getSquare().get(i).clickBlock("V2/bluebar1.png", GameScreen.this);
+                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this);
                                         }
                                         for (HollowBar b : terrain.getBar()) {
                                                 coupIA=2;
@@ -334,16 +322,42 @@ public class GameScreen implements Screen {
                                 }
                         }
                         else {
-                                for (HollowBar b : terrain.getBar()) { //L'IA cherche une barre qui est libre pour jouer, elle s'arrête après 2 coups
-                                        if(coupIA>0 && b.isFree) {
-                                                b.iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                coupIA -=1;
+                                Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1);
+                                Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
+                                if(oversaturate.size > 0) {
+                                        HollowSquare nearAlign = NearAlign(oversaturate);
+                                        if(nearAlign != null) {
+                                                OverSaturatePlay(nearAlign);
                                         }
-                                } //S'il n'y a pas de barre libre, elle joue les carrés libres
-                                for (int i =0; i < terrain.getSquare().size; i++) {
-                                        if(coupIA>0 && terrain.getSquare().get(i).isFree) {
-                                                terrain.getSquare().get(i).iaClickBlock("V2/redcross1.png", GameScreen.this);
-                                                coupIA -=1;
+                                        else if(coupIA == 1) {
+                                                Array<HollowSquare> four = terrain.HaveNeighbors(4,4);
+                                                if(four.size > 0) {
+                                                        four.get(random.nextInt(four.size)).iaClickBlock("V2/redcross1.png", GameScreen.this);
+                                                        coupIA-=1;
+                                                }
+
+                                        }
+                                        else {
+                                                OverSaturatePlay(oversaturate.get(random.nextInt(oversaturate.size)));
+                                        }
+
+
+                                }
+                                else if (insaturate.size>0 && terrain.FindInsaturation(insaturate) != null) {
+                                        terrain.FindInsaturation(insaturate).iaClickBlock("V2/redbar1.png", GameScreen.this);
+                                        coupIA-=1;
+                                } else{
+                                        for (HollowBar b : terrain.getBar()) { //L'IA cherche une barre qui est libre pour jouer, elle s'arrête après 2 coups
+                                                if (coupIA > 0 && b.isFree) {
+                                                        b.iaClickBlock("V2/redbar1.png", GameScreen.this);
+                                                        coupIA -= 1;
+                                                }
+                                        } //S'il n'y a pas de barre libre, elle joue les carrés libres
+                                        for (int i = 0; i < terrain.getSquare().size; i++) {
+                                                if (coupIA > 0 && terrain.getSquare().get(i).isFree) {
+                                                        terrain.getSquare().get(i).iaClickBlock("V2/redcross1.png", GameScreen.this);
+                                                        coupIA -= 1;
+                                                }
                                         }
                                 }
 
@@ -352,6 +366,25 @@ public class GameScreen implements Screen {
 
                 }
         };
+
+        private void OverSaturatePlay(HollowSquare square){
+                if(square.freeNeighbors==1) {
+                        for (HollowBar bar : square.neighbors) {
+                                if (bar.isFree) {
+                                        bar.iaClickBlock("V2/redbar1.png", GameScreen.this);
+                                        coupIA-=1;
+                                }
+                        }
+                        if(coupIA==1) {
+                                square.iaClickBlock("V2/redcross1.png", GameScreen.this);
+                                coupIA -= 1;
+                        }
+                }
+                else if (square.freeNeighbors == 0) {
+                        square.iaClickBlock("V2/redcross1.png", GameScreen.this);
+                        coupIA -= 1;
+                }
+        }
 
 
         public int getMode(){

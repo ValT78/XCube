@@ -46,7 +46,7 @@ public class HollowSquare extends TerrainBlock {
         return true;
     }
 
-    public void addNeighbors(Array<HollowBar> bars) { //Ajoute les 4 barres autour du carré dans cet ordre : gauche, droite, bas, haut
+    public void addNeighbors(Array<HollowBar> bars) { //Ajoute les 4 barres autour du carré dans cet ordre : bas, haut, gauche, droite
         for (HollowBar b: bars) {
             if (Math.abs(this.y - (b.y+b.dy/2-this.dy/2)) < 2  && Math.abs(this.x - (b.x-b.dy/2-this.dx/2)) < 2 ) {
                 this.neighbors.add(b);

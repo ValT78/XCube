@@ -5,6 +5,12 @@ import com.mygdx.xcube.block.TerrainBlock;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class Terrain {
     private final Array<HollowBar> bar;
     private final Array<HollowSquare> square;
@@ -15,6 +21,7 @@ public class Terrain {
     private final int originX;
     private final int originY;
     private Array<TerrainBlock> lastPlay;
+    private final Random random = new Random();
 
 
     public Terrain() {
@@ -203,40 +210,47 @@ public class Terrain {
     public Array<HollowSquare> HaveNeighbors(int min, int max) {
         Array<HollowSquare> haveNeighbors = new Array<>();
         for (HollowSquare square : square) {
-            int numberFree = 0;
-            for(int i =0; i<4;i++) {
-                if(square.neighbors.get(i).isFree) {
-                    numberFree++;
+            if(square.isFree) {
+                int numberFree = 0;
+                for(int i =0; i<4;i++) {
+                    if(square.neighbors.get(i).isFree) {
+                        numberFree++;
+                    }
                 }
-            }
-            square.freeNeighbors=numberFree;
-            if(numberFree>=min && numberFree<=max) {
-                haveNeighbors.add(square);
+                square.freeNeighbors=numberFree;
+                if(numberFree>=min && numberFree<=max) {
+                    haveNeighbors.add(square);
+                }
             }
         }
         return haveNeighbors;
     }
     public HollowBar FindInsaturation(Array<HollowSquare> nonSaturate) {
+        for (int i = nonSaturate.size - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            nonSaturate.swap(i, j);
+        }
         for (HollowSquare nonSat : nonSaturate) {
             int[] coord = nonSat.getCoords();
             HollowSquare squareR = locateSquare(coord[0]+spaceBlock, coord[1],square);
             HollowSquare squareL = locateSquare(coord[0]-spaceBlock, coord[1],square);
             HollowSquare squareU = locateSquare(coord[0], coord[1]+spaceBlock,square);
             HollowSquare squareD = locateSquare(coord[0], coord[1]-spaceBlock,square);
-            if (squareL.freeNeighbors>2) {
-                return nonSat.neighbors.get(0);
+            Array<Integer> aleaCond = new Array<>();
+            if (nonSat.neighbors.get(2).isFree && (squareL==null || squareL.freeNeighbors>2)) {
+                aleaCond.add(2);
             }
-            else if (squareR.freeNeighbors>2) {
-                return nonSat.neighbors.get(1);
-
+            if (nonSat.neighbors.get(3).isFree && (squareR==null || squareR.freeNeighbors>2)) {
+                aleaCond.add(3);
             }
-            else if (squareD.freeNeighbors>2) {
-                return nonSat.neighbors.get(2);
-
+            if (nonSat.neighbors.get(0).isFree && (squareD==null || squareD.freeNeighbors>2)) {
+                aleaCond.add(0);
             }
-            else if (squareU.freeNeighbors>2) {
-                return nonSat.neighbors.get(3);
-
+            if (nonSat.neighbors.get(1).isFree && (squareU==null || squareU.freeNeighbors>2)) {
+                aleaCond.add(1);
+            }
+            if(aleaCond.size > 0) {
+                return nonSat.neighbors.get(aleaCond.get(random.nextInt(aleaCond.size)));
             }
         }
         return null;
