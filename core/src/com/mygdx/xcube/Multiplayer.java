@@ -27,7 +27,7 @@ public class Multiplayer implements Screen {
     Stage stage = new Stage(viewport);
     OrthographicCamera camera;
 
-    public Multiplayer(XCube game, boolean dlc){
+    public Multiplayer(XCube game, float startTime, boolean dlc){
         asyncExecutor = new AsyncExecutor(1);
 
         asyncExecutor.submit(new AsyncTask<Void>() {
@@ -45,7 +45,7 @@ public class Multiplayer implements Screen {
             }
         });
         this.game = game;
-        this.gamescreen = new GameScreen(game,1, dlc);
+        this.gamescreen = new GameScreen(game,1, startTime, dlc);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
     }

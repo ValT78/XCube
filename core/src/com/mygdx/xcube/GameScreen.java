@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
@@ -24,14 +23,11 @@ public class GameScreen implements Screen {
         final XCube game;
         private boolean color;
         public static OrthographicCamera camera;
-        //Viewport viewport = new FitViewport(800,480);
         public Terrain terrain;
         public PlayerManager players;
         private boolean touchOff = true;
-        //private boolean setup= false;
-        private final float startTime = 180;
-        private float timeLeftBlue = startTime;
-        private float timeLeftRed = startTime;
+        private float timeLeftBlue;
+        private float timeLeftRed;
         private int minutesBlue;
         private int secondsBlue;
         private int tenthsBlue;
@@ -51,7 +47,7 @@ public class GameScreen implements Screen {
         private boolean gameStarted = false;
         private final Random random = new Random();
 
-        public GameScreen(final XCube game,int mode, boolean dlc) {
+        public GameScreen(final XCube game, int mode, float startTime, boolean dlc) {
 
                 grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/grille.png");
                 grid.resize(4*unitY+7*unitX,4*unitY+7*unitX);
@@ -59,8 +55,8 @@ public class GameScreen implements Screen {
                 terrain = new Terrain();
                 players = new PlayerManager();
                 camera = new OrthographicCamera();
-                //camera.setToOrtho(false,width_screen,height_screen);
-
+                this.timeLeftRed=startTime;
+                this.timeLeftBlue=startTime;
 
                 this.mode = mode;
                 camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
@@ -171,13 +167,11 @@ public class GameScreen implements Screen {
                         sat.isFree=false;
                         sat.isBlue=players.getPlayer();
                         if(checkEveryAlign(players.getPlayer())) {
-                                System.out.println("J'ai gagnée");
                                 sat.isFree=true;
                                 return sat;
                         }
                         sat.isBlue=!players.getPlayer();
                         if(checkEveryAlign(!players.getPlayer())) {
-                                System.out.println("je perds pas");
                                 sat.isFree=true;
                                 return sat;
                         }
