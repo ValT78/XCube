@@ -1,6 +1,8 @@
 package com.mygdx.xcube;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.xcube.block.Items;
 import com.mygdx.xcube.block.TerrainBlock;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
@@ -117,7 +119,6 @@ public class Terrain {
 
         HollowSquare square1 = new HollowSquare(x+unitX+unitY/2-unitSquare/2, y+unitX+unitY/2-unitSquare/2); //Création et ajout du carré au terrain
         this.square.add(square1);
-
         HollowBar bar1 = locateBar(x+unitX,y, this.bar);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
         if(bar1==null) {
             bar1 = new HollowBar(true, x + unitX, y);

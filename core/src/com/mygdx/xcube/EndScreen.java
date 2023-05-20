@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class EndScreen implements Screen {
+    ShapeRenderer shape;
     final XCube game;
     float inputTime = 0;
     OrthographicCamera camera;
@@ -28,24 +31,31 @@ public class EndScreen implements Screen {
         }
 
         public void render(float delta){            // Boucle infinie d'exécution
+            shape = new ShapeRenderer();
             inputTime += delta;
             if(player) {
-                ScreenUtils.clear(222/255f,1,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                //ScreenUtils.clear(222/255f,1,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                shape.begin(ShapeRenderer.ShapeType.Filled);
+                shape.rect(0,0,540,1200,Color.CYAN,Color.SKY,new Color(0x029FFA),new Color(0x029FFA)); // gradient
+                shape.end();
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
 
                 game.batch.begin();     // Début des éléments à afficher
                 font.setColor(Color.BLUE);
-                font.draw(game.batch,"Victoire du bleu !",width_screen/4,height_screen/2);
+                font.draw(game.batch,"VICTOIRE DU BLEU !",width_screen/4,height_screen/2);
                 game.batch.end();       // Fin des éléments à afficher
             }
             if(!player){
-                ScreenUtils.clear(1,222/255f,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                //ScreenUtils.clear(1,222/255f,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                shape.begin(ShapeRenderer.ShapeType.Filled);
+                shape.rect(0,0,540,1200,Color.SALMON,Color.SALMON,Color.CORAL,Color.CORAL); // gradient
+                shape.end();
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
                 game.batch.begin();     // Début des éléments à afficher
                 font.setColor(Color.RED);
-                font.draw(game.batch,"Victoire du rouge !",width_screen/4,height_screen/2);
+                font.draw(game.batch,"VICTOIRE DU ROUGE !",width_screen/5,height_screen/2);
                 game.batch.end();       // Fin des éléments à afficher
 
             }

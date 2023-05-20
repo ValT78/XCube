@@ -48,8 +48,7 @@ public class GameScreen implements Screen {
         private final Random random = new Random();
 
         public GameScreen(final XCube game, int mode, float startTime, boolean dlc) {
-
-                grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/grille.png");
+                grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/dots.png");
                 grid.resize(4*unitY+7*unitX,4*unitY+7*unitX);
                 this.game = game;
                 terrain = new Terrain();
