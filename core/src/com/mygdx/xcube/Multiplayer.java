@@ -1,6 +1,5 @@
 package com.mygdx.xcube;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,12 +10,8 @@ import com.badlogic.gdx.utils.async.AsyncExecutor;
 import com.badlogic.gdx.utils.async.AsyncTask;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.swing.text.StyledEditorKit;
-
 import io.socket.client.Socket;
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
@@ -32,7 +27,7 @@ public class Multiplayer implements Screen {
     Stage stage = new Stage(viewport);
     OrthographicCamera camera;
 
-    public Multiplayer(XCube game, boolean dlc){
+    public Multiplayer(XCube game, float startTime, boolean dlc){
         asyncExecutor = new AsyncExecutor(1);
 
         asyncExecutor.submit(new AsyncTask<Void>() {
@@ -50,7 +45,7 @@ public class Multiplayer implements Screen {
             }
         });
         this.game = game;
-        this.gamescreen = new GameScreen(game,1, dlc);
+        this.gamescreen = new GameScreen(game,1, startTime, dlc);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,822);
     }
