@@ -36,7 +36,6 @@ public class GameScreen implements Screen {
         private int tenthsRed;
         private final int mode;
         private final boolean dlc;
-        private int coupIA;
         private Vector3 touchPos = new Vector3();
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
         private final int unitY = new HollowBar(false,0,0).getSize()[1];
@@ -309,15 +308,14 @@ public class GameScreen implements Screen {
         Runnable RendererIA = new Runnable() { //Similaire à RenderLocal mais pour l'IA
                 @Override
                 public void run() {
+                        boolean hasPlay = false;
                         if(players.getPlayer()) {
                                 if (Gdx.input.isTouched() && touchOff) {
                                         touchOff = false;
                                         for (int i = 0; i < terrain.getSquare().size; i++) {
-                                                coupIA=2;
                                                 terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this);
                                         }
                                         for (HollowBar b : terrain.getBar()) {
-                                                coupIA=2;
                                                 b.clickBlock("V2/bluebar1.png", GameScreen.this);
                                         }
 
@@ -331,14 +329,15 @@ public class GameScreen implements Screen {
                                 Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
                                 if(oversaturate.size > 0) {
                                         HollowSquare nearAlign = NearAlign(oversaturate);
-                                        Array<HollowSquare> four = terrain.HaveNeighbors(4,4);
+                                        Array<HollowSquare> four = terrain.HaveNeighbors(0,0);
                                         if(nearAlign != null) {
                                                 OverSaturatePlay(nearAlign);
+                                                nearAlign.iaClickBlock("V2/redcross1.png", GameScreen.this);
+                                                hasPlay=true;
                                         }
-                                        else if(coupIA == 1 && four.size > 0) {
+                                        else if(four.size > 0) {
                                                 four.get(random.nextInt(four.size)).iaClickBlock("V2/redcross1.png", GameScreen.this);
-                                                        coupIA-=1;
-
+                                                hasPlay=true;
                                         }
                                         else {
                                                 for (HollowSquare square : oversaturate) {
@@ -349,30 +348,29 @@ public class GameScreen implements Screen {
                                                         HollowSquare squareD = terrain.locateSquare(coord[0], coord[1] - spaceBlock, terrain.getSquare());
                                                         if (square.neighbors.get(2).isFree && (squareL == null || !CouldAlign(squareL))) {
                                                                 OverSaturatePlay(square);
-                                                                coupIA -= 1;
+                                                                hasPlay=true;
                                                                 break;
                                                         } else if (square.neighbors.get(3).isFree && (squareR == null || !CouldAlign(squareR))) {
                                                                 OverSaturatePlay(square);
-                                                                coupIA -= 1;
+                                                                hasPlay=true;
                                                                 break;
                                                         } else if (square.neighbors.get(0).isFree && (squareD == null || !CouldAlign(squareD))) {
                                                                 OverSaturatePlay(square);
-                                                                coupIA -= 1;
+                                                                hasPlay=true;
                                                                 break;
                                                         } else if (square.neighbors.get(1).isFree && (squareU == null || !CouldAlign(squareU))) {
                                                                 OverSaturatePlay(square);
-                                                                coupIA -= 1;
+                                                                hasPlay=true;
                                                                 break;
                                                         }
                                                 }
-                                                OverSaturatePlay(oversaturate.get(random.nextInt(oversaturate.size)));
                                         }
                                 }
                                 else if (insaturate.size>0 && terrain.FindInsaturation(insaturate) != null) {
                                         terrain.FindInsaturation(insaturate).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                        coupIA-=1;
+                                        hasPlay=true;
                                 }
-                                else {
+                                if(!hasPlay) {
                                         for (HollowSquare square : terrain.getSquare()) {
                                                 if (square.isFree && !CouldAlign(square)) {
                                                         int[] coord = square.getCoords();
@@ -382,26 +380,29 @@ public class GameScreen implements Screen {
                                                         HollowSquare squareD = terrain.locateSquare(coord[0], coord[1]-spaceBlock,terrain.getSquare());
                                                         if(square.neighbors.get(2).isFree && (squareL==null || !CouldAlign(squareL))) {
                                                                 square.neighbors.get(2).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                coupIA-=1;
+                                                                hasPlay=true;
                                                                 break;
                                                         }
                                                         else if(square.neighbors.get(3).isFree && (squareR==null || !CouldAlign(squareR))) {
                                                                 square.neighbors.get(3).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                coupIA-=1;
+                                                                hasPlay=true;
                                                                 break;
                                                         }
                                                         else if(square.neighbors.get(0).isFree && (squareD==null || !CouldAlign(squareD))) {
                                                                 square.neighbors.get(0).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                coupIA-=1;
+                                                                hasPlay=true;
                                                                 break;
                                                         }
                                                         else if(square.neighbors.get(1).isFree && (squareU==null || !CouldAlign(squareU))) {
                                                                 square.neighbors.get(1).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                coupIA-=1;
+                                                                hasPlay=true;
                                                                 break;
                                                         }
 
                                                 }
+                                        }
+                                        if(!hasPlay) {
+                                                OverSaturatePlay(oversaturate.get(random.nextInt(oversaturate.size)));
                                         }
                                 }
 
@@ -419,21 +420,10 @@ public class GameScreen implements Screen {
         };
 
         private void OverSaturatePlay(HollowSquare square){
-                if(square.freeNeighbors==1) {
-                        for (HollowBar bar : square.neighbors) {
-                                if (bar.isFree) {
-                                        bar.iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                        coupIA-=1;
-                                }
+                for (HollowBar bar : square.neighbors) {
+                        if (bar.isFree) {
+                                bar.iaClickBlock("V2/redbar1.png", GameScreen.this);
                         }
-                        if(coupIA==1) {
-                                square.iaClickBlock("V2/redcross1.png", GameScreen.this);
-                                coupIA -= 1;
-                        }
-                }
-                else if (square.freeNeighbors == 0) {
-                        square.iaClickBlock("V2/redcross1.png", GameScreen.this);
-                        coupIA -= 1;
                 }
         }
 

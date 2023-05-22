@@ -150,9 +150,9 @@ public class Terrain {
 
     public HollowSquare locateSquare(int x, int y, Array<HollowSquare> squares) { //retourne le carré de coordonnée (x,y)
         int[] coord = {x,y};
-        for (HollowSquare square: squares) {
-            if(coord[0] == square.getCoords()[0] && coord[1] == square.getCoords()[1]) {
-                return square;
+        for(int i = 0; i<squares.size; i++) {
+            if(coord[0] == squares.get(i).getCoords()[0] && coord[1] == squares.get(i).getCoords()[1]) {
+                return squares.get(i);
             }
         }
         return null;
