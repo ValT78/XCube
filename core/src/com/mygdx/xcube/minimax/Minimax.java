@@ -26,7 +26,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, false, newBoard); // create the next node (maximizing player, second action)
                     value = Math.max(value, minimax(child, depth - 1)); // compute the score of the current node
 
@@ -37,7 +37,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, true, newBoard); // create the next node (minimizing player, first action)
                     value = Math.max(value, minimax(child, depth - 1)); // compute the score of the current node
 
@@ -58,7 +58,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, false, newBoard); // create the next node (minimizing player, second action)
                     value = Math.min(value, minimax(child, depth - 1)); // compute the score of the current node
 
@@ -69,7 +69,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, true, newBoard); // create the next node (maximizing player, first action)
                     value = Math.min(value, minimax(child, depth - 1)); // compute the score of the current node
 
@@ -105,7 +105,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, false, newBoard); // create the next node (maximizing player, second action)
                     value = Math.max(value, alphabeta(child, depth - 1, alpha, beta)); // compute the score of the current node
                     if (value > beta) {
@@ -120,7 +120,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, true, newBoard); // create the next node (minimizing player, first action)
                     value = Math.max(value, alphabeta(child, depth - 1, alpha, beta)); // compute the score of the current node
                     if (value > beta) {
@@ -145,7 +145,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, false, newBoard); // create the next node (minimizing player, second action)
                     value = Math.min(value, alphabeta(child, depth - 1, alpha, beta)); // compute the score of the current node
                     if (value < alpha) {
@@ -160,7 +160,7 @@ class Minimax {
 
                 for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
-                    Board newBoard = node.getBoard().play(move); // get the board after the move
+                    MinimaxBoard newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, true, newBoard); // create the next node (maximizing player, first action)
                     value = Math.min(value, alphabeta(child, depth - 1, alpha, beta)); // compute the score of the current node
                     if (value < alpha) {
@@ -181,7 +181,7 @@ class Minimax {
 
 
     // Given a board and a number of steps (4k + 2), compute using the minimax algorithm (with alpha beta pruning) the best score and returns the next move to play 
-    public static MinimaxMove chooseMove(Board board, int nbSteps) {
+    public static MinimaxMove chooseMove(MinimaxBoard board, int nbSteps) {
 
         MinimaxNode root = new MinimaxNode(true, true, board); // root of the tree
         Double bestScore = Double.NEGATIVE_INFINITY; // the best score
@@ -191,7 +191,7 @@ class Minimax {
 
         for (MinimaxMove move: root.possibleMoves()) {
 
-            Board newBoard = root.getBoard().play(move);
+            MinimaxBoard newBoard = root.getBoard().play(move);
             MinimaxNode child = new MinimaxNode(true, false, newBoard);
             Double score = alphabeta(child, nbSteps - 1, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY); // compute score of this node using minimax
 

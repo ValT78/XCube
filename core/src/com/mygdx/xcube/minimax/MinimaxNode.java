@@ -5,9 +5,9 @@ class MinimaxNode {
     private boolean isMaxPlayer; // true if the current node is maximizing the score
     private boolean isFirstAction; // true if this node is the first of the two actions a player has during their turn
     private boolean isTerminal; // true if the board presents a win condition
-    private Board board;
+    private MinimaxBoard board;
 
-    public MinimaxNode(boolean isMaxPlayer, boolean isFirstAction, Board board) {
+    public MinimaxNode(boolean isMaxPlayer, boolean isFirstAction, MinimaxBoard board) {
         this.isMaxPlayer = isMaxPlayer;
         this.isFirstAction = isFirstAction;
         this.board = board;
@@ -23,13 +23,13 @@ class MinimaxNode {
     public boolean getIsTerminal() {
         return this.isTerminal;
     }
-    public Board getBoard() {
+    public MinimaxBoard getBoard() {
         return this.board;
     }
 
 
     // check if the board is terminal
-    public boolean someoneWins(Board board) {
+    public boolean someoneWins(MinimaxBoard board) {
         return false;
     }
 
