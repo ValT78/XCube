@@ -1,64 +1,67 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.mygdx.xcube"
-4    android:versionCode="1"
-5    android:versionName="1.0" >
-6
-7    <uses-sdk
-8        android:minSdkVersion="14"
-8-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml
-9        android:targetSdkVersion="33" />
+4    android:background="@drawable/gradient_bg"
+5    android:versionCode="1"
+6    android:versionName="1.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="14"
 9-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml
-10
-11    <uses-feature
-11-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:6:5-78
-12        android:glEsVersion="0x00020000"
-12-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:6:19-51
-13        android:required="true" />
-13-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:6:52-75
-14
-15    <uses-permission android:name="android.permission.INTERNET" />
-15-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:7:5-67
-15-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:7:22-64
-16
-17    <application
-17-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:8:5-27:19
-18        android:allowBackup="true"
-18-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:9:9-35
-19        android:appCategory="game"
-19-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:13:9-35
-20        android:debuggable="true"
-21        android:fullBackupContent="true"
-21-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:10:9-41
-22        android:icon="@drawable/ic_launcher"
-22-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:11:9-45
-23        android:isGame="true"
-23-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:12:9-30
-24        android:label="XCube" >
+10        android:targetSdkVersion="33" />
+10-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml
+11
+12    <uses-feature
+12-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:7:5-78
+13        android:glEsVersion="0x00020000"
+13-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:7:19-51
+14        android:required="true" />
+14-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:7:52-75
+15
+16    <uses-permission android:name="android.permission.INTERNET" />
+16-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:8:5-67
+16-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:8:22-64
+17
+18    <application
+18-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:9:5-29:19
+19        android:allowBackup="true"
+19-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:10:9-35
+20        android:appCategory="game"
+20-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:15:9-35
+21        android:debuggable="true"
+22        android:fullBackupContent="true"
+22-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:11:9-41
+23        android:icon="@drawable/ic_launcher"
+23-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:12:9-45
+24        android:isGame="true"
 24-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:14:9-30
-25        <activity
-25-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:16:9-26:20
-26            android:name="com.mygdx.xcube.AndroidLauncher"
-26-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:17:13-59
-27            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
-27-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:20:13-107
-28            android:exported="true"
-28-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:21:13-36
-29            android:label="@string/app_name"
-29-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:18:13-45
-30            android:screenOrientation="portrait" >
-30-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:19:13-49
-31            <intent-filter>
-31-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:22:13-25:29
-32                <action android:name="android.intent.action.MAIN" />
-32-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:23:17-69
-32-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:23:25-66
-33
-34                <category android:name="android.intent.category.LAUNCHER" />
-34-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:24:17-77
-34-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:24:27-74
-35            </intent-filter>
-36        </activity>
-37    </application>
-38
-39</manifest>
+25        android:label="XCube"
+25-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:16:9-30
+26        android:usesCleartextTraffic="true" >
+26-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:13:9-44
+27        <activity
+27-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:18:9-28:20
+28            android:name="com.mygdx.xcube.AndroidLauncher"
+28-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:19:13-59
+29            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
+29-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:22:13-107
+30            android:exported="true"
+30-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:23:13-36
+31            android:label="@string/app_name"
+31-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:20:13-45
+32            android:screenOrientation="portrait" >
+32-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:21:13-49
+33            <intent-filter>
+33-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:24:13-27:29
+34                <action android:name="android.intent.action.MAIN" />
+34-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:25:17-69
+34-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:25:25-66
+35
+36                <category android:name="android.intent.category.LAUNCHER" />
+36-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:26:17-77
+36-->/home/basile/JavaProject/Projet-dev/android/AndroidManifest.xml:26:27-74
+37            </intent-filter>
+38        </activity>
+39    </application>
+40
+41</manifest>

@@ -10,6 +10,7 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@drawable/ic_launcher"
+        android:usesCleartextTraffic="true"
         android:isGame="true"
         android:appCategory="game"
         android:label="XCube"
