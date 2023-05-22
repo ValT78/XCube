@@ -142,3 +142,5 @@ Une fois en jeu :
 La partie commence avec le·a joueur·se bleu·e. On a deux coups. En touchant une barre grise, elle se transforme en bleu clair. Une fois le tour terminé, cela passe au rouge. Le bleu devient ensuite bleu foncé au tour prochain. Quand trois croix rouge ou bleue sont allignées, la partie est terminée. 
 
 ## Release
+
+Elles sont disponibles dans le tag `release-x`.
