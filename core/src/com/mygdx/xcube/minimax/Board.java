@@ -5,7 +5,7 @@ class Board {
     public Board() {} // to update
 
     // play a move
-    public Board play(Move move) {
+    public Board play(MinimaxMove move) {
         return this;
     }
 

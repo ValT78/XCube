@@ -33,10 +33,10 @@ class MinimaxNode {
         return false;
     }
 
-    // returns the list of possibles moves from this board
-    public Move[] possibleMoves() {
-        Move[] res = new Move[1];
-        Move newMove = new Move();
+    // returns the list of possibles moves from this board (to update)
+    public MinimaxMove[] possibleMoves() {
+        MinimaxMove[] res = new MinimaxMove[1];
+        MinimaxMove newMove = new MinimaxMove();
         res[0] = newMove;
         return res;
     }

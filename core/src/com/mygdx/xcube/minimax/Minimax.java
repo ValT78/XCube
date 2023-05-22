@@ -24,7 +24,7 @@ class Minimax {
             // First action case
             if (node.getIsFirstAction()) {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, false, newBoard); // create the next node (maximizing player, second action)
@@ -35,7 +35,7 @@ class Minimax {
             // Second action case
             } else {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, true, newBoard); // create the next node (minimizing player, first action)
@@ -56,7 +56,7 @@ class Minimax {
             // First action case
             if (node.getIsFirstAction()) {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, false, newBoard); // create the next node (minimizing player, second action)
@@ -67,7 +67,7 @@ class Minimax {
             // Second action case
             } else {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, true, newBoard); // create the next node (maximizing player, first action)
@@ -103,7 +103,7 @@ class Minimax {
             // First action case
             if (node.getIsFirstAction()) {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, false, newBoard); // create the next node (maximizing player, second action)
@@ -118,7 +118,7 @@ class Minimax {
             // Second action case
             } else {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, true, newBoard); // create the next node (minimizing player, first action)
@@ -143,7 +143,7 @@ class Minimax {
             // First action case
             if (node.getIsFirstAction()) {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(false, false, newBoard); // create the next node (minimizing player, second action)
@@ -158,7 +158,7 @@ class Minimax {
             // Second action case
             } else {
 
-                for (Move move: node.possibleMoves()) { // for each possible move from the current board,
+                for (MinimaxMove move: node.possibleMoves()) { // for each possible move from the current board,
 
                     Board newBoard = node.getBoard().play(move); // get the board after the move
                     MinimaxNode child = new MinimaxNode(true, true, newBoard); // create the next node (maximizing player, first action)
@@ -181,15 +181,15 @@ class Minimax {
 
 
     // Given a board and a number of steps (4k + 2), compute using the minimax algorithm (with alpha beta pruning) the best score and returns the next move to play 
-    public static Move chooseMove(Board board, int nbSteps) {
+    public static MinimaxMove chooseMove(Board board, int nbSteps) {
 
         MinimaxNode root = new MinimaxNode(true, true, board); // root of the tree
         Double bestScore = Double.NEGATIVE_INFINITY; // the best score
         Random rd = new Random();
 
-        ArrayList<Move> bestMoves = new ArrayList<Move>(); // the list of moves that maximize the score
+        ArrayList<MinimaxMove> bestMoves = new ArrayList<MinimaxMove>(); // the list of moves that maximize the score
 
-        for (Move move: root.possibleMoves()) {
+        for (MinimaxMove move: root.possibleMoves()) {
 
             Board newBoard = root.getBoard().play(move);
             MinimaxNode child = new MinimaxNode(true, false, newBoard);
