@@ -28,12 +28,12 @@ class MinimaxNode {
     }
 
 
-    // check if the board is terminal
+    // check if the board is terminal (to update)
     public boolean someoneWins(MinimaxBoard board) {
         return false;
     }
 
-    // returns the list of possibles moves from this board (to update)
+    // returns the list of possibles moves from this board
     public ArrayList<MinimaxMove> possibleMoves() {
 
         ArrayList<MinimaxMove> moves = new ArrayList<MinimaxMove>;
@@ -42,7 +42,7 @@ class MinimaxNode {
         int verticalBars[] = this.board.getVerticalBars(); 
 
         // square case (checks if the square is surrounded by bars)
-        for (int i = 0 ; i < squares.length ; i++ ) {
+        for (int i = 0 ; i < squares.length ; i++) {
             if (squares[i] == 0 && (horizontalBars[i] == 1 && horizontalBars[i + 4] == 1) && (verticalBars[i + (i / 4 % 4)] == 1 && verticalBars[i + (i / 4 % 4) + 1] == 1)) {
                 MinimaxMove newMove = new MinimaxMove(this.isMaxPlayer, ! this.isMaxPlayer, false, false, i);
                 moves.add(newMove);
@@ -56,7 +56,7 @@ class MinimaxNode {
             }
         }
         // vertical bar case
-        for (int i = 0 ; i < verticalBars.length ; i++ ) {
+        for (int i = 0 ; i < verticalBars.length ; i++) {
             if (verticalBars[i] == 0) {
                 MinimaxMove newMove = new MinimaxMove(false, false, false, true, i);
                 moves.add(newMove);
@@ -69,7 +69,7 @@ class MinimaxNode {
 
     // returns the score associated with this board
     public Double heuristic() {
-        return Double.valueOf(1);
+        return this.board.heuristic();
     }
 
 }

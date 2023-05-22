@@ -8,7 +8,7 @@ class MinimaxBoard {
     // represents a board as arrays of squares and bars, from top to bottom and left to right
     // note : only works for a 4x4 grid
 
-    private int squares[]; // reprensents the squares (0 : free, 1 : AI, 2 : opponent)
+    private int squares[]; // reprensents the squares (0 : free, 1 : AI, -1 : opponent)
     private int horizontalBars[]; // represents the horizontal bars (0 : free, 1 : not free)
     private int verticalBars[]; // represents the vertircal bars (0 : free, 1 : not free)
 
@@ -36,6 +36,21 @@ class MinimaxBoard {
 
         return this;
 
+    }
+
+    // returns the score associated with this board (to update)
+    public Double heuristic() {
+
+        Double score = 0;
+
+        for (int i = 0 ; i < squares ; i++) {
+
+            score += squares[i];
+
+        }
+
+        return score;
+        
     }
 
 }
