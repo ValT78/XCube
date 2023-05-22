@@ -94,7 +94,7 @@ public class MainMenuScreen implements Screen {
                 }
                 else if(startTime==150){
                     startTime=300;
-                    Chrono.setSprite("grey_bar2.png");
+                    Chrono.setSprite("V2/bluebar2.png");
                     Chrono.setText("Temps : Découverte (300 sec)");
                 }
                 else if(startTime==300){

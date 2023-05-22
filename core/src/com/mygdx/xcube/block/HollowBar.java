@@ -8,7 +8,7 @@ public class HollowBar extends TerrainBlock {
 
     public HollowBar(boolean rotation, int x, int y){
         super(x,y);
-        this.setSprite("grey_bar.png");
+        this.setSprite("greybarv2.png");
 
         dx=round(this.getSprite().getWidth());
         dy=round(this.getSprite().getHeight());
