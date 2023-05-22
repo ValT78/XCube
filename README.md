@@ -143,4 +143,4 @@ La partie commence avec le·a joueur·se bleu·e. On a deux coups. En touchant u
 
 ## Release
 
-Elles sont disponibles dans le tag `release-x`.
+Elles sont disponibles dans le tag `[release-x](https://gitlab.com/Racoon-r/Projet-dev/-/releases)`.
