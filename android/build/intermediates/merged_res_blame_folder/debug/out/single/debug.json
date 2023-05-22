@@ -54,5 +54,9 @@
     {
         "merged": "com.mygdx.xcube.android-merged_res-5:/drawable-hdpi_ic_launcher_foreground.png.flat",
         "source": "com.mygdx.xcube.android-pngs-0:/drawable-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.mygdx.xcube.android-merged_res-5:/drawable_gradient_bg.xml.flat",
+        "source": "com.mygdx.xcube.android-android-6:/drawable/gradient_bg.xml"
     }
 ]
