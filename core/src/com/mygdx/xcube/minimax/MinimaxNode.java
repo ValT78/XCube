@@ -34,11 +34,37 @@ class MinimaxNode {
     }
 
     // returns the list of possibles moves from this board (to update)
-    public MinimaxMove[] possibleMoves() {
-        MinimaxMove[] res = new MinimaxMove[1];
-        MinimaxMove newMove = new MinimaxMove(true,false,false,0);
-        res[0] = newMove;
-        return res;
+    public ArrayList<MinimaxMove> possibleMoves() {
+
+        ArrayList<MinimaxMove> moves = new ArrayList<MinimaxMove>;
+        int squares[] = this.board.getSquares();
+        int horizontalBars[] = this.board.getHorizontalBars();
+        int verticalBars[] = this.board.getVerticalBars(); 
+
+        // square case (checks if the square is surrounded by bars)
+        for (int i = 0 ; i < squares.length ; i++ ) {
+            if (squares[i] == 0 && (horizontalBars[i] == 1 && horizontalBars[i + 4] == 1) && (verticalBars[i + (i / 4 % 4)] == 1 && verticalBars[i + (i / 4 % 4) + 1] == 1)) {
+                MinimaxMove newMove = new MinimaxMove(this.isMaxPlayer, ! this.isMaxPlayer, false, false, i);
+                moves.add(newMove);
+            }
+        }
+        // horizontal bar case
+        for (int i = 0 ; i < horizontalBars.length ; i++) {
+            if (horizontalBars[i] == 0) {
+                MinimaxMove newMove = new MinimaxMove(false, false, true, false, i);
+                moves.add(newMove);
+            }
+        }
+        // vertical bar case
+        for (int i = 0 ; i < verticalBars.length ; i++ ) {
+            if (verticalBars[i] == 0) {
+                MinimaxMove newMove = new MinimaxMove(false, false, false, true, i);
+                moves.add(newMove);
+            }
+        }
+
+        return moves;
+
     }
 
     // returns the score associated with this board

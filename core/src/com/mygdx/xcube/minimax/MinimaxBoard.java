@@ -5,12 +5,12 @@ import java.util.Arrays;
 
 class MinimaxBoard {
 
-    // represents a board as arrays of squares and bars, from top to bottom and left to right (0 : free, 1 : AI, 2 : opponent)
+    // represents a board as arrays of squares and bars, from top to bottom and left to right
     // note : only works for a 4x4 grid
 
-    private int squares[];
-    private int horizontalBars[];
-    private int verticalBars[];
+    private int squares[]; // reprensents the squares (0 : free, 1 : AI, 2 : opponent)
+    private int horizontalBars[]; // represents the horizontal bars (0 : free, 1 : not free)
+    private int verticalBars[]; // represents the vertircal bars (0 : free, 1 : not free)
 
     public MinimaxBoard() {
         this.squares = new int[16];
@@ -21,9 +21,21 @@ class MinimaxBoard {
         Arrays.fill(this.verticalBars, 0);
     }
 
+    public int[] getSquares() {
+        return this.squares;
+    }
+    public int[] getHorizontalBars() {
+        return this.horizontalBars;
+    }
+    public int[] getVerticalBars() {
+        return this.verticalBars;
+    }
+
     // play a move (to update)
     public MinimaxBoard play(MinimaxMove move) {
+
         return this;
+
     }
 
 }
