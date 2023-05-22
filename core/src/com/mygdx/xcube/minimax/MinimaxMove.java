@@ -9,7 +9,7 @@ class MinimaxMove {
     private boolean isVerticalBar; // true if it represents a vertical bar
     private int index; // index of the block in the corresponding array of the board
 
-    public Move(boolean isSquare, boolean isHorizontalBar, boolean isVerticalBar, int index) {
+    public MinimaxMove(boolean isSquare, boolean isHorizontalBar, boolean isVerticalBar, int index) {
         this.isSquare = isSquare;
         this.isHorizontalBar = isHorizontalBar;
         this.isVerticalBar = isVerticalBar;

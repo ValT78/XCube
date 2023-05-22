@@ -36,7 +36,7 @@ class MinimaxNode {
     // returns the list of possibles moves from this board (to update)
     public MinimaxMove[] possibleMoves() {
         MinimaxMove[] res = new MinimaxMove[1];
-        MinimaxMove newMove = new MinimaxMove();
+        MinimaxMove newMove = new MinimaxMove(true,false,false,0);
         res[0] = newMove;
         return res;
     }
