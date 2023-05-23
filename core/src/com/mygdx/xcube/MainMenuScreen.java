@@ -63,7 +63,7 @@ public class MainMenuScreen implements Screen {
             camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
 
             if(this.multiplayer.contains(touchPos.x,touchPos.y)){
-                game.setScreen(new Multiplayer(game, startTime, dlc));   // Si l'écran est touché, l'écran passe à GameScreen
+                game.setScreen(new Multiplayer(game, 150, false));   // Si l'écran est touché, l'écran passe à GameScreen
                 dispose();                              // Supprime les élements définie dans dispose ( ici aucun)
             }
             else if(this.local.contains(touchPos.x,touchPos.y)){
