@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -34,7 +35,7 @@ public class GameScreen implements Screen {
         private int minutesRed;
         private int secondsRed;
         private int tenthsRed;
-        private final int mode;
+        private int mode;
         private final boolean dlc;
         private Vector3 touchPos = new Vector3();
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
@@ -46,6 +47,9 @@ public class GameScreen implements Screen {
         //private SpriteBatch batch;
         private boolean gameStarted = false;
         private final Random random = new Random();
+        private ShapeRenderer shape;
+        private boolean winner;
+        private boolean hasTouch=false;
 
         public GameScreen(final XCube game, int mode, float startTime, boolean dlc) {
                 grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/dots.png");
@@ -56,28 +60,22 @@ public class GameScreen implements Screen {
                 camera = new OrthographicCamera();
                 this.timeLeftRed=startTime;
                 this.timeLeftBlue=startTime;
-
                 this.mode = mode;
                 camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
                 game.batch = new SpriteBatch();
                 FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
                 FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
                 fontParameter.size = 150;
-                //fontParameter.color = Color.BLUE;
-                //fontParameter.color = Color.RED;
                 font = fontGenerator.generateFont(fontParameter);
-                //font = new BitmapFont();
                 this.dlc=dlc;
+                shape= new ShapeRenderer();
         }
-
-
-        //render s'éxecute toutes les frames
-
-        @SuppressWarnings("DefaultLocale")
-
         @Override
         public void render(float delta){ //s'exécute une fois par frame
-
+                ScreenUtils.clear(1,1,1,1);
+                if(mode==3) {
+                        RendererEnd.run();
+                }
                 if(gameStarted) {
                         if (players.getPlayer()) { //gestion du chronometre bleu
                                 timeLeftBlue -= delta;
@@ -107,18 +105,11 @@ public class GameScreen implements Screen {
                                 case 2:
                                         RendererIA.run();
                                         break;
-                                case 3:
-                                        RendererEnd.run();
-                                        break;
                         }
                 }
-                ScreenUtils.clear(1,1,1,1);
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
                 game.batch.begin(); //On affiche tous les éléments à l'écran, dans l'ordre : chronomètre, terrain puis grille
-                //font.setColor(Color.BLUE);  //Police bleue pour le premier chronomètre
-                //font.draw(game.batch, String.format("%01d:%02d.%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
-                //font.setColor(Color.RED);  //Police rouge pour le deuxième chronomètre
                 font.setColor(Color.BLUE);
                 font.draw(game.batch, String.format("%01d:%02d:%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 font.setColor(Color.RED);
@@ -131,6 +122,7 @@ public class GameScreen implements Screen {
                 }
                 grid.drawItems(game,(float)(1));
                 game.batch.end();
+
         }
         public void setTouchPos(Vector3 touchPos){ //renvoie les coordonnées où le joueur a appuyé
                 this.touchPos = touchPos;
@@ -194,8 +186,9 @@ public class GameScreen implements Screen {
                 if(mode == 1) {
                         Multiplayer.disconnected();
                 }
-                //mode=3;  A décommmenter et commenter la ligne du dessous
-                game.setScreen(new EndScreen(game, winner));
+                gameStarted=false;
+                this.winner=winner;
+                mode=3;
         }
         @Override
         public void show() {
@@ -414,7 +407,34 @@ public class GameScreen implements Screen {
         Runnable RendererEnd = new Runnable() {
                 @Override
                 public void run() {
-                        //Code quand c'est la fin
+                        if(winner) {
+                                //ScreenUtils.clear(222/255f,1,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                                shape.begin(ShapeRenderer.ShapeType.Filled);
+                                shape.rect(0,0,7*unitY + 7*unitX,(7*unitY + 7*unitX)*2,Color.CYAN,Color.SKY,new Color(0x029FFA),new Color(0x029FFA)); // gradient
+                                shape.end();
+                                game.batch.begin();     // Début des éléments à afficher
+                                font.setColor(Color.BLUE);
+                                font.draw(game.batch,"ViCTOiRE DU BLEU !",spaceBlock,(7*unitY + 7*unitX)*15/8);
+                                game.batch.end();       // Fin des éléments à afficher
+                        }
+                        if(!winner){
+                                //ScreenUtils.clear(1,222/255f,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                                shape.begin(ShapeRenderer.ShapeType.Filled);
+                                shape.rect(0,0,7*unitY + 7*unitX,(7*unitY + 7*unitX)*2,Color.SALMON,Color.SALMON,Color.CORAL,Color.CORAL); // gradient
+                                shape.end();
+                                game.batch.begin();     // Début des éléments à afficher
+                                font.setColor(Color.RED);
+                                font.draw(game.batch,"ViCTOiRE DU ROUGE !",spaceBlock,(7*unitY + 7*unitX)*15/8);
+                                game.batch.end();       // Fin des éléments à afficher
+
+                        }
+                        if (!Gdx.input.isTouched()) {
+                                hasTouch=true;
+                        }
+                        if (Gdx.input.isTouched() && hasTouch) {
+                                game.dispose();
+                                game.create();
+                        }
                 }
 
         };
