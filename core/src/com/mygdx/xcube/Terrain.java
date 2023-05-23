@@ -100,7 +100,7 @@ public class Terrain {
 
     public void setupAlign() {                            //trouvent tous les carrés qui pourraient créer un alignement tous les autres carrés du terrain
         for (int i = 0; i<this.square.size; i++) {
-            createAlign(this.square.get(i), this.square);
+            createAlign(this.square.get(i));
         }
     }
 
@@ -119,28 +119,28 @@ public class Terrain {
 
         HollowSquare square1 = new HollowSquare(x+unitX+unitY/2-unitSquare/2, y+unitX+unitY/2-unitSquare/2); //Création et ajout du carré au terrain
         this.square.add(square1);
-        HollowBar bar1 = locateBar(x+unitX,y, this.bar);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
+        HollowBar bar1 = locateBar(x+unitX,y);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
         if(bar1==null) {
             bar1 = new HollowBar(true, x + unitX, y);
         }
         this.bar.add(bar1);
         square1.neighbors.add(bar1);
 
-        HollowBar bar2 =locateBar(x+unitX,y+spaceBlock, this.bar);  //Pareil mais inférieur
+        HollowBar bar2 =locateBar(x+unitX,y+spaceBlock);  //Pareil mais inférieur
         if(bar2 ==null) {
             bar2 = new HollowBar(true, x + unitX, y + spaceBlock);
         }
         this.bar.add(bar2);
         square1.neighbors.add(bar2);
 
-        HollowBar bar3 = locateBar(x,y+unitX, this.bar);          //Pareil mais à droite
+        HollowBar bar3 = locateBar(x,y+unitX);          //Pareil mais à droite
         if(bar3==null) {
             bar3 = new HollowBar(false, x, y + unitX);
         }
             this.bar.add(bar3);
             square1.neighbors.add(bar3);
 
-        HollowBar bar4 = locateBar(x+spaceBlock,y+unitX, this.bar);   //Pareil mais à gauche
+        HollowBar bar4 = locateBar(x+spaceBlock,y+unitX);   //Pareil mais à gauche
         if(bar4==null) {
             bar4 = new HollowBar(false, x + spaceBlock, y + unitX);
         }
@@ -148,18 +148,18 @@ public class Terrain {
         square1.neighbors.add(bar4);
     }
 
-    public HollowSquare locateSquare(int x, int y, Array<HollowSquare> squares) { //retourne le carré de coordonnée (x,y)
+    public HollowSquare locateSquare(int x, int y) { //retourne le carré de coordonnée (x,y)
         int[] coord = {x,y};
-        for(int i = 0; i<squares.size; i++) {
-            if(coord[0] == squares.get(i).getCoords()[0] && coord[1] == squares.get(i).getCoords()[1]) {
-                return squares.get(i);
+        for(int i = 0; i<square.size; i++) {
+            if(coord[0] == square.get(i).getCoords()[0] && coord[1] == square.get(i).getCoords()[1]) {
+                return square.get(i);
             }
         }
         return null;
     }
-    public HollowBar locateBar(int x, int y, Array<HollowBar> bars) { //retourne la barre de coordonnée (x,y)
+    public HollowBar locateBar(int x, int y) { //retourne la barre de coordonnée (x,y)
         int[] coord = {x,y};
-        for (HollowBar bar: bars) {
+        for (HollowBar bar: bar) {
             if(coord[0] == bar.getCoords()[0] && coord[1] == bar.getCoords()[1]) {
                 return bar;
             }
@@ -167,10 +167,10 @@ public class Terrain {
         return null;
     }
 
-    public void createAlign(HollowSquare square, Array<HollowSquare> squares) { //Définis quelles sont les carrés voisin d'un carré donné pouvant créer un alignement
+    public void createAlign(HollowSquare square) { //Définis quelles sont les carrés voisin d'un carré donné pouvant créer un alignement
         int[] coord = square.getCoords();
-        HollowSquare right = locateSquare(coord[0]+spaceBlock, coord[1], squares);
-        HollowSquare left = locateSquare(coord[0]-spaceBlock, coord[1], squares);
+        HollowSquare right = locateSquare(coord[0]+spaceBlock, coord[1]);
+        HollowSquare left = locateSquare(coord[0]-spaceBlock, coord[1]);
         if(right!=null && left!=null) { //si les cases à droite et à gauche existent, on les ajoute dans le tableau de taille 2 : horizontal
             square.horizontal[0] = right;
             square.horizontal[1] = left;
@@ -179,8 +179,8 @@ public class Terrain {
             square.isHorizontal=false;
         }
 
-        HollowSquare up = locateSquare(coord[0], coord[1]+spaceBlock, squares);
-        HollowSquare down = locateSquare(coord[0], coord[1]-spaceBlock, squares);
+        HollowSquare up = locateSquare(coord[0], coord[1]+spaceBlock);
+        HollowSquare down = locateSquare(coord[0], coord[1]-spaceBlock);
         if(up!=null && down!=null) { //pareil mais pour les cases verticales
             square.vertical[0] = up;
             square.vertical[1] = down;
@@ -188,8 +188,8 @@ public class Terrain {
         else {
             square.isVertical=false;
         }
-        HollowSquare upRight = locateSquare(coord[0]+spaceBlock, coord[1]+spaceBlock, squares);
-        HollowSquare downLeft = locateSquare(coord[0]-spaceBlock, coord[1]-spaceBlock, squares);
+        HollowSquare upRight = locateSquare(coord[0]+spaceBlock, coord[1]+spaceBlock);
+        HollowSquare downLeft = locateSquare(coord[0]-spaceBlock, coord[1]-spaceBlock);
         if(upRight!=null && downLeft!=null) { //pareil mais pour les diagonales
             square.diagonal[0] = upRight;
             square.diagonal[1]=downLeft;
@@ -197,8 +197,8 @@ public class Terrain {
         else {
             square.isDiagonal=false;
         }
-        HollowSquare upLeft = locateSquare(coord[0]-spaceBlock, coord[1]+spaceBlock, squares);
-        HollowSquare downRight = locateSquare(coord[0]+spaceBlock, coord[1]-spaceBlock, squares);
+        HollowSquare upLeft = locateSquare(coord[0]-spaceBlock, coord[1]+spaceBlock);
+        HollowSquare downRight = locateSquare(coord[0]+spaceBlock, coord[1]-spaceBlock);
         if(upLeft!=null && downRight!=null) { //pareil pour l'antidiagonal
             square.antidiagonal[0]=upLeft;
             square.antidiagonal[1]=downRight;
@@ -233,10 +233,10 @@ public class Terrain {
         }
         for (HollowSquare nonSat : nonSaturate) {
             int[] coord = nonSat.getCoords();
-            HollowSquare squareR = locateSquare(coord[0]+spaceBlock, coord[1],square);
-            HollowSquare squareL = locateSquare(coord[0]-spaceBlock, coord[1],square);
-            HollowSquare squareU = locateSquare(coord[0], coord[1]+spaceBlock,square);
-            HollowSquare squareD = locateSquare(coord[0], coord[1]-spaceBlock,square);
+            HollowSquare squareR = locateSquare(coord[0]+spaceBlock, coord[1]);
+            HollowSquare squareL = locateSquare(coord[0]-spaceBlock, coord[1]);
+            HollowSquare squareU = locateSquare(coord[0], coord[1]+spaceBlock);
+            HollowSquare squareD = locateSquare(coord[0], coord[1]-spaceBlock);
             Array<Integer> aleaCond = new Array<>();
             if (nonSat.neighbors.get(2).isFree && (squareL==null || squareL.freeNeighbors>2)) {
                 aleaCond.add(2);

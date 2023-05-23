@@ -342,10 +342,10 @@ public class GameScreen implements Screen {
                                         else {
                                                 for (HollowSquare square : oversaturate) {
                                                         int[] coord = square.getCoords();
-                                                        HollowSquare squareR = terrain.locateSquare(coord[0] + spaceBlock, coord[1], terrain.getSquare());
-                                                        HollowSquare squareL = terrain.locateSquare(coord[0] - spaceBlock, coord[1], terrain.getSquare());
-                                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1] + spaceBlock, terrain.getSquare());
-                                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1] - spaceBlock, terrain.getSquare());
+                                                        HollowSquare squareR = terrain.locateSquare(coord[0] + spaceBlock, coord[1]);
+                                                        HollowSquare squareL = terrain.locateSquare(coord[0] - spaceBlock, coord[1]);
+                                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1] + spaceBlock);
+                                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1] - spaceBlock);
                                                         if (square.neighbors.get(2).isFree && (squareL == null || !CouldAlign(squareL))) {
                                                                 OverSaturatePlay(square);
                                                                 hasPlay=true;
@@ -374,10 +374,10 @@ public class GameScreen implements Screen {
                                         for (HollowSquare square : terrain.getSquare()) {
                                                 if (square.isFree && !CouldAlign(square)) {
                                                         int[] coord = square.getCoords();
-                                                        HollowSquare squareR = terrain.locateSquare(coord[0]+spaceBlock, coord[1],terrain.getSquare());
-                                                        HollowSquare squareL = terrain.locateSquare(coord[0]-spaceBlock, coord[1],terrain.getSquare());
-                                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1]+spaceBlock,terrain.getSquare());
-                                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1]-spaceBlock,terrain.getSquare());
+                                                        HollowSquare squareR = terrain.locateSquare(coord[0]+spaceBlock, coord[1]);
+                                                        HollowSquare squareL = terrain.locateSquare(coord[0]-spaceBlock, coord[1]);
+                                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1]+spaceBlock);
+                                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1]-spaceBlock);
                                                         if(square.neighbors.get(2).isFree && (squareL==null || !CouldAlign(squareL))) {
                                                                 square.neighbors.get(2).iaClickBlock("V2/redbar1.png", GameScreen.this);
                                                                 hasPlay=true;
