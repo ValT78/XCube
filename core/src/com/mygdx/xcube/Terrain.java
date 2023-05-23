@@ -98,7 +98,7 @@ public class Terrain {
         return squares;
     }
 
-    public void setupAlign() {                            //trouvent tous les carrés qui pourraient créer un alignement tous les autres carrés du terrain
+    public void setupAlign() {                            //trouvent tous les carrés qui pourraient créer un alignement avec tous les autres carrés du terrain
         for (int i = 0; i<this.square.size; i++) {
             createAlign(this.square.get(i));
         }

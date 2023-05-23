@@ -1,5 +1,7 @@
 package com.mygdx.xcube.minimax;
 
+import java.util.ArrayList;
+
 class MinimaxNode {
 
     private boolean isMaxPlayer; // true if the current node is maximizing the score
@@ -36,7 +38,7 @@ class MinimaxNode {
     // returns the list of possibles moves from this board
     public ArrayList<MinimaxMove> possibleMoves() {
 
-        ArrayList<MinimaxMove> moves = new ArrayList<MinimaxMove>;
+        ArrayList<MinimaxMove> moves = new ArrayList<MinimaxMove>();
         int squares[] = this.board.getSquares();
         int horizontalBars[] = this.board.getHorizontalBars();
         int verticalBars[] = this.board.getVerticalBars(); 

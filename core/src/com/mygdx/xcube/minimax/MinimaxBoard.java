@@ -41,9 +41,9 @@ class MinimaxBoard {
     // returns the score associated with this board (to update)
     public Double heuristic() {
 
-        Double score = 0;
+        Double score = Double.valueOf(0);
 
-        for (int i = 0 ; i < squares ; i++) {
+        for (int i = 0 ; i < squares.length ; i++) {
 
             score += squares[i];
 
