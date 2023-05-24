@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.xcube.block.Button;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 import com.mygdx.xcube.block.Items;
@@ -50,6 +51,10 @@ public class GameScreen implements Screen {
         private ShapeRenderer shape;
         private boolean winner;
         private boolean hasTouch=false;
+        private final Button turnBack;
+        private final Button reDo;
+        private final Button finishGame;
+
 
         public GameScreen(final XCube game, int mode, float startTime, boolean dlc) {
                 grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/dots.png");
@@ -63,16 +68,22 @@ public class GameScreen implements Screen {
                 this.mode = mode;
                 camera.setToOrtho(false, 7*unitY + 7*unitX, 2*(7*unitY + 7*unitX));
                 game.batch = new SpriteBatch();
-                FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
+                FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
                 FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
                 fontParameter.size = 150;
                 font = fontGenerator.generateFont(fontParameter);
                 this.dlc=dlc;
                 shape= new ShapeRenderer();
+                turnBack = new Button((7*unitY + 7*unitX)/3,(7*unitY + 7*unitX)/8,"turnback.png","",1);
+                reDo = new Button((7*unitY + 7*unitX)*2/3,(7*unitY + 7*unitX)/8,"redo.png","",1);
+                finishGame = new Button((7*unitY + 7*unitX)*1/5,(7*unitY + 7*unitX)*13/8,"V2/bluebar1.png","Retour au Menu",5);
+
         }
         @Override
         public void render(float delta){ //s'exécute une fois par frame
                 ScreenUtils.clear(1,1,1,1);
+                camera.update();
+                game.batch.setProjectionMatrix(camera.combined);
                 if(mode==3) {
                         RendererEnd.run();
                 }
@@ -107,8 +118,6 @@ public class GameScreen implements Screen {
                                         break;
                         }
                 }
-                camera.update();
-                game.batch.setProjectionMatrix(camera.combined);
                 game.batch.begin(); //On affiche tous les éléments à l'écran, dans l'ordre : chronomètre, terrain puis grille
                 font.setColor(Color.BLUE);
                 font.draw(game.batch, String.format("%01d:%02d:%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
@@ -407,36 +416,69 @@ public class GameScreen implements Screen {
         Runnable RendererEnd = new Runnable() {
                 @Override
                 public void run() {
-                        if(winner) {
-                                //ScreenUtils.clear(222/255f,1,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                        if (winner) {
                                 shape.begin(ShapeRenderer.ShapeType.Filled);
-                                shape.rect(0,0,7*unitY + 7*unitX,(7*unitY + 7*unitX)*2,Color.CYAN,Color.SKY,new Color(0x029FFA),new Color(0x029FFA)); // gradient
+                                shape.rect(0, 0, 7 * unitY + 7 * unitX, (7 * unitY + 7 * unitX) * 2, Color.CYAN, Color.SKY, new Color(0x029FFA), new Color(0x029FFA)); // gradient
                                 shape.end();
                                 game.batch.begin();     // Début des éléments à afficher
                                 font.setColor(Color.BLUE);
-                                font.draw(game.batch,"ViCTOiRE DU BLEU !",spaceBlock,(7*unitY + 7*unitX)*15/8);
+                                font.draw(game.batch, "ViCTOiRE DU BLEU !", spaceBlock, (7 * unitY + 7 * unitX) * 15 / 8);
                                 game.batch.end();       // Fin des éléments à afficher
                         }
-                        if(!winner){
-                                //ScreenUtils.clear(1,222/255f,1,1);  // Supprime l'ancien background et en place un nouveau de la couleur rgb voulu
+                        if (!winner) {
                                 shape.begin(ShapeRenderer.ShapeType.Filled);
-                                shape.rect(0,0,7*unitY + 7*unitX,(7*unitY + 7*unitX)*2,Color.SALMON,Color.SALMON,Color.CORAL,Color.CORAL); // gradient
+                                shape.rect(0, 0, 7 * unitY + 7 * unitX, (7 * unitY + 7 * unitX) * 2, Color.SALMON, Color.SALMON, Color.CORAL, Color.CORAL); // gradient
                                 shape.end();
                                 game.batch.begin();     // Début des éléments à afficher
                                 font.setColor(Color.RED);
-                                font.draw(game.batch,"ViCTOiRE DU ROUGE !",spaceBlock,(7*unitY + 7*unitX)*15/8);
+                                font.draw(game.batch, "ViCTOiRE DU ROUGE !", spaceBlock, (7 * unitY + 7 * unitX) * 15 / 8);
                                 game.batch.end();       // Fin des éléments à afficher
 
                         }
+                        game.batch.begin();     // Début des éléments à afficher
+                        turnBack.drawButton(game, 0);
+                        reDo.drawButton(game, 0);
+                        finishGame.drawButton(game, 90);
+                        game.batch.end();
                         if (!Gdx.input.isTouched()) {
-                                hasTouch=true;
+                                touchOff=true;
+                                hasTouch = true;
                         }
-                        if (Gdx.input.isTouched() && hasTouch) {
-                                game.dispose();
-                                game.create();
+                        if (hasTouch && touchOff && Gdx.input.isTouched()) {
+                                touchOff = false;
+                                for (int i = 0; i < terrain.getSquare().size; i++) {  //On détecte si le joueur a appuyé sur un carré puis de quelle couleur est le joueur
+                                        if (players.getPlayer()) {
+                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this);
+
+                                        }
+                                        else {
+                                                terrain.getSquare().get(i).clickBlock("V2/redcross1.png", GameScreen.this);
+                                        }
+                                }
+                                for (HollowBar b : terrain.getBar()) { //Pareil pour les barres
+                                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
+                                                b.clickBlock("V2/bluebar1.png", GameScreen.this);
+
+                                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
+                                                b.clickBlock("V2/redbar1.png", GameScreen.this);
+
+                                        }
+                                }
+                                Vector3 touchPos = new Vector3();                              //Création d'un vecteur à 3 coordonnées x,y,z
+                                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);        // On récupère les coordonnées de touché
+                                camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
+                                if (finishGame.contains(touchPos.x, touchPos.y)) {
+                                        game.dispose();
+                                        game.create();
+                                }
+                                else if (turnBack.contains(touchPos.x, touchPos.y)) {
+                                        terrain.unPlay(GameScreen.this);
+                                }
+                                else if (reDo.contains(touchPos.x, touchPos.y)) {
+                                        terrain.rePlay(GameScreen.this);
+                                }
                         }
                 }
-
         };
 
         private void OverSaturatePlay(HollowSquare square){

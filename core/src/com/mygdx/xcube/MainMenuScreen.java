@@ -32,11 +32,11 @@ public class MainMenuScreen implements Screen {
         this.game=game;
 
         //Valeurs modifiable selon le menu désiré
-        local = new Button(400,300,"V2/bluebar1.png","Local");
-        multiplayer = new Button(400,200,"V2/bluebar1.png","Multijoueur");
-        IA = new Button(400,100,"V2/bluebar1.png","Intelligence Artificielle");
-        DLC = new Button(400,400,"V2/redbar1.png","DLC Désactivés");
-        Chrono = new Button(400,500,"V2/bluebar1.png","Temps : Medium (150 sec)");
+        local = new Button(100,300,"V2/bluebar1.png","Local",1);
+        multiplayer = new Button(100,200,"V2/bluebar1.png","Multijoueur",1);
+        IA = new Button(100,100,"V2/bluebar1.png","Intelligence Artificielle",1);
+        DLC = new Button(100,400,"V2/redbar1.png","DLC Désactivés",1);
+        Chrono = new Button(100,500,"V2/bluebar1.png","Temps : Medium (150 sec)",1);
         logo = new Items(width_screen/4,3*height_screen/4,"V2/title.png");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,width_screen,height_screen);
@@ -48,11 +48,11 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();     // Début des éléments à afficher
-        local.drawButton(game);
-        multiplayer.drawButton(game);
-        IA.drawButton(game);
-        DLC.drawButton(game);
-        Chrono.drawButton(game);
+        local.drawButton(game, 90);
+        multiplayer.drawButton(game,90);
+        IA.drawButton(game,90);
+        DLC.drawButton(game,90);
+        Chrono.drawButton(game,90);
         logo.drawItems(game,(float)(0.5));
         game.batch.end();       // Fin des éléments à afficher
 

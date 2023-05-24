@@ -14,31 +14,36 @@ import com.mygdx.xcube.XCube;
 
 public class Button extends Block {
     private String text;
-    private final BitmapFont font;
+    private BitmapFont font;
+    private int scale;
 
-
-    public Button(int x, int y, String sprite, String text) {
+    public Button(int x, int y, String sprite, String text, int scale) {
         this.x=x;
         this.y=y;
         this.sprite = new Sprite(new Texture(Gdx.files.internal(sprite)));
         this.dx=round(this.sprite.getWidth());
         this.dy=round(this.sprite.getHeight());
-        this.rectangle = new Rectangle(x-dy,y,dy,dx);
+        this.rectangle = new Rectangle(x,y,dy*scale,dx*scale);
         this.text=text;
         FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter.size = 20;
+        fontParameter.size = 20*scale;
         font = fontGenerator.generateFont(fontParameter);
+        font.setColor(Color.WHITE);
+        this.scale=scale;
     }
 
-    public void drawButton(XCube game) {
-        game.batch.draw(sprite,x,y,0,0,dx,dy,1,1,90);
+    public void drawButton(XCube game, float rotation) {
+        if(rotation==0) {
+            game.batch.draw(sprite, x, y, 0, 0, dx, dy, scale, scale, rotation);
+            font.draw(game.batch, text, x-dy*scale*15/16, y+dx*scale*3/4);
+        }
+        else {
+            game.batch.draw(sprite, x+dy*scale, y, 0, 0, dx, dy, scale, scale, rotation);
+            font.draw(game.batch, text, x+dy*scale*1/16, y+dx*scale*3/4);
 
-        //game.batch.begin();
-        font.setColor(Color.WHITE);
-        font.draw(game.batch, text, x-dy*15/16, y+dx*3/4);
-        //game.batch.end();
-        //game.font.draw(game.batch, text,x-dy*15/16,y+dx*3/4);
+        }
+
     }
 
     public void setSprite(String sprite) {

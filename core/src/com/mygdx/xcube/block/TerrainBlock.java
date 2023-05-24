@@ -63,13 +63,15 @@ public class TerrainBlock extends Block {
         isFree=false;                                                          //Le rectangle ne peut plus être cliqué
         isBlue=gameScreen.players.getPlayer();                                 //Il prend la couleur du joueur dont c'est le tour
         this.setSprite(texture);                                               //Il change de texture
-        if(this.isSquare && gameScreen.checkEveryAlign(gameScreen.players.getPlayer())) {                                                   //vérifie si une condition de victoire est remplie
+        if(this.isSquare && gameScreen.getMode()!=3 && gameScreen.checkEveryAlign(gameScreen.players.getPlayer())) {                                                   //vérifie si une condition de victoire est remplie
             gameScreen.setVictoryScreen(gameScreen.players.getPlayer());
         }
         gameScreen.terrain.getLastPlay().add(this);                           //Est enregistré comme le dernier coup joué pour apparaitre d'une couleur différente de la normal
+        gameScreen.terrain.addPlay(this);
         gameScreen.players.setCoup(gameScreen.terrain);                       //Vérifie combien de coup il reste au joueur actuel pour jouer, et change la couleur des blocks récemment joués
 
     }
+
 
     public void drawBlock(SpriteBatch batch) {
         batch.draw(this.sprite,x,y,0,0,dx,dy,1,1,0);
@@ -89,6 +91,38 @@ public class TerrainBlock extends Block {
 
         return new int[]{x,y};
     } //retourne les coordonnées d'un carré
+    public void unPlay(GameScreen gameScreen) {
+        isFree=true;                                                          //Le rectangle ne peut plus être cliqué
+        if(isSquare) {
+            setSprite("square_holder.png");
+        }
+        else {
+            setSprite("greybarv2.png");
+        }
+        gameScreen.players.backCoup(gameScreen.terrain);                       //Vérifie combien de coup il reste au joueur actuel pour jouer, et change la couleur des blocks récemment joués
 
+    }
+    public void rePlay(GameScreen gameScreen) {
+        isFree=false;                                                          //Le rectangle ne peut plus être cliqué
+        isBlue=gameScreen.players.getPlayer();                                 //Il prend la couleur du joueur dont c'est le tour
+        if(isSquare) {
+            if(isBlue) {
+                setSprite("V2/bluecross2.png");
+            }
+            else {
+                setSprite("V2/redcross2.png");
+            }
+        }
+        else {
+            if(isBlue) {
+                setSprite("V2/bluebar2.png");
+            }
+            else {
+                setSprite("V2/redbar2.png");
+            }
+        }
+        gameScreen.players.setCoup(gameScreen.terrain);                       //Vérifie combien de coup il reste au joueur actuel pour jouer, et change la couleur des blocks récemment joués
+
+    }
 
 }

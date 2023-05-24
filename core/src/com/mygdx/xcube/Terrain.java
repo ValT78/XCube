@@ -23,6 +23,8 @@ public class Terrain {
     private final int originX;
     private final int originY;
     private Array<TerrainBlock> lastPlay;
+    private Array<TerrainBlock> allPlay;
+    private int iterator = 0;
     private final Random random = new Random();
 
 
@@ -36,9 +38,19 @@ public class Terrain {
         this.bar = generateBar();           // Stock la liste des barres
         this.square=generateSquare();       // Stock la liste de carrés
         this.lastPlay=new Array<>();
+        this.allPlay=new Array<>();
     }
     public Array<TerrainBlock> getLastPlay() {
         return lastPlay;
+    }
+    public void addPlay(TerrainBlock block) {
+        iterator++;
+        if(iterator>allPlay.size) {
+            allPlay.add(block);
+        }
+        else {
+            allPlay.set(iterator-1,block);
+        }
     }
     public Array<HollowBar> getBar() {
         return bar;
@@ -255,6 +267,20 @@ public class Terrain {
             }
         }
         return null;
+    }
+
+    public void unPlay(GameScreen gameScreen) {
+        if(iterator > 0) {
+            allPlay.get(iterator-1).unPlay(gameScreen);
+            iterator--;
+        }
+    }
+    public void rePlay(GameScreen gameScreen) {
+        if(allPlay.size > iterator) {
+            iterator++;
+            allPlay.get(iterator-1).rePlay(gameScreen);
+            System.out.println(iterator);
+        }
     }
 
     public int heuristic() {
