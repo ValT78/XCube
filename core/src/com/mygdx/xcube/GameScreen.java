@@ -42,18 +42,16 @@ public class GameScreen implements Screen {
         private final int unitX = new HollowBar(false,0,0).getSize()[0];
         private final int unitY = new HollowBar(false,0,0).getSize()[1];
         private final int spaceBlock = unitX+unitY;
-        //private Renderer RenderMode;
         private final BitmapFont font;
         private final Items grid;
-        //private SpriteBatch batch;
         private boolean gameStarted = false;
         private final Random random = new Random();
-        private ShapeRenderer shape;
+        private final ShapeRenderer shape;
         private boolean winner;
-        private boolean hasTouch=false;
         private final Button turnBack;
         private final Button reDo;
         private final Button finishGame;
+        private final Button pause;
 
 
         public GameScreen(final XCube game, int mode, float startTime, boolean dlc) {
@@ -77,7 +75,38 @@ public class GameScreen implements Screen {
                 turnBack = new Button((7*unitY + 7*unitX)/3,(7*unitY + 7*unitX)/8,"turnback.png","",1);
                 reDo = new Button((7*unitY + 7*unitX)*2/3,(7*unitY + 7*unitX)/8,"redo.png","",1);
                 finishGame = new Button((7*unitY + 7*unitX)*1/5,(7*unitY + 7*unitX)*13/8,"V2/bluebar1.png","Retour au Menu",5);
+                pause = new Button((7*unitY + 7*unitX)*6/7,(7*unitY + 7*unitX)*13/7,"pause.png","",0.5f);
+        }
+        @Override
+        public void show() {
+                minutesBlue = (int) (timeLeftBlue / 60);
+                secondsBlue = (int) ((timeLeftBlue) % 60);
+                tenthsBlue = (int) ((timeLeftBlue * 10) % 10);
+                minutesRed = (int) (timeLeftRed / 60);
+                secondsRed = (int) ((timeLeftRed) % 60);
+                tenthsRed = (int) ((timeLeftRed * 10) % 10);
+                // Définition du temps de départ et du temps restant
+                chooseDLC();
 
+        }
+        void chooseDLC() {
+                Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                                boolean alea = random.nextBoolean(); //Une chance sur 2 de créer un DLC
+                                if (alea || !dlc) {                  //on démarre la partie
+                                        terrain.setupAlign();
+                                        gameStarted = true;
+                                }
+                                else {                               //On crée un DLC et on redonne une chance sur 2 de créer un deuxième DLC
+                                        int place = random.nextInt(6);
+                                        boolean side = random.nextBoolean();
+                                        boolean turn = random.nextBoolean();
+                                        terrain.createDLC(place, side, turn);
+                                        chooseDLC();
+                                }
+                        }
+                }, 2); // Attendre pendant 2 secondes
         }
         @Override
         public void render(float delta){ //s'exécute une fois par frame
@@ -85,7 +114,23 @@ public class GameScreen implements Screen {
                 camera.update();
                 game.batch.setProjectionMatrix(camera.combined);
                 if(mode==3) {
-                        RendererEnd.run();
+                        EndScreen();
+                }
+                else {
+                        game.batch.begin();
+                        pause.drawButton(game, 0);
+                        game.batch.end();
+                        if (Gdx.input.isTouched() && touchOff) {
+                                touchOff = false;
+                                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                                camera.unproject(touchPos);
+                                if (pause.contains(touchPos.x, touchPos.y)) {
+                                        gameStarted = !gameStarted;
+                                }
+                        }
+                        if (!Gdx.input.isTouched()) {
+                                touchOff = true;
+                        }
                 }
                 if(gameStarted) {
                         if (players.getPlayer()) { //gestion du chronometre bleu
@@ -96,8 +141,8 @@ public class GameScreen implements Screen {
                                 if (timeLeftBlue < 0) { //vérifie si le temps bleu n'est pas écoulé
                                         setVictoryScreen(false);
                                 }
-
-                        } else { //gestion du chronometre rouge
+                        }
+                        else { //gestion du chronometre rouge
                                 timeLeftRed -= delta;
                                 minutesRed = (int) (timeLeftRed / 60);
                                 secondsRed = (int) ((timeLeftRed) % 60);
@@ -108,14 +153,30 @@ public class GameScreen implements Screen {
                         }
                         switch (mode) { //On fait tourner une fonction différente selon le mode de jeu choisi sur le menu
                                 case 0:
-                                        RendererLocal.run();
+                                        WaitToTouch();
                                         break;
                                 case 1:
-                                        RendererMulti.run();
+                                        if(color==players.getPlayer()) {
+                                                WaitToTouch();
+                                        }
                                         break;
                                 case 2:
-                                        RendererIA.run();
+                                        if(players.getPlayer()) {
+                                                WaitToTouch();
+                                        }
+                                        else {
+                                                ProcessIA();
+                                        }
                                         break;
+                        }
+                }
+                else  {
+                        game.batch.begin();
+                        finishGame.drawButton(game, 90);
+                        game.batch.end();
+                        if (finishGame.contains(touchPos.x, touchPos.y)) {
+                                game.dispose();
+                                game.create();
                         }
                 }
                 game.batch.begin(); //On affiche tous les éléments à l'écran, dans l'ordre : chronomètre, terrain puis grille
@@ -129,14 +190,133 @@ public class GameScreen implements Screen {
                 for (HollowSquare b : terrain.getSquare()) {
                         b.drawBlock(game.batch);                         // Dessine le terrain
                 }
+                for (Items i : terrain.getBullet()) {
+                        i.drawItems(game, 1);
+                }
                 grid.drawItems(game,(float)(1));
                 game.batch.end();
 
         }
-        public void setTouchPos(Vector3 touchPos){ //renvoie les coordonnées où le joueur a appuyé
-                this.touchPos = touchPos;
+        private void ProcessIA() {
+                boolean hasPlay = false;
+                Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1);
+                Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
+                if(oversaturate.size > 0) {
+                        HollowSquare nearAlign = NearAlign(oversaturate);
+                        Array<HollowSquare> four = terrain.HaveNeighbors(0,0);
+                        if(nearAlign != null) {
+                                OverSaturatePlay(nearAlign);
+                                nearAlign.changeBlock(GameScreen.this);
+                                hasPlay=true;
+                        }
+                        else if(four.size > 0) {
+                                four.get(random.nextInt(four.size)).changeBlock(GameScreen.this);
+                                hasPlay=true;
+                        }
+                        else {
+                                for (HollowSquare square : oversaturate) {
+                                        int[] coord = square.getCoords();
+                                        HollowSquare squareR = terrain.locateSquare(coord[0] + spaceBlock, coord[1]);
+                                        HollowSquare squareL = terrain.locateSquare(coord[0] - spaceBlock, coord[1]);
+                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1] + spaceBlock);
+                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1] - spaceBlock);
+                                        if (square.neighbors.get(2).isFree && (squareL == null || !CouldAlign(squareL))) {
+                                                OverSaturatePlay(square);
+                                                hasPlay=true;
+                                                break;
+                                        } else if (square.neighbors.get(3).isFree && (squareR == null || !CouldAlign(squareR))) {
+                                                OverSaturatePlay(square);
+                                                hasPlay=true;
+                                                break;
+                                        } else if (square.neighbors.get(0).isFree && (squareD == null || !CouldAlign(squareD))) {
+                                                OverSaturatePlay(square);
+                                                hasPlay=true;
+                                                break;
+                                        } else if (square.neighbors.get(1).isFree && (squareU == null || !CouldAlign(squareU))) {
+                                                OverSaturatePlay(square);
+                                                hasPlay=true;
+                                                break;
+                                        }
+                                }
+                        }
+                }
+                else if (insaturate.size>0 && terrain.FindInsaturation(insaturate) != null) {
+                        terrain.FindInsaturation(insaturate).changeBlock(GameScreen.this);
+                        hasPlay=true;
+                }
+                if(!hasPlay) {
+                        for (HollowSquare square : terrain.getSquare()) {
+                                if (square.isFree && !CouldAlign(square)) {
+                                        int[] coord = square.getCoords();
+                                        HollowSquare squareR = terrain.locateSquare(coord[0]+spaceBlock, coord[1]);
+                                        HollowSquare squareL = terrain.locateSquare(coord[0]-spaceBlock, coord[1]);
+                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1]+spaceBlock);
+                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1]-spaceBlock);
+                                        if(square.neighbors.get(2).isFree && (squareL==null || !CouldAlign(squareL))) {
+                                                square.neighbors.get(2).changeBlock(GameScreen.this);
+                                                hasPlay=true;
+                                                break;
+                                        }
+                                        else if(square.neighbors.get(3).isFree && (squareR==null || !CouldAlign(squareR))) {
+                                                square.neighbors.get(3).changeBlock(GameScreen.this);
+                                                hasPlay=true;
+                                                break;
+                                        }
+                                        else if(square.neighbors.get(0).isFree && (squareD==null || !CouldAlign(squareD))) {
+                                                square.neighbors.get(0).changeBlock(GameScreen.this);
+                                                hasPlay=true;
+                                                break;
+                                        }
+                                        else if(square.neighbors.get(1).isFree && (squareU==null || !CouldAlign(squareU))) {
+                                                square.neighbors.get(1).changeBlock(GameScreen.this);
+                                                hasPlay=true;
+                                                break;
+                                        }
+                                }
+                        }
+                        if(!hasPlay) {
+                                OverSaturatePlay(oversaturate.get(random.nextInt(oversaturate.size)));
+                        }
+                }
         }
 
+        public void EndScreen() {
+                if (winner) {
+                        shape.begin(ShapeRenderer.ShapeType.Filled);
+                        shape.rect(0, 0, 7 * unitY + 7 * unitX, (7 * unitY + 7 * unitX) * 2, Color.CYAN, Color.SKY, new Color(0x029FFA), new Color(0x029FFA)); // gradient
+                        shape.end();
+                        game.batch.begin();     // Début des éléments à afficher
+                        font.setColor(Color.BLUE);
+                        font.draw(game.batch, "ViCTOiRE DU BLEU !", spaceBlock, (7 * unitY + 7 * unitX) * 15 / 8);
+                        game.batch.end();
+                }
+                if (!winner) {
+                        shape.begin(ShapeRenderer.ShapeType.Filled);
+                        shape.rect(0, 0, 7 * unitY + 7 * unitX, (7 * unitY + 7 * unitX) * 2, Color.SALMON, Color.SALMON, Color.CORAL, Color.CORAL); // gradient
+                        shape.end();
+                        game.batch.begin();     // Début des éléments à afficher
+                        font.setColor(Color.RED);
+                        font.draw(game.batch, "ViCTOiRE DU ROUGE !", spaceBlock, (7 * unitY + 7 * unitX) * 15 / 8);
+                        game.batch.end();
+                }
+                game.batch.begin();     // Début des éléments à afficher
+                turnBack.drawButton(game, 0);
+                reDo.drawButton(game, 0);
+                finishGame.drawButton(game, 90);
+                game.batch.end();
+                if(WaitToTouch()) {
+                        if (finishGame.contains(touchPos.x, touchPos.y)) {
+                                game.dispose();
+                                game.create();
+                        }
+                        else if (turnBack.contains(touchPos.x, touchPos.y)) {
+                                terrain.unPlay(GameScreen.this);
+                        }
+                        else if (reDo.contains(touchPos.x, touchPos.y)) {
+                                terrain.rePlay(GameScreen.this);
+                        }
+                }
+        };
         public boolean checkEveryAlign(boolean player) { //vérifie si il y a un alignement avec les cases du joueur qui vient de jouer
                 for (HollowSquare square: terrain.getSquare()) { //boucle for sur chaque carré
                         if(!square.isFree && square.isBlue==player) { //on ne choisit que ceux qui sont plein et de la couleur du joueur qui vient de jouer
@@ -190,7 +370,6 @@ public class GameScreen implements Screen {
                 square.isFree=true;
                 return false;
         }
-
         public void setVictoryScreen(boolean winner){
                 if(mode == 1) {
                         Multiplayer.disconnected();
@@ -199,297 +378,47 @@ public class GameScreen implements Screen {
                 this.winner=winner;
                 mode=3;
         }
-        @Override
-        public void show() {
-                minutesBlue = (int) (timeLeftBlue / 60);
-                secondsBlue = (int) ((timeLeftBlue) % 60);
-                tenthsBlue = (int) ((timeLeftBlue * 10) % 10);
-                minutesRed = (int) (timeLeftRed / 60);
-                secondsRed = (int) ((timeLeftRed) % 60);
-                tenthsRed = (int) ((timeLeftRed * 10) % 10);
-                // Définition du temps de départ et du temps restant
-                chooseDLC();
-
-        }
-        void chooseDLC() {
-                Timer.schedule(new Timer.Task() {
-                        @Override
-                        public void run() {
-                                boolean alea = random.nextBoolean(); //Une chance sur 2 de créer un DLC
-                                if (alea || !dlc) {                  //on démarre la partie
-                                        terrain.setupAlign();
-                                        gameStarted = true;
-                                }
-                                else {                               //On crée un DLC et on redonne une chance sur 2 de créer un deuxième DLC
-                                        int place = random.nextInt(6);
-                                        boolean side = random.nextBoolean();
-                                        boolean turn = random.nextBoolean();
-                                        terrain.createDLC(place, side, turn);
-                                        chooseDLC();
-                                }
-                        }
-                }, 2); // Attendre pendant 2 secondes
-        }
-        Runnable RendererLocal = new Runnable() {
-                @Override
-                public void run() {
-                        if (Gdx.input.isTouched() && touchOff) { //On détecte une unique pression du joueur (pas de détection prolongée)
-                                touchOff = false;
-                                for (int i = 0; i < terrain.getSquare().size; i++) {  //On détecte si le joueur a appuyé sur un carré puis de quelle couleur est le joueur
-                                        if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this);
-
-                                        } else {
-                                                terrain.getSquare().get(i).clickBlock("V2/redcross1.png", GameScreen.this);
-                                        }
-                                }
-                                for (HollowBar b : terrain.getBar()) { //Pareil pour les barres
-                                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("V2/bluebar1.png", GameScreen.this);
-
-                                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("V2/redbar1.png", GameScreen.this);
-
-                                        }
-                                }
-
-                        }
-
-                        if (!Gdx.input.isTouched()) {
-                                touchOff = true;
-                        }
-                }
-
-        };
-        Runnable RendererMulti = new Runnable() { //Fonction similaire à RenderLocal mais pour le multi
-                @Override
-                public void run() {
-                        for (int i = 0; i < terrain.getSquare().size; i++) {
-                                if (players.getPlayer()) {
-                                        if(color) {
-                                                if (Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this);
-                                                }
-                                        }
-                                        terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this, touchPos);
-
-                                } else {
-                                        if (!color) {
-                                                if (Gdx.input.isTouched() && touchOff) {
-                                                        terrain.getSquare().get(i).clickBlock("V2/redcross1.png", GameScreen.this);
-                                                }
-                                        }
-                                        terrain.getSquare().get(i).clickBlock("V2/redcross1.png", GameScreen.this, touchPos);
-
-                                }
-                        }
-                        for (HollowBar b : terrain.getBar()) {
-                                if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                        if(color) {
-                                                if (Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("V2/bluebar1.png", GameScreen.this);
-                                                }
-                                        }
-                                        b.clickBlock("V2/bluebar1.png",GameScreen.this, touchPos);
-
-                                } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                        if(!color) {
-                                                if (Gdx.input.isTouched() && touchOff) {
-                                                        b.clickBlock("V2/redbar1.png", GameScreen.this);
-                                                }
-                                        }
-                                        b.clickBlock("V2/redbar1.png", GameScreen.this, touchPos);
-                                }
-                        }
-
-                        if (!Gdx.input.isTouched()) {
-                                touchOff = true;
-                        }
-                }
-        };
-        Runnable RendererIA = new Runnable() { //Similaire à RenderLocal mais pour l'IA
-                @Override
-                public void run() {
-                        boolean hasPlay = false;
-                        if(players.getPlayer()) {
-                                if (Gdx.input.isTouched() && touchOff) {
-                                        touchOff = false;
-                                        for (int i = 0; i < terrain.getSquare().size; i++) {
-                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this);
-                                        }
-                                        for (HollowBar b : terrain.getBar()) {
-                                                b.clickBlock("V2/bluebar1.png", GameScreen.this);
-                                        }
-
-                                }
-                                if (!Gdx.input.isTouched()) {
-                                        touchOff = true;
-                                }
-                        }
-                        else {
-                                Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1);
-                                Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
-                                if(oversaturate.size > 0) {
-                                        HollowSquare nearAlign = NearAlign(oversaturate);
-                                        Array<HollowSquare> four = terrain.HaveNeighbors(0,0);
-                                        if(nearAlign != null) {
-                                                OverSaturatePlay(nearAlign);
-                                                nearAlign.iaClickBlock("V2/redcross1.png", GameScreen.this);
-                                                hasPlay=true;
-                                        }
-                                        else if(four.size > 0) {
-                                                four.get(random.nextInt(four.size)).iaClickBlock("V2/redcross1.png", GameScreen.this);
-                                                hasPlay=true;
-                                        }
-                                        else {
-                                                for (HollowSquare square : oversaturate) {
-                                                        int[] coord = square.getCoords();
-                                                        HollowSquare squareR = terrain.locateSquare(coord[0] + spaceBlock, coord[1]);
-                                                        HollowSquare squareL = terrain.locateSquare(coord[0] - spaceBlock, coord[1]);
-                                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1] + spaceBlock);
-                                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1] - spaceBlock);
-                                                        if (square.neighbors.get(2).isFree && (squareL == null || !CouldAlign(squareL))) {
-                                                                OverSaturatePlay(square);
-                                                                hasPlay=true;
-                                                                break;
-                                                        } else if (square.neighbors.get(3).isFree && (squareR == null || !CouldAlign(squareR))) {
-                                                                OverSaturatePlay(square);
-                                                                hasPlay=true;
-                                                                break;
-                                                        } else if (square.neighbors.get(0).isFree && (squareD == null || !CouldAlign(squareD))) {
-                                                                OverSaturatePlay(square);
-                                                                hasPlay=true;
-                                                                break;
-                                                        } else if (square.neighbors.get(1).isFree && (squareU == null || !CouldAlign(squareU))) {
-                                                                OverSaturatePlay(square);
-                                                                hasPlay=true;
-                                                                break;
-                                                        }
-                                                }
-                                        }
-                                }
-                                else if (insaturate.size>0 && terrain.FindInsaturation(insaturate) != null) {
-                                        terrain.FindInsaturation(insaturate).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                        hasPlay=true;
-                                }
-                                if(!hasPlay) {
-                                        for (HollowSquare square : terrain.getSquare()) {
-                                                if (square.isFree && !CouldAlign(square)) {
-                                                        int[] coord = square.getCoords();
-                                                        HollowSquare squareR = terrain.locateSquare(coord[0]+spaceBlock, coord[1]);
-                                                        HollowSquare squareL = terrain.locateSquare(coord[0]-spaceBlock, coord[1]);
-                                                        HollowSquare squareU = terrain.locateSquare(coord[0], coord[1]+spaceBlock);
-                                                        HollowSquare squareD = terrain.locateSquare(coord[0], coord[1]-spaceBlock);
-                                                        if(square.neighbors.get(2).isFree && (squareL==null || !CouldAlign(squareL))) {
-                                                                square.neighbors.get(2).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                hasPlay=true;
-                                                                break;
-                                                        }
-                                                        else if(square.neighbors.get(3).isFree && (squareR==null || !CouldAlign(squareR))) {
-                                                                square.neighbors.get(3).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                hasPlay=true;
-                                                                break;
-                                                        }
-                                                        else if(square.neighbors.get(0).isFree && (squareD==null || !CouldAlign(squareD))) {
-                                                                square.neighbors.get(0).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                hasPlay=true;
-                                                                break;
-                                                        }
-                                                        else if(square.neighbors.get(1).isFree && (squareU==null || !CouldAlign(squareU))) {
-                                                                square.neighbors.get(1).iaClickBlock("V2/redbar1.png", GameScreen.this);
-                                                                hasPlay=true;
-                                                                break;
-                                                        }
-
-                                                }
-                                        }
-                                        if(!hasPlay) {
-                                                OverSaturatePlay(oversaturate.get(random.nextInt(oversaturate.size)));
-                                        }
-                                }
-
-
-                        }
-
-                }
-        };
-        Runnable RendererEnd = new Runnable() {
-                @Override
-                public void run() {
-                        if (winner) {
-                                shape.begin(ShapeRenderer.ShapeType.Filled);
-                                shape.rect(0, 0, 7 * unitY + 7 * unitX, (7 * unitY + 7 * unitX) * 2, Color.CYAN, Color.SKY, new Color(0x029FFA), new Color(0x029FFA)); // gradient
-                                shape.end();
-                                game.batch.begin();     // Début des éléments à afficher
-                                font.setColor(Color.BLUE);
-                                font.draw(game.batch, "ViCTOiRE DU BLEU !", spaceBlock, (7 * unitY + 7 * unitX) * 15 / 8);
-                                game.batch.end();       // Fin des éléments à afficher
-                        }
-                        if (!winner) {
-                                shape.begin(ShapeRenderer.ShapeType.Filled);
-                                shape.rect(0, 0, 7 * unitY + 7 * unitX, (7 * unitY + 7 * unitX) * 2, Color.SALMON, Color.SALMON, Color.CORAL, Color.CORAL); // gradient
-                                shape.end();
-                                game.batch.begin();     // Début des éléments à afficher
-                                font.setColor(Color.RED);
-                                font.draw(game.batch, "ViCTOiRE DU ROUGE !", spaceBlock, (7 * unitY + 7 * unitX) * 15 / 8);
-                                game.batch.end();       // Fin des éléments à afficher
-
-                        }
-                        game.batch.begin();     // Début des éléments à afficher
-                        turnBack.drawButton(game, 0);
-                        reDo.drawButton(game, 0);
-                        finishGame.drawButton(game, 90);
-                        game.batch.end();
-                        if (!Gdx.input.isTouched()) {
-                                touchOff=true;
-                                hasTouch = true;
-                        }
-                        if (hasTouch && touchOff && Gdx.input.isTouched()) {
-                                touchOff = false;
-                                for (int i = 0; i < terrain.getSquare().size; i++) {  //On détecte si le joueur a appuyé sur un carré puis de quelle couleur est le joueur
-                                        if (players.getPlayer()) {
-                                                terrain.getSquare().get(i).clickBlock("V2/bluecross1.png", GameScreen.this);
-
-                                        }
-                                        else {
-                                                terrain.getSquare().get(i).clickBlock("V2/redcross1.png", GameScreen.this);
-                                        }
-                                }
-                                for (HollowBar b : terrain.getBar()) { //Pareil pour les barres
-                                        if (players.getPlayer()) {     // Si le joueur bleue(valeur true) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("V2/bluebar1.png", GameScreen.this);
-
-                                        } else {                       // Si le joueur rouge(valeur false) toûche, on cherche où et on adapte le sprite
-                                                b.clickBlock("V2/redbar1.png", GameScreen.this);
-
-                                        }
-                                }
-                                Vector3 touchPos = new Vector3();                              //Création d'un vecteur à 3 coordonnées x,y,z
-                                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);        // On récupère les coordonnées de touché
-                                camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
-                                if (finishGame.contains(touchPos.x, touchPos.y)) {
-                                        game.dispose();
-                                        game.create();
-                                }
-                                else if (turnBack.contains(touchPos.x, touchPos.y)) {
-                                        terrain.unPlay(GameScreen.this);
-                                }
-                                else if (reDo.contains(touchPos.x, touchPos.y)) {
-                                        terrain.rePlay(GameScreen.this);
-                                }
-                        }
-                }
-        };
-
         private void OverSaturatePlay(HollowSquare square){
                 for (HollowBar bar : square.neighbors) {
                         if (bar.isFree) {
-                                bar.iaClickBlock("V2/redbar1.png", GameScreen.this);
+                                bar.changeBlock(GameScreen.this);
                         }
                 }
         }
+        private boolean WaitToTouch() {
+                if (Gdx.input.isTouched() && touchOff) {
+                        touchOff = false;
+                        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                        camera.unproject(touchPos);
+                        if(mode==1) {
+                                Multiplayer.send(touchPos);
+                        }
+                        UpdateBlock(touchPos);
+                        return true;
+                }
+                if (!Gdx.input.isTouched()) {
+                        touchOff = true;
+                }
+                return false;
+        }
+        private void UpdateBlock(Vector3 touchPos) {
+                for (int i = 0; i < terrain.getBar().size; i++) { //Pareil pour les barres
+                        if (terrain.getBar().get(i).isClickable(touchPos)) {
+                                terrain.getBar().get(i).changeBlock(GameScreen.this);
+                                return;
+                        }
+                }
+                for (int i = 0; i < terrain.getSquare().size; i++) {  //On détecte si le joueur a appuyé sur un carré puis de quelle couleur est le joueur
+                        if (terrain.getSquare().get(i).isClickable(touchPos)) {
+                                terrain.getSquare().get(i).changeBlock(GameScreen.this);
+                                return;
+                        }
+                }
 
-
+        }
+        public void SendTouchPos(Vector3 touchPos){ //renvoie les coordonnées où le joueur a appuyé
+                UpdateBlock(touchPos);
+        }
         public int getMode(){
                 return mode;
         }
@@ -498,9 +427,6 @@ public class GameScreen implements Screen {
         @Override
         public void resize(int width, int height) {
         }
-
-
-
         @Override
         public void hide() {
         }
@@ -508,11 +434,9 @@ public class GameScreen implements Screen {
         @Override
         public void pause() {
         }
-
         @Override
         public void resume() {
         }
-
         @Override
         public void dispose() {
 

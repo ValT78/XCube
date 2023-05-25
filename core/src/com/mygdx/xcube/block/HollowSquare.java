@@ -20,7 +20,7 @@ public class HollowSquare extends TerrainBlock {
     public int freeNeighbors;
     public HollowSquare(int x, int y) {
         super(x,y);
-        this.setSprite("V2/4case.png");
+        this.sprite = setSprite("V2/4case.png");
         this.vertical=new HollowSquare[2];
         this.horizontal= new HollowSquare[2];
         this.diagonal = new HollowSquare[2];
@@ -35,6 +35,11 @@ public class HollowSquare extends TerrainBlock {
         isAntidiagonal=true;
         this.neighbors = new ArrayList<>();
         this.freeNeighbors=4;
+        this.spritebleu = setSprite("V2/bluecross1.png");
+        this.spritebleu2 = setSprite("V2/bluecross2.png");
+        this.spriterouge = setSprite("V2/redcross1.png");
+        this.spriterouge2 = setSprite("V2/redcross2.png");
+
     }
 
     public boolean FillNeighbors() {

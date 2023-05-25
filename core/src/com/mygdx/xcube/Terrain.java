@@ -24,9 +24,10 @@ public class Terrain {
     private final int originY;
     private Array<TerrainBlock> lastPlay;
     private Array<TerrainBlock> allPlay;
+    private Array<Items> bullet;
+
     private int iterator = 0;
     private final Random random = new Random();
-
 
     public Terrain() {
         this.unitSquare = new HollowSquare(0,0).getSize()[0];
@@ -39,6 +40,7 @@ public class Terrain {
         this.square=generateSquare();       // Stock la liste de carrés
         this.lastPlay=new Array<>();
         this.allPlay=new Array<>();
+        this.bullet=new Array<>();
     }
     public Array<TerrainBlock> getLastPlay() {
         return lastPlay;
@@ -57,6 +59,9 @@ public class Terrain {
     }                //Permet d'appeler les barres
     public Array<HollowSquare> getSquare() {
         return square;
+    }       // Permet d'appeler les carrés
+    public Array<Items> getBullet() {
+        return bullet;
     }       // Permet d'appeler les carrés
     public Array<HollowBar>  generateBar() { //Génère les coordonnées des barres à placer sur le terrain
 
@@ -117,47 +122,52 @@ public class Terrain {
     }
 
     public void createDLC(int place, boolean side, boolean turn) { //Crée un emplacement de DLC à un endroit libre sur le terrain
-        int x = originX-spaceBlock;
-        int y = originY-spaceBlock;
+        int x = originX - spaceBlock;
+        int y = originY - spaceBlock;
 
-        if(side) {                         //On peut définir chaque emplacement libre pour un DLC sur le terrain par un entier compris entre 0 et 5 inclus, et 2 boolean
-            y+=spaceBlock*place;
-            if(turn) {x+=spaceBlock*5;}
+        if (side) {                         //On peut définir chaque emplacement libre pour un DLC sur le terrain par un entier compris entre 0 et 5 inclus, et 2 boolean
+            y += spaceBlock * place;
+            if (turn) {
+                x += spaceBlock * 5;
+            }
+        } else {
+            x += spaceBlock * place;
+            if (turn) {
+                y += spaceBlock * 5;
+            }
         }
-        else {
-            x+=spaceBlock*place;
-            if(turn) {y+=spaceBlock*5;}
-        }
+        if (locateSquare(x + unitX + unitY / 2 - unitSquare / 2, y + unitX + unitY / 2 - unitSquare / 2) == null) {
+            HollowSquare square1 = new HollowSquare(x + unitX + unitY / 2 - unitSquare / 2, y + unitX + unitY / 2 - unitSquare / 2); //Création et ajout du carré au terrain
+            this.square.add(square1);
+            bullet.add(new Items(x-26,y-26,"alone_dots.png"));
+            HollowBar bar1 = locateBar(x + unitX, y);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
+            if (bar1 == null) {
+                bar1 = new HollowBar(true, x + unitX, y);
+            }
+            this.bar.add(bar1);
+            square1.neighbors.add(bar1);
 
-        HollowSquare square1 = new HollowSquare(x+unitX+unitY/2-unitSquare/2, y+unitX+unitY/2-unitSquare/2); //Création et ajout du carré au terrain
-        this.square.add(square1);
-        HollowBar bar1 = locateBar(x+unitX,y);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
-        if(bar1==null) {
-            bar1 = new HollowBar(true, x + unitX, y);
-        }
-        this.bar.add(bar1);
-        square1.neighbors.add(bar1);
+            HollowBar bar2 = locateBar(x + unitX, y + spaceBlock);  //Pareil mais inférieur
+            if (bar2 == null) {
+                bar2 = new HollowBar(true, x + unitX, y + spaceBlock);
+            }
+            this.bar.add(bar2);
+            square1.neighbors.add(bar2);
 
-        HollowBar bar2 =locateBar(x+unitX,y+spaceBlock);  //Pareil mais inférieur
-        if(bar2 ==null) {
-            bar2 = new HollowBar(true, x + unitX, y + spaceBlock);
-        }
-        this.bar.add(bar2);
-        square1.neighbors.add(bar2);
-
-        HollowBar bar3 = locateBar(x,y+unitX);          //Pareil mais à droite
-        if(bar3==null) {
-            bar3 = new HollowBar(false, x, y + unitX);
-        }
+            HollowBar bar3 = locateBar(x, y + unitX);          //Pareil mais à droite
+            if (bar3 == null) {
+                bar3 = new HollowBar(false, x, y + unitX);
+            }
             this.bar.add(bar3);
             square1.neighbors.add(bar3);
 
-        HollowBar bar4 = locateBar(x+spaceBlock,y+unitX);   //Pareil mais à gauche
-        if(bar4==null) {
-            bar4 = new HollowBar(false, x + spaceBlock, y + unitX);
+            HollowBar bar4 = locateBar(x + spaceBlock, y + unitX);   //Pareil mais à gauche
+            if (bar4 == null) {
+                bar4 = new HollowBar(false, x + spaceBlock, y + unitX);
+            }
+            this.bar.add(bar4);
+            square1.neighbors.add(bar4);
         }
-        this.bar.add(bar4);
-        square1.neighbors.add(bar4);
     }
 
     public HollowSquare locateSquare(int x, int y) { //retourne le carré de coordonnée (x,y)
@@ -279,7 +289,6 @@ public class Terrain {
         if(allPlay.size > iterator) {
             iterator++;
             allPlay.get(iterator-1).rePlay(gameScreen);
-            System.out.println(iterator);
         }
     }
 

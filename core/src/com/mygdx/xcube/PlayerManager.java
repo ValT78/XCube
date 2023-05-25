@@ -1,5 +1,6 @@
 package com.mygdx.xcube;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.xcube.block.TerrainBlock;
 
 public class PlayerManager {
@@ -23,22 +24,11 @@ public class PlayerManager {
             if(terrain.getLastPlay().size >= 3) {
                 for (int i = 0; i < 2; i++) {
                     TerrainBlock lastPlay = terrain.getLastPlay().removeIndex(0);
-                    if (player) {
-                        if (lastPlay.isSquare) {
-                            lastPlay.setSprite("V2/bluecross2.png");
-                        }
-                        else {
-                            lastPlay.setSprite("V2/bluebar2.png");
-                        }
+                    if(lastPlay.isBlue) {
+                        lastPlay.sprite=lastPlay.spritebleu2;
                     }
-
                     else {
-                        if (lastPlay.isSquare) {
-                            lastPlay.setSprite("V2/redcross2.png");
-                        }
-                        else {
-                            lastPlay.setSprite("V2/redbar2.png");
-                        }
+                        lastPlay.sprite=lastPlay.spriterouge2;
                     }
                 }
             }
@@ -51,7 +41,8 @@ public class PlayerManager {
         if(!coup) {
             player=!player;     // Passe player à false et inversement
         }
-        if(terrain.getLastPlay().size>0)
-        terrain.getLastPlay().removeIndex(terrain.getLastPlay().size-1);
+        if(terrain.getLastPlay().size>0) {
+            terrain.getLastPlay().removeIndex(terrain.getLastPlay().size - 1);
+        }
     }
 }

@@ -9,8 +9,8 @@ public class Block {
     int y;
     int dx;
     int dy;
-    Rectangle rectangle;
-    Sprite sprite;
+    public Rectangle rectangle;
+    public Sprite sprite;
 
 
 }

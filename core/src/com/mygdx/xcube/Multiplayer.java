@@ -81,7 +81,7 @@ public class Multiplayer implements Screen {
                     Vector3 touchPos = new Vector3();
                     touchPos.x = (float) x;
                     touchPos.y = (float) y;
-                    gamescreen.setTouchPos(touchPos);
+                    gamescreen.SendTouchPos(touchPos);
                 } catch(JSONException e){
 
                 }

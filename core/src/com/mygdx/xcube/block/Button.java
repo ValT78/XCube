@@ -15,9 +15,9 @@ import com.mygdx.xcube.XCube;
 public class Button extends Block {
     private String text;
     private BitmapFont font;
-    private int scale;
+    private float scale;
 
-    public Button(int x, int y, String sprite, String text, int scale) {
+    public Button(int x, int y, String sprite, String text, float scale) {
         this.x=x;
         this.y=y;
         this.sprite = new Sprite(new Texture(Gdx.files.internal(sprite)));
@@ -27,7 +27,7 @@ public class Button extends Block {
         this.text=text;
         FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Avenir.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter.size = 20*scale;
+        fontParameter.size = (int) (20*scale);
         font = fontGenerator.generateFont(fontParameter);
         font.setColor(Color.WHITE);
         this.scale=scale;
