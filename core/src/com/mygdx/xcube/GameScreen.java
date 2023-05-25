@@ -207,12 +207,16 @@ public class GameScreen implements Screen {
                         Array<HollowSquare> four = terrain.HaveNeighbors(0,0);
                         if(nearAlign != null) {
                                 OverSaturatePlay(nearAlign);
-                                nearAlign.changeBlock(GameScreen.this);
+                                if(!players.getPlayer()) {
+                                        nearAlign.changeBlock(GameScreen.this);
+                                }
                                 hasPlay=true;
+                                System.out.println("nearalign");
                         }
                         else if(four.size > 0) {
                                 four.get(random.nextInt(four.size)).changeBlock(GameScreen.this);
                                 hasPlay=true;
+                                System.out.println("four");
                         }
                         else {
                                 for (HollowSquare square : oversaturate) {
@@ -246,7 +250,8 @@ public class GameScreen implements Screen {
                         hasPlay=true;
                 }
                 if(!hasPlay) {
-                        for (HollowSquare square : terrain.getSquare()) {
+                        for (int i=0; i<terrain.getSquare().size; i++) {
+                                HollowSquare square = terrain.getSquare().get(i);
                                 if (square.isFree && !CouldAlign(square)) {
                                         int[] coord = square.getCoords();
                                         HollowSquare squareR = terrain.locateSquare(coord[0]+spaceBlock, coord[1]);
