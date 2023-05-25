@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
         public Terrain terrain;
         public PlayerManager players;
         private boolean touchOff = true;
+        private boolean touchOff2 = true;
         private float timeLeftBlue;
         private float timeLeftRed;
         private int minutesBlue;
@@ -120,16 +121,16 @@ public class GameScreen implements Screen {
                         game.batch.begin();
                         pause.drawButton(game, 0);
                         game.batch.end();
-                        if (Gdx.input.isTouched() && touchOff) {
-                                touchOff = false;
+                        if (Gdx.input.isTouched() && touchOff2) {
+                                touchOff2 = false;
                                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                                 camera.unproject(touchPos);
-                                if (pause.contains(touchPos.x, touchPos.y)) {
-                                        gameStarted = !gameStarted;
+                                if(pause.contains(touchPos.x,touchPos.y)) {
+                                        gameStarted=!gameStarted;
                                 }
                         }
                         if (!Gdx.input.isTouched()) {
-                                touchOff = true;
+                                touchOff2 = true;
                         }
                 }
                 if(gameStarted) {
@@ -279,7 +280,6 @@ public class GameScreen implements Screen {
                         }
                 }
         }
-
         public void EndScreen() {
                 if (winner) {
                         shape.begin(ShapeRenderer.ShapeType.Filled);
@@ -317,6 +317,37 @@ public class GameScreen implements Screen {
                         }
                 }
         };
+        private boolean WaitToTouch() {
+                if (Gdx.input.isTouched() && touchOff) {
+                        touchOff = false;
+                        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                        camera.unproject(touchPos);
+                        if(mode==1) {
+                                Multiplayer.send(touchPos);
+                        }
+                        UpdateBlock(touchPos);
+                        return true;
+                }
+                if (!Gdx.input.isTouched()) {
+                        touchOff = true;
+                }
+                return false;
+        }
+        private void UpdateBlock(Vector3 touchPos) {
+                for (int i = 0; i < terrain.getBar().size; i++) { //Pareil pour les barres
+                        if (terrain.getBar().get(i).isClickable(touchPos)) {
+                                terrain.getBar().get(i).changeBlock(GameScreen.this);
+                                return;
+                        }
+                }
+                for (int i = 0; i < terrain.getSquare().size; i++) {  //On détecte si le joueur a appuyé sur un carré puis de quelle couleur est le joueur
+                        if (terrain.getSquare().get(i).isClickable(touchPos)) {
+                                terrain.getSquare().get(i).changeBlock(GameScreen.this);
+                                return;
+                        }
+                }
+
+        }
         public boolean checkEveryAlign(boolean player) { //vérifie si il y a un alignement avec les cases du joueur qui vient de jouer
                 for (HollowSquare square: terrain.getSquare()) { //boucle for sur chaque carré
                         if(!square.isFree && square.isBlue==player) { //on ne choisit que ceux qui sont plein et de la couleur du joueur qui vient de jouer
@@ -385,37 +416,7 @@ public class GameScreen implements Screen {
                         }
                 }
         }
-        private boolean WaitToTouch() {
-                if (Gdx.input.isTouched() && touchOff) {
-                        touchOff = false;
-                        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                        camera.unproject(touchPos);
-                        if(mode==1) {
-                                Multiplayer.send(touchPos);
-                        }
-                        UpdateBlock(touchPos);
-                        return true;
-                }
-                if (!Gdx.input.isTouched()) {
-                        touchOff = true;
-                }
-                return false;
-        }
-        private void UpdateBlock(Vector3 touchPos) {
-                for (int i = 0; i < terrain.getBar().size; i++) { //Pareil pour les barres
-                        if (terrain.getBar().get(i).isClickable(touchPos)) {
-                                terrain.getBar().get(i).changeBlock(GameScreen.this);
-                                return;
-                        }
-                }
-                for (int i = 0; i < terrain.getSquare().size; i++) {  //On détecte si le joueur a appuyé sur un carré puis de quelle couleur est le joueur
-                        if (terrain.getSquare().get(i).isClickable(touchPos)) {
-                                terrain.getSquare().get(i).changeBlock(GameScreen.this);
-                                return;
-                        }
-                }
 
-        }
         public void SendTouchPos(Vector3 touchPos){ //renvoie les coordonnées où le joueur a appuyé
                 UpdateBlock(touchPos);
         }
