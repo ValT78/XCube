@@ -42,8 +42,13 @@ public class TerrainBlock extends Block {
         else {
             sprite = spriterouge;
         }
-        if(this.isSquare && gameScreen.getMode()!=3 && gameScreen.checkEveryAlign(gameScreen.players.getPlayer())) {                                                   //vérifie si une condition de victoire est remplie
+        if(this.isSquare && gameScreen.getMode()!=3 && gameScreen.terrain.checkEveryAlign(gameScreen.players.getPlayer())) {                                                   //vérifie si une condition de victoire est remplie
             gameScreen.setVictoryScreen(gameScreen.players.getPlayer());
+        }
+        for (int i=0;i<gameScreen.terrain.getCanPlay().size;i++) {
+            if(gameScreen.terrain.getCanPlay().get(i)==this) {
+                gameScreen.terrain.getCanPlay().removeIndex(i);
+            }
         }
         gameScreen.terrain.getLastPlay().add(this);                           //Est enregistré comme le dernier coup joué pour apparaitre d'une couleur différente de la normal
         gameScreen.terrain.addPlay(this);
@@ -96,5 +101,7 @@ public class TerrainBlock extends Block {
         gameScreen.players.setCoup(gameScreen.terrain);                       //Vérifie combien de coup il reste au joueur actuel pour jouer, et change la couleur des blocks récemment joués
 
     }
+
+
 
 }

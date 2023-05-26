@@ -4,6 +4,7 @@ import static com.badlogic.gdx.math.MathUtils.round;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.xcube.Terrain;
 
 import java.util.ArrayList;
 
@@ -67,6 +68,105 @@ public class HollowSquare extends TerrainBlock {
             }
         }
     }
-
+    public int ComputeLine(HollowSquare[] neighbors) {
+        if(freeNeighbors>2) { // |
+            return -7;
+        }
+        else if(neighbors[0].isBlue!=neighbors[1].isBlue && !neighbors[0].isFree && !neighbors[1].isFree) { // X ? O
+            return 0;
+        }
+        else if(freeNeighbors==2) {
+            if(neighbors[0].isFree && neighbors[1].isFree) { // ¤ |_ ¤
+                return 0;
+            }
+            else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) { // X |_ ¤
+                return -6;
+            }
+            else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) { // O |_ ¤
+                return 4;
+            }
+            else if(neighbors[0].isBlue==neighbors[1].isBlue) {
+                if(neighbors[0].isBlue) { // X |_ X
+                    return -30;
+                }
+                else { // O |_ O
+                    return 20;
+                }
+            }
+        }
+        else if(freeNeighbors<2 && isFree) {
+            if(neighbors[0].isFree && neighbors[1].isFree) { // ¤ |_| ¤
+                return 4;
+            }
+            else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) { // X |_| ¤
+                return -12;
+            }
+            else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) { // O |_| ¤
+                return 8;
+            }
+            else if(neighbors[0].isBlue==neighbors[1].isBlue) {
+                if(neighbors[0].isBlue) { // X |_| X
+                    return -150;
+                }
+                else { // O |_| O
+                    return 100;
+                }
+            }
+        }
+        else {
+            if((isBlue!=neighbors[0].isBlue) && (isBlue!=neighbors[0].isBlue)) { // X O X ou O X O
+                return 0;
+            }
+            if(isBlue) {
+                if(neighbors[0].isFree && neighbors[1].isFree) {
+                    if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // |_| X ¤
+                        return -15;
+                    }
+                    else { // |_ X |_
+                        return -8;
+                    }
+                }
+                else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) { // O X ¤
+                    return -10;
+                }
+                else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) {
+                    if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // X X |_|
+                        return -150;
+                    }
+                    else if(neighbors[0].freeNeighbors>1 || neighbors[1].freeNeighbors>1){ // X X |_
+                        return  -45;
+                    }
+                }
+                else if(neighbors[0].isBlue!=neighbors[1].isBlue) { // X X O
+                    return -12;
+                }
+            }
+            if(!isBlue) {
+                if(neighbors[0].isFree && neighbors[1].isFree) {
+                    if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // |_| O ¤
+                        return 10;
+                    }
+                    else { // |_ O |_
+                        return 6;
+                    }
+                }
+                else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) { // X O ¤
+                    return 7;
+                }
+                else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) {
+                    if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // O O |_|
+                        return 100;
+                    }
+                    else if(neighbors[0].freeNeighbors>1 || neighbors[1].freeNeighbors>1){ // O O |_
+                        return  30;
+                    }
+                }
+                else if(neighbors[0].isBlue!=neighbors[1].isBlue) { // X O O
+                    return 8;
+                }
+            }
+        }
+    return 0;
+    }
 
 }

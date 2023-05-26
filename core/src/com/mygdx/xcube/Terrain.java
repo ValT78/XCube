@@ -24,6 +24,7 @@ public class Terrain {
     private final int originY;
     private Array<TerrainBlock> lastPlay;
     private Array<TerrainBlock> allPlay;
+    private Array<TerrainBlock> canPlay;
     private Array<Items> bullet;
 
     private int iterator = 0;
@@ -40,6 +41,9 @@ public class Terrain {
         this.square=generateSquare();       // Stock la liste de carrés
         this.lastPlay=new Array<>();
         this.allPlay=new Array<>();
+        this.canPlay=new Array<>();
+        canPlay.addAll(bar);
+        canPlay.addAll(square);
         this.bullet=new Array<>();
     }
     public Array<TerrainBlock> getLastPlay() {
@@ -59,6 +63,9 @@ public class Terrain {
     }                //Permet d'appeler les barres
     public Array<HollowSquare> getSquare() {
         return square;
+    }       // Permet d'appeler les carrés
+    public Array<TerrainBlock> getCanPlay() {
+        return canPlay;
     }       // Permet d'appeler les carrés
     public Array<Items> getBullet() {
         return bullet;
@@ -139,33 +146,38 @@ public class Terrain {
         if (locateSquare(x + unitX + unitY / 2 - unitSquare / 2, y + unitX + unitY / 2 - unitSquare / 2) == null) {
             HollowSquare square1 = new HollowSquare(x + unitX + unitY / 2 - unitSquare / 2, y + unitX + unitY / 2 - unitSquare / 2); //Création et ajout du carré au terrain
             this.square.add(square1);
+            canPlay.add(square1);
             bullet.add(new Items(x-26,y-26,"alone_dots.png"));
             HollowBar bar1 = locateBar(x + unitX, y);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
             if (bar1 == null) {
                 bar1 = new HollowBar(true, x + unitX, y);
+                this.bar.add(bar1);
+                canPlay.add(bar1);
             }
-            this.bar.add(bar1);
             square1.neighbors.add(bar1);
 
             HollowBar bar2 = locateBar(x + unitX, y + spaceBlock);  //Pareil mais inférieur
             if (bar2 == null) {
                 bar2 = new HollowBar(true, x + unitX, y + spaceBlock);
+                this.bar.add(bar2);
+                canPlay.add(bar2);
             }
-            this.bar.add(bar2);
             square1.neighbors.add(bar2);
 
             HollowBar bar3 = locateBar(x, y + unitX);          //Pareil mais à droite
             if (bar3 == null) {
                 bar3 = new HollowBar(false, x, y + unitX);
+                this.bar.add(bar3);
+                canPlay.add(bar3);
             }
-            this.bar.add(bar3);
             square1.neighbors.add(bar3);
 
             HollowBar bar4 = locateBar(x + spaceBlock, y + unitX);   //Pareil mais à gauche
             if (bar4 == null) {
                 bar4 = new HollowBar(false, x + spaceBlock, y + unitX);
+                this.bar.add(bar4);
+                canPlay.add(bar4);
             }
-            this.bar.add(bar4);
             square1.neighbors.add(bar4);
         }
     }
@@ -230,6 +242,33 @@ public class Terrain {
         }
     }
 
+    public boolean checkEveryAlign(boolean player) { //vérifie si il y a un alignement avec les cases du joueur qui vient de jouer
+        for (HollowSquare square: square) { //boucle for sur chaque carré
+            if(!square.isFree && square.isBlue==player) { //on ne choisit que ceux qui sont plein et de la couleur du joueur qui vient de jouer
+                if (square.isHorizontal) { //On vérifie si le bloc à droite et à gauche existent, puis s'ils sont de la même couleur que celui du milieu
+                    if (square.horizontal[0].isBlue==player && square.horizontal[1].isBlue==player && !square.horizontal[0].isFree && !square.horizontal[1].isFree) {
+                        return true;
+                    }
+                }
+                if (square.isVertical) {//pareil avec celui en bas et en haut
+                    if (square.vertical[0].isBlue==player && square.vertical[1].isBlue==player && !square.vertical[0].isFree && !square.vertical[1].isFree ) {
+                        return true;
+                    }
+                }
+                if (square.isDiagonal) {//pareil pour les 2 diagonales
+                    if (square.diagonal[0].isBlue==player && square.diagonal[1].isBlue==player && !square.diagonal[0].isFree && !square.diagonal[1].isFree ) {
+                        return true;
+                    }
+                }
+                if (square.isAntidiagonal) {
+                    if (square.antidiagonal[0].isBlue==player && square.antidiagonal[1].isBlue==player && !square.antidiagonal[0].isFree && !square.antidiagonal[1].isFree ) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     public Array<HollowSquare> HaveNeighbors(int min, int max) {
         Array<HollowSquare> haveNeighbors = new Array<>();
         for (HollowSquare square : square) {
@@ -292,8 +331,121 @@ public class Terrain {
         }
     }
 
+    public int MinimaxTurn(int depth, boolean color) {
+        if(checkEveryAlign(color)) {
+            if(color) {
+                return -10000;
+            }
+            else {
+                return 10000;
+            }
+        }
+        else if(depth==0) {
+            return heuristic();
+        }
+        else {
+            if(color) {
+                int note = 10001;
+                for(int i = 0; i<canPlay.size;i++) {
+                    if(!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
+                        canPlay.get(i).isFree = false;
+                        canPlay.get(i).isBlue = color;
+                        for (int j = 0; j < canPlay.size; j++) {
+                            if (j != i) {
+                                if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                                    canPlay.get(j).isFree = false;
+                                    canPlay.get(j).isBlue = color;
+                                    int newNote = this.MinimaxTurn(depth - 1, !color);
+                                    if (newNote < note) {
+                                        note = newNote;
+                                    }
+                                    canPlay.get(i).isFree = true;
+                                    canPlay.get(j).isFree = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return note;
+            }
+            else {
+                int note = -10001;
+                for(int i = 0; i<canPlay.size;i++) {
+                    if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
+                        canPlay.get(i).isFree = false;
+                        canPlay.get(i).isBlue = !color;
+                        for (int j = 0; j < canPlay.size; j++) {
+                            if (j != i) {
+                                if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                                    canPlay.get(j).isFree = false;
+                                    canPlay.get(j).isBlue = !color;
+                                    int newNote = this.MinimaxTurn(depth - 1, !color);
+                                    if (newNote > note) {
+                                        note = newNote;
+                                    }
+                                    canPlay.get(i).isFree = true;
+                                    canPlay.get(j).isFree = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return note;
+            }
+        }
+    }
+    public int[] Minimax(int depth) {
+        int note = -10000;
+        int coup1=0;
+        int coup2=0;
+        for(int i = 0; i<canPlay.size;i++) {
+            if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
+                canPlay.get(i).isFree = false;
+                canPlay.get(i).isBlue = false;
+                for (int j = 0; j < canPlay.size; j++) {
+                    if (j != i) {
+                        if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                            canPlay.get(j).isFree = false;
+                            canPlay.get(j).isBlue = false;
+                            int newNote = this.MinimaxTurn(depth - 1, true);
+                            if (newNote > note) {
+                                note = newNote;
+                                coup1 = i;
+                                coup2 = j;
+                            }
+                            System.out.println(note);
+                            System.out.println(coup1+"   "+i);
+                            System.out.println(coup2+"   "+j);
+                            canPlay.get(i).isFree = true;
+                            canPlay.get(j).isFree = true;
+                        }
+                    }
+                }
+            }
+        }
+        return new int[]{coup1,coup2};
+    }
+
     public int heuristic() {
-        return 1;
+        int score = 0;
+        for(int i =0; i<square.size; i++) {
+            HollowSquare squar = square.get(i);
+            if(squar.isHorizontal) {
+                score += squar.ComputeLine(squar.horizontal);
+            }
+            if(squar.isVertical) {
+                score += squar.ComputeLine(squar.vertical);
+
+            }
+            if(squar.isDiagonal) {
+                score += squar.ComputeLine(squar.diagonal);
+
+            }
+            if(squar.isAntidiagonal) {
+                score += squar.ComputeLine(squar.antidiagonal);
+            }
+        }
+        return score;
     }
 
 

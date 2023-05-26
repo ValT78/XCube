@@ -199,7 +199,24 @@ public class GameScreen implements Screen {
 
         }
         private void ProcessIA() {
-                boolean hasPlay = false;
+                Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
+                Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1); //C'est important de garder au moins une de ces 2 lignes même si le tableau sert pas au final
+                HollowSquare nearAlign = NearAlign(oversaturate);
+                /*if(nearAlign != null) {
+                        OverSaturatePlay(nearAlign);
+                        if(!players.getPlayer()) {
+                                nearAlign.changeBlock(GameScreen.this);
+                        }
+                }*/
+                if (insaturate.size>2 && terrain.FindInsaturation(insaturate) != null) {
+                        terrain.FindInsaturation(insaturate).changeBlock(GameScreen.this);
+                }
+                else {
+                        for (int i : terrain.Minimax(3)) {
+                                terrain.getCanPlay().get(i).changeBlock(GameScreen.this);
+                        }
+                }
+                /*boolean hasPlay = false;
                 Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1);
                 Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
                 if(oversaturate.size > 0) {
@@ -211,12 +228,10 @@ public class GameScreen implements Screen {
                                         nearAlign.changeBlock(GameScreen.this);
                                 }
                                 hasPlay=true;
-                                System.out.println("nearalign");
                         }
                         else if(four.size > 0) {
                                 four.get(random.nextInt(four.size)).changeBlock(GameScreen.this);
                                 hasPlay=true;
-                                System.out.println("four");
                         }
                         else {
                                 for (HollowSquare square : oversaturate) {
@@ -283,7 +298,7 @@ public class GameScreen implements Screen {
                         if(!hasPlay) {
                                 OverSaturatePlay(oversaturate.get(random.nextInt(oversaturate.size)));
                         }
-                }
+                }*/
         }
         public void EndScreen() {
                 if (winner) {
@@ -353,33 +368,7 @@ public class GameScreen implements Screen {
                 }
 
         }
-        public boolean checkEveryAlign(boolean player) { //vérifie si il y a un alignement avec les cases du joueur qui vient de jouer
-                for (HollowSquare square: terrain.getSquare()) { //boucle for sur chaque carré
-                        if(!square.isFree && square.isBlue==player) { //on ne choisit que ceux qui sont plein et de la couleur du joueur qui vient de jouer
-                                if (square.isHorizontal) { //On vérifie si le bloc à droite et à gauche existent, puis s'ils sont de la même couleur que celui du milieu
-                                        if (square.horizontal[0].isBlue==player && square.horizontal[1].isBlue==player && !square.horizontal[0].isFree && !square.horizontal[1].isFree) {
-                                                return true;
-                                        }
-                                }
-                                if (square.isVertical) {//pareil avec celui en bas et en haut
-                                        if (square.vertical[0].isBlue==player && square.vertical[1].isBlue==player && !square.vertical[0].isFree && !square.vertical[1].isFree ) {
-                                                return true;
-                                        }
-                                }
-                                if (square.isDiagonal) {//pareil pour les 2 diagonales
-                                        if (square.diagonal[0].isBlue==player && square.diagonal[1].isBlue==player && !square.diagonal[0].isFree && !square.diagonal[1].isFree ) {
-                                                return true;
-                                        }
-                                }
-                                if (square.isAntidiagonal) {
-                                        if (square.antidiagonal[0].isBlue==player && square.antidiagonal[1].isBlue==player && !square.antidiagonal[0].isFree && !square.antidiagonal[1].isFree ) {
-                                                return true;
-                                        }
-                                }
-                        }
-                }
-                return false;
-        }
+
 
         public HollowSquare NearAlign(Array<HollowSquare> overSaturate) {
                 for (HollowSquare sat : overSaturate) {
@@ -394,12 +383,12 @@ public class GameScreen implements Screen {
         private boolean CouldAlign(HollowSquare square) {
                 square.isFree=false;
                 square.isBlue=players.getPlayer();
-                if(checkEveryAlign(players.getPlayer())) {
+                if(terrain.checkEveryAlign(players.getPlayer())) {
                         square.isFree=true;
                         return true;
                 }
                 square.isBlue=!players.getPlayer();
-                if(checkEveryAlign(!players.getPlayer())) {
+                if(terrain.checkEveryAlign(!players.getPlayer())) {
                         square.isFree=true;
                         return true;
                 }
