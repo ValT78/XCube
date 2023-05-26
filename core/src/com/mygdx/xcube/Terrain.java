@@ -398,17 +398,17 @@ public class Terrain {
         int note = -10000;
         int coup1=0;
         int coup2=0;
-        for(int i = 0; i<canPlay.size;i++) {
-            if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
-                canPlay.get(i).isFree = false;
-                canPlay.get(i).isBlue = false;
-                for (int j = 0; j < canPlay.size; j++) {
+        for(int i = 0; i<canPlay.size;i++) { // On itère sur tous les blocs qui peuvent être joués
+            if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) { //On vérifie qu'il s'agit d'une barre, ou d'un carré avec ses 4 voisins
+                canPlay.get(i).isFree = false; //On fait comme si le bloc était joué
+                canPlay.get(i).isBlue = false; //On fait comme si le bloc était rouge
+                for (int j = 0; j < canPlay.size; j++) { //On cherche le 2ème coup
                     if (j != i) {
-                        if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                        if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) { // tout pareil que le premier
                             canPlay.get(j).isFree = false;
                             canPlay.get(j).isBlue = false;
-                            int newNote = this.MinimaxTurn(depth - 1, true);
-                            if (newNote > note) {
+                            int newNote = this.MinimaxTurn(depth - 1, true); //On utilise le Minimax récursif avec le terrain un peu modifié
+                            if (newNote > note) { //On prend la note max et on récupère les coups associés
                                 note = newNote;
                                 coup1 = i;
                                 coup2 = j;
@@ -417,7 +417,7 @@ public class Terrain {
                             System.out.println(coup1+"   "+i);
                             System.out.println(coup2+"   "+j);
                             canPlay.get(i).isFree = true;
-                            canPlay.get(j).isFree = true;
+                            canPlay.get(j).isFree = true; // On fait revenir le terrain à la normal
                         }
                     }
                 }
@@ -426,8 +426,8 @@ public class Terrain {
         return new int[]{coup1,coup2};
     }
 
-    public int heuristic() {
-        int score = 0;
+    public int heuristic() { //Le principe : Pour chaque carré, on vient récupérer les 2 blocs à la vertical, puis à l'horizontal, puis en diagonal, puis en antidiagonale
+        int score = 0;       //Pour chacun, en fonction de l'état du carré et de ses 2 voisins, on attribut une note différente. On fait ensuite la somme des notes
         for(int i =0; i<square.size; i++) {
             HollowSquare squar = square.get(i);
             if(squar.isHorizontal) {
