@@ -227,14 +227,14 @@ public class GameScreen implements Screen {
                         terrain.FindInsaturation(insaturate).changeBlock(GameScreen.this);
 
                 }
-                else if(terrain.getCanPlay().size>23) {
+                else if(terrain.getCanPlay().size>17) {
                         int[] coups = terrain.Minimax(3);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
                         coup2.changeBlock(GameScreen.this);
                 }
-                else if(terrain.getCanPlay().size>16) {
+                else if(terrain.getCanPlay().size>12) {
                         int[] coups = terrain.Minimax(5);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);

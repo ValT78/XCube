@@ -353,22 +353,22 @@ public class Terrain {
                         if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
                             if(canPlay.get(i).isFree) {
                                 canPlay.get(i).isFree = false;
-                                canPlay.get(i).isBlue = color;
+                                canPlay.get(i).isBlue = true;
                                 for (int j = 0; j < canPlay.size; j++) {
-                                                if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                                    if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
                                                     if (canPlay.get(j).isFree) {
                                                         canPlay.get(j).isFree = false;
-                                                        canPlay.get(j).isBlue = color;
-                                                        int newNote = this.MinimaxTurn(depth - 1, !color);
+                                                        canPlay.get(j).isBlue = true;
+                                                        int newNote = this.MinimaxTurn(depth - 1, false);
                                                         if (newNote < note) {
                                                             note = newNote;
                                                         }
                                                         //System.out.println(note+" "+depth);
-                                                        canPlay.get(i).isFree = true;
                                                         canPlay.get(j).isFree = true;
                                                     }
                                                 }
                                 }
+                                canPlay.get(i).isFree = true;
                             }
                     }
                 }
@@ -380,22 +380,22 @@ public class Terrain {
                     if (canPlay.get(i).isFree) {
                         if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
                             canPlay.get(i).isFree = false;
-                            canPlay.get(i).isBlue = !color;
+                            canPlay.get(i).isBlue = true;
                             for (int j = 0; j < canPlay.size; j++) {
                                     if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
                                         if (canPlay.get(j).isFree) {
                                             canPlay.get(j).isFree = false;
-                                            canPlay.get(j).isBlue = !color;
-                                            int newNote = this.MinimaxTurn(depth - 1, !color);
+                                            canPlay.get(j).isBlue = true;
+                                            int newNote = this.MinimaxTurn(depth - 1, true);
                                             if (newNote > note) {
                                                 note = newNote;
                                             }
-                                            canPlay.get(i).isFree = true;
                                             canPlay.get(j).isFree = true;
                                         }
 
                                     }
                             }
+                            canPlay.get(i).isFree = true;
                         }
                     }
                 }
