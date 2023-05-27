@@ -17,6 +17,7 @@ import com.mygdx.xcube.block.Button;
 import com.mygdx.xcube.block.HollowBar;
 import com.mygdx.xcube.block.HollowSquare;
 import com.mygdx.xcube.block.Items;
+import com.mygdx.xcube.block.TerrainBlock;
 
 import java.util.Random;
 
@@ -53,7 +54,8 @@ public class GameScreen implements Screen {
         private final Button reDo;
         private final Button finishGame;
         private final Button pause;
-
+        private Thread iaThread = new Thread(new IAClass(this));
+        private boolean IAStart=false;
 
         public GameScreen(final XCube game, int mode, float startTime, boolean dlc) {
                 grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/dots.png");
@@ -163,10 +165,15 @@ public class GameScreen implements Screen {
                                         break;
                                 case 2:
                                         if(players.getPlayer()) {
+                                                iaThread.interrupt();
                                                 WaitToTouch();
+                                                IAStart=false;
+
                                         }
-                                        else {
-                                                ProcessIA();
+                                        else if(!players.getPlayer() && !IAStart){
+                                                iaThread = new Thread(new IAClass(this));
+                                                iaThread.start();
+                                                IAStart=true;
                                         }
                                         break;
                         }
@@ -185,36 +192,61 @@ public class GameScreen implements Screen {
                 font.draw(game.batch, String.format("%01d:%02d:%d",minutesBlue,secondsBlue,tenthsBlue), unitY, ((6*unitY + 5*unitX)*7/4));
                 font.setColor(Color.RED);
                 font.draw(game.batch, String.format("%01d:%02d.%d",minutesRed,secondsRed,tenthsRed), unitY, (6*unitY + 5*unitX)/4);
-                for (HollowBar b : terrain.getBar()) {
-                        b.drawBlock(game.batch);                         // Dessine le terrain
+                for (int i=0; i<terrain.getBar().size;i++) {
+                        terrain.getBar().get(i).drawBlock(game.batch);                         // Dessine le terrain
                 }
-                for (HollowSquare b : terrain.getSquare()) {
-                        b.drawBlock(game.batch);                         // Dessine le terrain
+                for (int i=0; i<terrain.getSquare().size;i++) {
+                        terrain.getSquare().get(i).drawBlock(game.batch);                         // Dessine le terrain
                 }
-                for (Items i : terrain.getBullet()) {
-                        i.drawItems(game, 1);
+                for (int i=0; i<terrain.getBullet().size;i++) {
+                        terrain.getBullet().get(i).drawItems(game, 1);
                 }
                 grid.drawItems(game,(float)(1));
                 game.batch.end();
 
         }
-        private void ProcessIA() {
+        public void ProcessIA() {
                 Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
                 Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1); //C'est important de garder au moins une de ces 2 lignes même si le tableau sert pas au final
-                HollowSquare nearAlign = NearAlign(oversaturate);
                 /*if(nearAlign != null) {
                         OverSaturatePlay(nearAlign);
                         if(!players.getPlayer()) {
                                 nearAlign.changeBlock(GameScreen.this);
                         }
                 }*/
-                if (insaturate.size>2 && terrain.FindInsaturation(insaturate) != null) {
+                if(oversaturate.size>0) {
+                        int[] coups = terrain.Minimax(3);
+                        TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
+                        TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
+                        coup1.changeBlock(GameScreen.this);
+                        coup2.changeBlock(GameScreen.this);
+                }
+                else if (insaturate.size>3 && terrain.FindInsaturation(insaturate) != null) {
                         terrain.FindInsaturation(insaturate).changeBlock(GameScreen.this);
+                        insaturate = terrain.HaveNeighbors(3,4);
+                        terrain.FindInsaturation(insaturate).changeBlock(GameScreen.this);
+
+                }
+                else if(terrain.getCanPlay().size>23) {
+                        int[] coups = terrain.Minimax(3);
+                        TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
+                        TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
+                        coup1.changeBlock(GameScreen.this);
+                        coup2.changeBlock(GameScreen.this);
+                }
+                else if(terrain.getCanPlay().size>16) {
+                        int[] coups = terrain.Minimax(5);
+                        TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
+                        TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
+                        coup1.changeBlock(GameScreen.this);
+                        coup2.changeBlock(GameScreen.this);
                 }
                 else {
-                        for (int i : terrain.Minimax(3)) {
-                                terrain.getCanPlay().get(i).changeBlock(GameScreen.this);
-                        }
+                        int[] coups = terrain.Minimax(7);
+                        TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
+                        TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
+                        coup1.changeBlock(GameScreen.this);
+                        coup2.changeBlock(GameScreen.this);
                 }
                 /*boolean hasPlay = false;
                 Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1);
