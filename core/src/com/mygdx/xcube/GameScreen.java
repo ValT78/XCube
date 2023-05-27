@@ -215,7 +215,7 @@ public class GameScreen implements Screen {
                         }
                 }*/
                 if(oversaturate.size>0) {
-                        int[] coups = terrain.Minimax(3);
+                        int[] coups = terrain.AlphaBeta(3);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
@@ -228,21 +228,21 @@ public class GameScreen implements Screen {
 
                 }
                 else if(terrain.getCanPlay().size>23) {
-                        int[] coups = terrain.Minimax(3);
+                        int[] coups = terrain.AlphaBeta(3);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
                         coup2.changeBlock(GameScreen.this);
                 }
                 else if(terrain.getCanPlay().size>16) {
-                        int[] coups = terrain.Minimax(5);
+                        int[] coups = terrain.AlphaBeta(5);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
                         coup2.changeBlock(GameScreen.this);
                 }
                 else {
-                        int[] coups = terrain.Minimax(7);
+                        int[] coups = terrain.AlphaBeta(7);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
