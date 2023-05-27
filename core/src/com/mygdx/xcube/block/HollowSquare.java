@@ -84,67 +84,52 @@ public class HollowSquare extends TerrainBlock {
             freeNeighbors = 0;
         }
     }
-    public int ComputeLine(HollowSquare[] neighbors) {
-        HaveNeighborsLite();
-        if(isFree) {
-            if(freeNeighbors<2) {
-                return -1;
-            }
-            else if(freeNeighbors>2) {
-                return -4;
-            }
-            else {
-                return 0;
-            }
-        }
-        else {
-            if (isBlue) {
-                return 0;
-            }
 
-            else {
-                return 200;
-            }
-        }
-    }
-        public int ComputeLine2(HollowSquare[] neighbors) {
+        public int ComputeLine(HollowSquare[] neighbors) {
             HaveNeighborsLite();
             neighbors[0].HaveNeighborsLite();
             neighbors[1].HaveNeighborsLite();
         if(freeNeighbors>2) { // |
-            if(neighbors[0].isFree && neighbors[0].freeNeighbors==2 && neighbors[1].isFree && neighbors[1].freeNeighbors==2) {
+            if(neighbors[0].isFree && neighbors[0].freeNeighbors==2 && neighbors[1].isFree && neighbors[1].freeNeighbors==2) { // |_ | |_
                 return 0;
             }
-            else return -7;
+            else if((neighbors[0].isFree && neighbors[0].freeNeighbors==3) || (neighbors[1].isFree && neighbors[1].freeNeighbors==3)) { // |_| | ¤
+                return -7;
+            }
         }
         else if(neighbors[0].isBlue!=neighbors[1].isBlue && !neighbors[0].isFree && !neighbors[1].isFree) { // X ? O
-            return 0;
+            return -10;
         }
         else if(freeNeighbors==2) {
-            if(neighbors[0].isFree && neighbors[1].isFree) { // ¤ |_ ¤
-                return 0;
-            }
-            else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) { // X |_ ¤
-                return -6;
-            }
-            else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) { // O |_ ¤
-                return 4;
+            /*if((neighbors[0].isFree && neighbors[0].freeNeighbors==3) || (neighbors[1].isFree && neighbors[1].freeNeighbors==3)) { // |_| |_ ¤
+                return 20;
+            }*/
+            if(neighbors[0].isFree || neighbors[1].isFree) {
+                if ((neighbors[0].freeNeighbors == 1 && !neighbors[1].isFree && neighbors[1].isBlue) || (neighbors[1].freeNeighbors == 1 && !neighbors[0].isFree && neighbors[0].isBlue)) { // X |_ |_|
+                    return -20;
+                } else if ((neighbors[0].freeNeighbors == 2 && !neighbors[1].isFree && neighbors[1].isBlue) || (neighbors[1].freeNeighbors == 2 && !neighbors[0].isFree && neighbors[0].isBlue)) { // X |_ |_
+                    return -6;
+                } else if ((neighbors[0].freeNeighbors == 1 && !neighbors[1].isFree && !neighbors[1].isBlue) || (neighbors[1].freeNeighbors == 1 && !neighbors[0].isFree && !neighbors[0].isBlue)) { // O |_ |_|
+                    return 14;
+                } else if ((neighbors[0].freeNeighbors == 2 && !neighbors[1].isFree && !neighbors[1].isBlue) || (neighbors[1].freeNeighbors == 2 && !neighbors[0].isFree && !neighbors[0].isBlue)) { // O |_ |_
+                    return 4;
+                }
             }
             else if(neighbors[0].isBlue==neighbors[1].isBlue) {
                 if(neighbors[0].isBlue) { // X |_ X
-                    return -30;
+                    return -60;
                 }
                 else { // O |_ O
-                    return 20;
+                    return 40;
                 }
             }
         }
         else if(freeNeighbors<2 && isFree) {
             if(neighbors[0].isFree && neighbors[1].isFree) { // ¤ |_| ¤
-                return -20;
+                return -15;
             }
             else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) { // X |_| ¤
-                return -12;
+                return -17;
             }
             else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) { // O |_| ¤
                 return 8;
@@ -165,14 +150,14 @@ public class HollowSquare extends TerrainBlock {
             if(isBlue) {
                 if(neighbors[0].isFree && neighbors[1].isFree) {
                     if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // |_| X ¤
-                        return -15;
+                        return -17;
                     }
                     else { // |_ X |_
                         return -8;
                     }
                 }
                 else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) { // O X ¤
-                    return -10;
+                    return -40;
                 }
                 else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) {
                     if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // X X |_|
@@ -189,14 +174,14 @@ public class HollowSquare extends TerrainBlock {
             if(!isBlue) {
                 if(neighbors[0].isFree && neighbors[1].isFree) {
                     if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // |_| O ¤
-                        return 10;
+                        return 13;
                     }
                     else { // |_ O |_
                         return 6;
                     }
                 }
                 else if((neighbors[0].isFree && neighbors[1].isBlue) || (neighbors[1].isFree && neighbors[0].isBlue)) { // X O ¤
-                    return 7;
+                    return 30;
                 }
                 else if((neighbors[0].isFree && !neighbors[1].isBlue) || (neighbors[1].isFree && !neighbors[0].isBlue)) {
                     if(neighbors[0].freeNeighbors<2 || neighbors[1].freeNeighbors<2) { // O O |_|

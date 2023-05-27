@@ -214,40 +214,22 @@ public class GameScreen implements Screen {
                                 nearAlign.changeBlock(GameScreen.this);
                         }
                 }*/
-                if(oversaturate.size>0) {
-                        int[] coups = terrain.AlphaBeta(3);
-                        TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
-                        TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
-                        coup1.changeBlock(GameScreen.this);
-                        coup2.changeBlock(GameScreen.this);
-                }
-                else if (insaturate.size>3 && terrain.FindInsaturation(insaturate) != null) {
-                        terrain.FindInsaturation(insaturate).changeBlock(GameScreen.this);
-                        insaturate = terrain.HaveNeighbors(3,4);
-                        terrain.FindInsaturation(insaturate).changeBlock(GameScreen.this);
-
-                }
-                else if(terrain.getCanPlay().size>17) {
-                        int[] coups = terrain.Minimax(3);
-                        TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
-                        TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
-                        coup1.changeBlock(GameScreen.this);
-                        coup2.changeBlock(GameScreen.this);
-                }
-                else if(terrain.getCanPlay().size>12) {
-                        int[] coups = terrain.Minimax(5);
+                if (insaturate.size>3) {
+                        int[] coups = terrain.Minimax(1);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
                         coup2.changeBlock(GameScreen.this);
                 }
                 else {
-                        int[] coups = terrain.AlphaBeta(7);
+                        int[] coups = terrain.Minimax(3);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
                         coup2.changeBlock(GameScreen.this);
                 }
+
+
                 /*boolean hasPlay = false;
                 Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1);
                 Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);

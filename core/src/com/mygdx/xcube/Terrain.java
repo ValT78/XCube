@@ -355,15 +355,14 @@ public class Terrain {
                                 canPlay.get(i).isFree = false;
                                 canPlay.get(i).isBlue = true;
                                 for (int j = 0; j < canPlay.size; j++) {
-                                    if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
-                                                    if (canPlay.get(j).isFree) {
-                                                        canPlay.get(j).isFree = false;
+                                        if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                                            if (canPlay.get(j).isFree) {
+                                                canPlay.get(j).isFree = false;
                                                         canPlay.get(j).isBlue = true;
                                                         int newNote = this.MinimaxTurn(depth - 1, false);
                                                         if (newNote < note) {
                                                             note = newNote;
                                                         }
-                                                        //System.out.println(note+" "+depth);
                                                         canPlay.get(j).isFree = true;
                                                     }
                                                 }
@@ -410,15 +409,12 @@ public class Terrain {
             for (int i = 0; i < canPlay.size; i++) { // On itère sur tous les blocs qui peuvent être joués
                 if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) { //On vérifie qu'il s'agit d'une barre, ou d'un carré avec ses 4 voisins
                     if (canPlay.get(i).isFree) {
-
                         canPlay.get(i).isFree = false; //On fait comme si le bloc était joué
                         canPlay.get(i).isBlue = false; //On fait comme si le bloc était rouge
                         for (int j = 0; j < canPlay.size; j++) { //On cherche le 2ème coup
-
-                            if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) { // tout pareil que le premier
-                                if (canPlay.get(j).isFree) {
-
-                                    canPlay.get(j).isFree = false;
+                                if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) { // tout pareil que le premier
+                                    if (canPlay.get(j).isFree) {
+                                        canPlay.get(j).isFree = false;
                                     canPlay.get(j).isBlue = false;
                                     int newNote = this.MinimaxTurn(depth - 1, true); //On utilise le Minimax récursif avec le terrain un peu modifié
                                     if (newNote > note) { //On prend la note max et on récupère les coups associés
@@ -426,7 +422,6 @@ public class Terrain {
                                         coup1 = i;
                                         coup2 = j;
                                     }
-                                    //System.out.println(note + " " + depth);
                                     canPlay.get(j).isFree = true; // On fait revenir le terrain à la normal
                                 }
                             }
@@ -459,9 +454,8 @@ public class Terrain {
                             canPlay.get(i).isFree = false;
                             canPlay.get(i).isBlue = color;
                             for (int j = 0; j < canPlay.size; j++) {
-                                if (j != i) {
+                                if (canPlay.get(j).isFree) {
                                     if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
-                                        if (canPlay.get(j).isFree) {
                                             canPlay.get(j).isFree = false;
                                             canPlay.get(j).isBlue = color;
                                             note = Math.min(note, this.AlphaBetaTurn(depth - 1, !color, alpha, beta));
@@ -477,7 +471,6 @@ public class Terrain {
                             canPlay.get(i).isFree = true;
                         }
                     }
-                }
                 return note;
             }
             else {
@@ -555,18 +548,18 @@ public class Terrain {
         for(int i =0; i<square.size; i++) {
             HollowSquare squar = square.get(i);
             if(squar.isHorizontal) {
-                score += squar.ComputeLine2(squar.horizontal);
+                score += squar.ComputeLine(squar.horizontal);
             }
             if(squar.isVertical) {
-                score += squar.ComputeLine2(squar.vertical);
+                score += squar.ComputeLine(squar.vertical);
 
             }
             if(squar.isDiagonal) {
-                score += squar.ComputeLine2(squar.diagonal);
+                score += squar.ComputeLine(squar.diagonal);
 
             }
             if(squar.isAntidiagonal) {
-                score += squar.ComputeLine2(squar.antidiagonal);
+                score += squar.ComputeLine(squar.antidiagonal);
             }
         }
         //System.out.println(score+"score");
