@@ -438,7 +438,7 @@ public class Terrain {
         return new int[]{coup1,coup2};
     }
 
-    /*public int AlphaBetaTurn(int depth, boolean color, int alpha, int beta) {
+    public int AlphaBetaTurn(int depth, boolean color, int alpha, int beta) {
         if(checkEveryAlign(color)) {
             if(color) {
                 return -10000;
@@ -452,50 +452,58 @@ public class Terrain {
         }
         else {
             if(color) {
-                int note = 10001;
+                int note = 100000;
                 for(int i = 0; i<canPlay.size;i++) {
                     if(!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
-                        canPlay.get(i).isFree = false;
-                        canPlay.get(i).isBlue = color;
-                        for (int j = 0; j < canPlay.size; j++) {
-                            if (j != i) {
-                                if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
-                                    canPlay.get(j).isFree = false;
-                                    canPlay.get(j).isBlue = color;
-                                    note = Math.min(note, this.AlphaBetaTurn(depth - 1, !color, alpha, beta));
-                                    if (note < alpha) {
-                                        return note;
+                        if (canPlay.get(i).isFree) {
+                            canPlay.get(i).isFree = false;
+                            canPlay.get(i).isBlue = color;
+                            for (int j = 0; j < canPlay.size; j++) {
+                                if (j != i) {
+                                    if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                                        if (canPlay.get(j).isFree) {
+                                            canPlay.get(j).isFree = false;
+                                            canPlay.get(j).isBlue = color;
+                                            note = Math.min(note, this.AlphaBetaTurn(depth - 1, !color, alpha, beta));
+                                            if (note < alpha) {
+                                                return note;
+                                            }
+                                            beta = Math.min(beta, note);
+                                            canPlay.get(j).isFree = true;
+                                        }
                                     }
-                                    beta = Math.min(beta, note);
-                                    canPlay.get(i).isFree = true;
-                                    canPlay.get(j).isFree = true;
                                 }
                             }
+                            canPlay.get(i).isFree = true;
                         }
                     }
                 }
                 return note;
             }
             else {
-                int note = -10001;
+                int note = -100000;
                 for(int i = 0; i<canPlay.size;i++) {
                     if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) {
-                        canPlay.get(i).isFree = false;
-                        canPlay.get(i).isBlue = !color;
-                        for (int j = 0; j < canPlay.size; j++) {
-                            if (j != i) {
-                                if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
-                                    canPlay.get(j).isFree = false;
-                                    canPlay.get(j).isBlue = !color;
-                                    note = Math.max(note, this.AlphaBetaTurn(depth - 1, !color, alpha, beta));
-                                    if (note > beta) {
-                                        return note;
+                        if (canPlay.get(i).isFree) {
+                            canPlay.get(i).isFree = false;
+                            canPlay.get(i).isBlue = !color;
+                            for (int j = 0; j < canPlay.size; j++) {
+                                if (j != i) {
+                                    if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
+                                        if (canPlay.get(j).isFree) {
+                                            canPlay.get(j).isFree = false;
+                                            canPlay.get(j).isBlue = !color;
+                                            note = Math.max(note, this.AlphaBetaTurn(depth - 1, !color, alpha, beta));
+                                            if (note > beta) {
+                                                return note;
+                                            }
+                                            alpha = Math.max(alpha, note);
+                                            canPlay.get(j).isFree = true;
+                                        }
                                     }
-                                    alpha = Math.max(alpha, note);
-                                    canPlay.get(i).isFree = true;
-                                    canPlay.get(j).isFree = true;
                                 }
                             }
+                            canPlay.get(i).isFree = true;
                         }
                     }
                 }
@@ -504,36 +512,43 @@ public class Terrain {
         }
     }
     public int[] AlphaBeta(int depth) {
-        int note = -10000;
+        int note = -100000;
         int coup1=0;
         int coup2=0;
+        int alpha = -100000;
+        int beta = 100000;
         for(int i = 0; i<canPlay.size;i++) { // On itère sur tous les blocs qui peuvent être joués
             if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) { //On vérifie qu'il s'agit d'une barre, ou d'un carré avec ses 4 voisins
-                canPlay.get(i).isFree = false; //On fait comme si le bloc était joué
-                canPlay.get(i).isBlue = false; //On fait comme si le bloc était rouge
-                System.out.println(canPlay.get(i).isSquare);
-                for (int j = 0; j < canPlay.size; j++) { //On cherche le 2ème coup
-                    if (j != i) {
-                        if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) { // tout pareil que le premier
-                            canPlay.get(j).isFree = false;
-                            canPlay.get(j).isBlue = false;
-                            int newNote = this.AlphaBetaTurn(depth - 1, true, -10001, 10001); //On utilise le Minimax récursif avec le terrain un peu modifié
-                            if (newNote > note) { //On prend la note max et on récupère les coups associés
-                                note = newNote;
-                                coup1 = i;
-                                coup2 = j;
+                if (canPlay.get(i).isFree) {
+                    canPlay.get(i).isFree = false; //On fait comme si le bloc était joué
+                    canPlay.get(i).isBlue = false; //On fait comme si le bloc était rouge
+                    for (int j = 0; j < canPlay.size; j++) { //On cherche le 2ème coup
+                        if (j != i) {
+                            if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) { // tout pareil que le premier
+                                if (canPlay.get(j).isFree) {
+                                    canPlay.get(j).isFree = false;
+                                    canPlay.get(j).isBlue = false;
+                                    int newNote = this.AlphaBetaTurn(depth - 1, true, alpha, beta); //On utilise le Minimax récursif avec le terrain un peu modifié
+                                    if (newNote > note) { //On prend la note max et on récupère les coups associés
+                                        note = newNote;
+                                        coup1 = i;
+                                        coup2 = j;
+                                    }
+                                    if (note > beta) { // alphabeta pruning
+                                        return new int[]{coup1,coup2};
+                                    }
+                                    alpha = Math.max(alpha, note);
+                                    canPlay.get(j).isFree = true; // On fait revenir le terrain à la normal
+                                }
                             }
-                            canPlay.get(i).isFree = true;
-                            canPlay.get(j).isFree = true; // On fait revenir le terrain à la normal
                         }
                     }
+                    canPlay.get(i).isFree = true;
                 }
             }
         }
-        System.out.println(coup1+"   "+coup1);
-        System.out.println(coup2+"   "+coup2);
         return new int[]{coup1,coup2};
-    }*/
+    }
 
     public int heuristic() { //Le principe : Pour chaque carré, on vient récupérer les 2 blocs à la vertical, puis à l'horizontal, puis en diagonal, puis en antidiagonale
         int score = 0;       //Pour chacun, en fonction de l'état du carré et de ses 2 voisins, on attribut une note différente. On fait ensuite la somme des notes
