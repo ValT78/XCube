@@ -184,6 +184,9 @@ public class GameScreen implements Screen {
                         game.batch.end();
                         if (finishGame.contains(touchPos.x, touchPos.y)) {
                                 game.dispose();
+                                if(mode==1) {
+                                        Multiplayer.disconnected();
+                                }
                                 game.create();
                         }
                 }

@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.async.AsyncExecutor;
 import com.badlogic.gdx.utils.async.AsyncTask;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.xcube.block.Button;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.socket.client.Socket;
@@ -21,6 +23,7 @@ public class Multiplayer implements Screen {
     private boolean color;
     private static Socket socket;
     final XCube game;
+    private final Button finishGame= new Button(50,50,"V2/bluebar1.png","Return to main menu",1);
     private final GameScreen gamescreen;
     private boolean duel = false;
     Viewport viewport = new ExtendViewport(800, 480);
@@ -131,8 +134,18 @@ public class Multiplayer implements Screen {
 
         game.batch.begin();     // Début des éléments à afficher
         game.font.draw(game.batch, "Waiting for another player ",100,250);
+        finishGame.drawButton(game, 90);
         game.batch.end();       // Fin des éléments à afficher
-
+        if (Gdx.input.isTouched()) {
+            Vector3 touchPos = new Vector3();                              //Création d'un vecteur à 3 coordonnées x,y,z
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);        // On récupère les coordonnées de touché
+            camera.unproject(touchPos);                                    // On adapte les coordonnées à la camera
+            if(this.finishGame.contains(touchPos.x,touchPos.y)){
+                disconnected();
+                game.dispose();
+                game.create();
+            }
+        }
         if(duel){
             game.setScreen(gamescreen);
             dispose();
