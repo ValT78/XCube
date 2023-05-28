@@ -214,15 +214,24 @@ public class GameScreen implements Screen {
                                 nearAlign.changeBlock(GameScreen.this);
                         }
                 }*/
-                if (insaturate.size>3) {
+                if (insaturate.size>2) {
                         int[] coups = terrain.Minimax(1);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
                         coup2.changeBlock(GameScreen.this);
                 }
-                else {
+                else if(terrain.getCanPlay().size>0){
                         int[] coups = terrain.Minimax(3);
+                        TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
+                        TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
+                        System.out.println(coup1.getCoords()[0]+"   "+coup1.getCoords()[1]+"   "+coup1.isSquare);
+                        System.out.println(coup2.getCoords()[0]+"   "+coup2.getCoords()[1]+"   "+coup2.isSquare);
+                        coup1.changeBlock(GameScreen.this);
+                        coup2.changeBlock(GameScreen.this);
+                }
+                else {
+                        int[] coups = terrain.Minimax(4);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);

@@ -344,7 +344,7 @@ public class Terrain {
             }
         }
         else if(depth==0) {
-            return heuristic();
+            return heuristic(true);
         }
         else {
             if(color) {
@@ -405,7 +405,7 @@ public class Terrain {
     public int[] Minimax(int depth) {
         int note = -10000;
         int coup1=0;
-        int coup2=0;
+        int coup2=1;
             for (int i = 0; i < canPlay.size; i++) { // On itère sur tous les blocs qui peuvent être joués
                 if (!canPlay.get(i).isSquare || ((HollowSquare) (canPlay.get(i))).FillNeighbors()) { //On vérifie qu'il s'agit d'une barre, ou d'un carré avec ses 4 voisins
                     if (canPlay.get(i).isFree) {
@@ -430,6 +430,7 @@ public class Terrain {
                     }
                 }
             }
+            //System.out.println(coup1+"  "+coup2);
         return new int[]{coup1,coup2};
     }
 
@@ -443,7 +444,7 @@ public class Terrain {
             }
         }
         else if(depth==0) {
-            return heuristic();
+            return heuristic(true);
         }
         else {
             if(color) {
@@ -543,23 +544,23 @@ public class Terrain {
         return new int[]{coup1,coup2};
     }
 
-    public int heuristic() { //Le principe : Pour chaque carré, on vient récupérer les 2 blocs à la vertical, puis à l'horizontal, puis en diagonal, puis en antidiagonale
+    public int heuristic(boolean color) { //Le principe : Pour chaque carré, on vient récupérer les 2 blocs à la vertical, puis à l'horizontal, puis en diagonal, puis en antidiagonale
         int score = 0;       //Pour chacun, en fonction de l'état du carré et de ses 2 voisins, on attribut une note différente. On fait ensuite la somme des notes
         for(int i =0; i<square.size; i++) {
             HollowSquare squar = square.get(i);
             if(squar.isHorizontal) {
-                score += squar.ComputeLine(squar.horizontal);
+                score += squar.ComputeLine2(squar.horizontal,color);
             }
             if(squar.isVertical) {
-                score += squar.ComputeLine(squar.vertical);
+                score += squar.ComputeLine2(squar.vertical, color);
 
             }
             if(squar.isDiagonal) {
-                score += squar.ComputeLine(squar.diagonal);
+                score += squar.ComputeLine2(squar.diagonal,color);
 
             }
             if(squar.isAntidiagonal) {
-                score += squar.ComputeLine(squar.antidiagonal);
+                score += squar.ComputeLine2(squar.antidiagonal,color);
             }
         }
         //System.out.println(score+"score");
