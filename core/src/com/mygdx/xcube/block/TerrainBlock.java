@@ -50,6 +50,9 @@ public class TerrainBlock extends Block {
                 gameScreen.terrain.getCanPlay().removeIndex(i);
             }
         }
+        if(!isSquare) {
+            gameScreen.terrain.numberBar--;
+        }
         gameScreen.terrain.getLastPlay().add(this);                           //Est enregistré comme le dernier coup joué pour apparaitre d'une couleur différente de la normal
         gameScreen.terrain.addPlay(this);
         gameScreen.players.setCoup(gameScreen.terrain);                       //Vérifie combien de coup il reste au joueur actuel pour jouer, et change la couleur des blocks récemment joués

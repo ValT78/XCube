@@ -28,15 +28,29 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
     private boolean touchOff;
 
-    public MainMenuScreen(XCube game){
+    public MainMenuScreen(XCube game, boolean dlc, float timer){
         this.game=game;
-
         //Valeurs modifiable selon le menu désiré
         local = new Button(100,300,"V2/bluebar1.png","Local",1);
         multiplayer = new Button(100,200,"V2/bluebar1.png","Multijoueur",1);
         IA = new Button(100,100,"V2/bluebar1.png","Intelligence Artificielle",1);
-        DLC = new Button(100,400,"V2/redbar1.png","DLC Désactivés",1);
-        Chrono = new Button(100,500,"V2/bluebar1.png","Temps : Medium (150 sec)",1);
+        this.dlc=dlc;
+        if(dlc) {
+            DLC = new Button(100, 400, "V2/bluebar1.png", "DLC Activés", 1);
+        }
+        else {
+            DLC = new Button(100, 400, "V2/redbar1.png", "DLC Désactivés", 1);
+        }
+        this.startTime=timer;
+        if(timer==90) {
+            Chrono = new Button(100, 500, "V2/redbar1.png", "Temps : Pro (90 sec)", 1);
+        }
+        else if(timer==150) {
+            Chrono = new Button(100, 500, "V2/bluebar1.png", "Temps : Medium (150 sec)", 1);
+        }
+        else {
+            Chrono = new Button(100, 500, "V2/bluebar2.png", "Temps : Découverte (300 sec)", 1);
+        }
         logo = new Items(width_screen/4,3*height_screen/4,"V2/title.png");
         camera = new OrthographicCamera();
         camera.setToOrtho(false,width_screen,height_screen);

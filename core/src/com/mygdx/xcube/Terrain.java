@@ -29,6 +29,8 @@ public class Terrain {
 
     private int iterator = 0;
     private final Random random = new Random();
+    private int test=0;
+    public int numberBar = 40;
 
     public Terrain() {
         this.unitSquare = new HollowSquare(0,0).getSize()[0];
@@ -146,13 +148,14 @@ public class Terrain {
         if (locateSquare(x + unitX + unitY / 2 - unitSquare / 2, y + unitX + unitY / 2 - unitSquare / 2) == null) {
             HollowSquare square1 = new HollowSquare(x + unitX + unitY / 2 - unitSquare / 2, y + unitX + unitY / 2 - unitSquare / 2); //Création et ajout du carré au terrain
             this.square.add(square1);
-            canPlay.add(square1);
+            this.canPlay.add(square1);
             bullet.add(new Items(x-26,y-26,"alone_dots.png"));
             HollowBar bar1 = locateBar(x + unitX, y);       //Création et ajout de la barre supérieur au carré si elle n'existe pas déjà
             if (bar1 == null) {
                 bar1 = new HollowBar(true, x + unitX, y);
                 this.bar.add(bar1);
-                canPlay.add(bar1);
+                canPlay.insert(40,bar1);
+                numberBar++;
             }
             square1.neighbors.add(bar1);
 
@@ -160,7 +163,9 @@ public class Terrain {
             if (bar2 == null) {
                 bar2 = new HollowBar(true, x + unitX, y + spaceBlock);
                 this.bar.add(bar2);
-                canPlay.add(bar2);
+                canPlay.insert(40,bar2);
+                numberBar++;
+
             }
             square1.neighbors.add(bar2);
 
@@ -168,7 +173,9 @@ public class Terrain {
             if (bar3 == null) {
                 bar3 = new HollowBar(false, x, y + unitX);
                 this.bar.add(bar3);
-                canPlay.add(bar3);
+                canPlay.insert(40,bar3);
+                numberBar++;
+
             }
             square1.neighbors.add(bar3);
 
@@ -176,7 +183,9 @@ public class Terrain {
             if (bar4 == null) {
                 bar4 = new HollowBar(false, x + spaceBlock, y + unitX);
                 this.bar.add(bar4);
-                canPlay.add(bar4);
+                canPlay.insert(40,bar4);
+                numberBar++;
+
             }
             square1.neighbors.add(bar4);
         }
@@ -344,6 +353,7 @@ public class Terrain {
             }
         }
         else if(depth==0) {
+            test++;
             return heuristic(true);
         }
         else {
@@ -354,7 +364,7 @@ public class Terrain {
                             if(canPlay.get(i).isFree) {
                                 canPlay.get(i).isFree = false;
                                 canPlay.get(i).isBlue = true;
-                                for (int j = 0; j < canPlay.size; j++) {
+                                for (int j = Math.min(i+1,numberBar); j < canPlay.size; j++) {
                                         if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) {
                                             if (canPlay.get(j).isFree) {
                                                 canPlay.get(j).isFree = false;
@@ -411,7 +421,7 @@ public class Terrain {
                     if (canPlay.get(i).isFree) {
                         canPlay.get(i).isFree = false; //On fait comme si le bloc était joué
                         canPlay.get(i).isBlue = false; //On fait comme si le bloc était rouge
-                        for (int j = 0; j < canPlay.size; j++) { //On cherche le 2ème coup
+                        for (int j = Math.min(i+1,numberBar); j < canPlay.size; j++) { //On cherche le 2ème coup
                                 if (!canPlay.get(j).isSquare || ((HollowSquare) (canPlay.get(j))).FillNeighbors()) { // tout pareil que le premier
                                     if (canPlay.get(j).isFree) {
                                         canPlay.get(j).isFree = false;
@@ -430,7 +440,8 @@ public class Terrain {
                     }
                 }
             }
-            //System.out.println(coup1+"  "+coup2);
+        System.out.println(test);
+        test=0;
         return new int[]{coup1,coup2};
     }
 

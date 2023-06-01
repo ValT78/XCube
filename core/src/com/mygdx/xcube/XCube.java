@@ -10,7 +10,7 @@ public class XCube extends Game {
 	public void create(){
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new MainMenuScreen(this));    // Lance l'écran de départ.
+		this.setScreen(new MainMenuScreen(this, false, 150f));    // Lance l'écran de départ.
 
 	}
 

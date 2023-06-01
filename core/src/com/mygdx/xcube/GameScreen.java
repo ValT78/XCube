@@ -56,6 +56,7 @@ public class GameScreen implements Screen {
         private final Button pause;
         private Thread iaThread = new Thread(new IAClass(this));
         private boolean IAStart=false;
+        private float startTime;
 
         public GameScreen(final XCube game, int mode, float startTime, boolean dlc) {
                 grid = new Items(3*unitY/2-unitX,(9*unitY + 9*unitX)/2-unitX,"V2/dots.png");
@@ -79,6 +80,7 @@ public class GameScreen implements Screen {
                 reDo = new Button((7*unitY + 7*unitX)*2/3,(7*unitY + 7*unitX)/8,"redo.png","",1);
                 finishGame = new Button((7*unitY + 7*unitX)*1/5,(7*unitY + 7*unitX)*13/8,"V2/bluebar1.png","Retour au Menu",5);
                 pause = new Button((7*unitY + 7*unitX)*6/7,(7*unitY + 7*unitX)*13/7,"pause.png","",0.5f);
+                this.startTime=startTime;
         }
         @Override
         public void show() {
@@ -183,11 +185,11 @@ public class GameScreen implements Screen {
                         finishGame.drawButton(game, 90);
                         game.batch.end();
                         if (finishGame.contains(touchPos.x, touchPos.y)) {
-                                game.dispose();
                                 if(mode==1) {
                                         Multiplayer.disconnected();
                                 }
-                                game.create();
+                                game.setScreen(new MainMenuScreen(game, dlc, startTime));
+                                dispose();
                         }
                 }
                 game.batch.begin(); //On affiche tous les éléments à l'écran, dans l'ordre : chronomètre, terrain puis grille
@@ -209,15 +211,7 @@ public class GameScreen implements Screen {
 
         }
         public void ProcessIA() {
-                Array<HollowSquare> insaturate = terrain.HaveNeighbors(3,4);
-                Array<HollowSquare> oversaturate = terrain.HaveNeighbors(0,1); //C'est important de garder au moins une de ces 2 lignes même si le tableau sert pas au final
-                /*if(nearAlign != null) {
-                        OverSaturatePlay(nearAlign);
-                        if(!players.getPlayer()) {
-                                nearAlign.changeBlock(GameScreen.this);
-                        }
-                }*/
-                if (insaturate.size>2) {
+                if (terrain.getCanPlay().size>40) {
                         int[] coups = terrain.Minimax(1);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
@@ -228,13 +222,11 @@ public class GameScreen implements Screen {
                         int[] coups = terrain.Minimax(3);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
-                        System.out.println(coup1.getCoords()[0]+"   "+coup1.getCoords()[1]+"   "+coup1.isSquare);
-                        System.out.println(coup2.getCoords()[0]+"   "+coup2.getCoords()[1]+"   "+coup2.isSquare);
                         coup1.changeBlock(GameScreen.this);
                         coup2.changeBlock(GameScreen.this);
                 }
                 else {
-                        int[] coups = terrain.Minimax(4);
+                        int[] coups = terrain.Minimax(5);
                         TerrainBlock coup1=terrain.getCanPlay().get(coups[0]);
                         TerrainBlock coup2=terrain.getCanPlay().get(coups[1]);
                         coup1.changeBlock(GameScreen.this);
@@ -352,8 +344,8 @@ public class GameScreen implements Screen {
                 game.batch.end();
                 if(WaitToTouch()) {
                         if (finishGame.contains(touchPos.x, touchPos.y)) {
-                                game.dispose();
-                                game.create();
+                                game.setScreen(new MainMenuScreen(game, dlc, startTime));
+                                dispose();
                         }
                         else if (turnBack.contains(touchPos.x, touchPos.y)) {
                                 terrain.unPlay(GameScreen.this);
@@ -461,6 +453,6 @@ public class GameScreen implements Screen {
         @Override
         public void dispose() {
 
-                game.batch.dispose();
+//                game.batch.dispose();
         }
 }
